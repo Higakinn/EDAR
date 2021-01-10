@@ -1,15 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
-/.pnp
+/src/edar/node_modules
+/src/edar/.pnp
 .pnp.js
 
 # testing
-/coverage
+/src/edar/coverage
 
 # production
-/build
+/src/edar/build
 
 # misc
 .DS_Store
