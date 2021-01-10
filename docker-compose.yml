@@ -1,0 +1,10 @@
+version: "3"
+services:
+  react:
+    build:
+      context: .
+    tty: true
+    volumes:
+      - ./src/:/usr/src/app/
+    ports:
+      - 3000:3000
