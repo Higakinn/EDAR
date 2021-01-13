@@ -8,5 +8,3 @@ services:
       - ./src/edar/src:/usr/src/edar/src
     ports:
       - 3000:3000
-    entrypoint: >
-      sleep 86400
