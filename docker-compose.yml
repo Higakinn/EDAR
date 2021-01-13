@@ -3,8 +3,10 @@ services:
   react:
     build:
       context: .
-    tty: true
     volumes:
-      - ./src/:/usr/src/app/
+      - ./src/edar/:/usr/src/edar/
+      - ./src/edar/src:/usr/src/edar/src
     ports:
       - 3000:3000
+    entrypoint: >
+      sleep 86400
