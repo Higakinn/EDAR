@@ -10,7 +10,7 @@ before_install:
   # docker build -t <Dockerイメージ名> <Dockerfileが存在するディレクトリ>
   - docker build -t edar_reacrt_test .
   - docker ps -a
-  - docker run edar_reacrt_test /bin/bash -c "yarn test"
+  - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn test"
 install:
   # - npm install -g firebase-tools
   - yarn install
