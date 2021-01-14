@@ -35,12 +35,12 @@ jobs:
       name: syntax check
       <<: *build_docker
       script:
-        - $(echo $COMMAND_IN_DOCKER) yarn eslint . --ext .tsx --ext .ts
+        - $COMMAND_IN_DOCKER yarn eslint . --ext .tsx --ext .ts
     - stage: test
       name: react test
       <<: *build_docker
       script:
-        - $(echo $COMMAND_IN_DOCKER) yarn test
+        - $COMMAND_IN_DOCKER yarn test
     - stage: deploy
       name: deploy firebase
       <<: *build_docker
