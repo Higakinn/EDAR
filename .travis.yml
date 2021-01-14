@@ -8,7 +8,7 @@ services:
   - docker
 before_install:
   # docker build -t <Dockerイメージ名> <Dockerfileが存在するディレクトリ>
-  - docker build -t edar_reacrt_test .
+  - docker build -t edar_react_test .
   - docker ps -a
   - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn test"
 install:
