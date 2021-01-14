@@ -1,18 +1,32 @@
-# ステージ: 上から順に実行し、成功すると次のステージに進む
-stages:
-  # 文法チェック
-  - name: syntax
-  # テストコードの実行
-  - name: test
-  # firebaseへのデプロイ処理
-  - name: deploy
+language: node_js
+node_js:
+  - 12.16.1
+# linuxの仮想環境を使う
+os:
+  - linux
+
+# linuxの仮想環境にdockerをインストール
 services:
   - docker
+
+# ステージ: 上から順に実行し、成功すると次のステージに進む
+stages:
+  # ci:文法チェック
+  - name: syntax
+  # ci:テストコードの実行
+  - name: test
+  # cd:firebaseへのデプロイ処理
+  - name: deploy
+
+# dockerのイメージ名を環境変数として設定
+env:
+  - DOCKER_IMAGE_NAME=edar_react_test
+  - COMMAND_IN_DOCKER="docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c"
 # docker imageのビルド処理
 _build_docker: &build_docker
   before_script:
-    - docker build -t edar_react_test .
-_test_in_docker: &test_in_docker
+    - docker build -t $DOCKER_IMAGE_NAME .
+# _test_in_docker: &test_in_docker
 
 jobs:
   include:
@@ -20,12 +34,12 @@ jobs:
       name: syntax check
       <<: *build_docker
       script:
-        - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn eslint . --ext .tsx --ext .ts"
+        - $(echo $COMMAND_IN_DOCKER) yarn eslint . --ext .tsx --ext .ts
     - stage: test
       name: react test
       <<: *build_docker
       script:
-        - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn test"
+        - $(echo $COMMAND_IN_DOCKER) yarn test
     - stage: deploy
       name: deploy firebase
       <<: *build_docker
