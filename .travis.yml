@@ -1,19 +1,28 @@
-language: node_js
-node_js:
-  - "stable"
-cache:
-  directories:
-    - node_modules
+stages:
+  - name: syntax
+  - name: test
+  - name: deploy
+    if: branch IN (master) AND type = 'push'
 services:
   - docker
-before_install:
-  # docker build -t <Dockerイメージ名> <Dockerfileが存在するディレクトリ>
-  - docker build -t edar_react_test .
-  - docker ps -a
-  - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn test"
-install:
-  # - npm install -g firebase-tools
-  - yarn install
 
-script:
-  - yarn test
+_build_docker: &build_docker
+  before_script:
+    - docker build -t edar_react_test .
+_test_in_docker: &test_in_docker
+
+jobs:
+  include:
+    - <<: *build_docker
+    - stage: syntax
+      name: syntax check
+      script:
+        - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn test"
+    - stage: test
+      name: react test
+      script:
+        - docker run -it -e CI=true --entrypoint=bash edar_react_test -c "yarn eslint . --ext .tsx --ext .ts"
+    - stage: deploy
+      name: deploy firebase
+      script:
+        - echo "deploy firebase"
