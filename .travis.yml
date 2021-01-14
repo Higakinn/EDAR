@@ -20,8 +20,9 @@ stages:
 
 # dockerのイメージ名を環境変数として設定
 env:
-  - DOCKER_IMAGE_NAME=edar_react_test
-  - COMMAND_IN_DOCKER="docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c"
+  global:
+    - "DOCKER_IMAGE_NAME=edar_react_test"
+    - \"COMMAND_IN_DOCKER="docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c"\"
 # docker imageのビルド処理
 _build_docker: &build_docker
   before_script:
