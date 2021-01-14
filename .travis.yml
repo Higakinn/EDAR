@@ -22,7 +22,6 @@ stages:
 env:
   global:
     - "DOCKER_IMAGE_NAME=edar_react_test"
-    - \"COMMAND_IN_DOCKER="docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c"\"
 # docker imageのビルド処理
 _build_docker: &build_docker
   before_script:
@@ -35,12 +34,12 @@ jobs:
       name: syntax check
       <<: *build_docker
       script:
-        - $COMMAND_IN_DOCKER yarn eslint . --ext .tsx --ext .ts
+        - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
     - stage: test
       name: react test
       <<: *build_docker
       script:
-        - $COMMAND_IN_DOCKER yarn test
+        - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
     - stage: deploy
       name: deploy firebase
       <<: *build_docker
