@@ -1,5 +1,5 @@
-import React from 'react';
 import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
 function App() {
@@ -18,9 +18,32 @@ function App() {
         >
           Learn React
         </a>
+        <RestaurantList />
       </header>
     </div>
   );
+}
+
+class RestaurantList extends Component {
+  state = {
+    latitude: null,
+    longitude: null,
+    isLoaded: false,
+  };
+
+  render() {
+    navigator.geolocation.getCurrentPosition(
+      position => {
+        this.setState({ longitude: position.coords.longitude, latitude: position.coords.latitude, isLoaded: true });
+      },
+      error => { this.setState({ isLoaded: false }); }
+    );
+
+    return this.state.isLoaded ?
+      <div>経度は{this.state.longitude}であり、緯度は{this.state.latitude}である。</div>
+      :
+      <div>位置情報取得に失敗しました。</div>
+  }
 }
 
 export default App;
