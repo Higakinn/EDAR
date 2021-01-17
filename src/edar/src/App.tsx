@@ -17,9 +17,16 @@ class RestaurantList extends Component {
     longitude: null,
     isLoaded: false,
     isLoadedShopInfo: false,
+    isPushed: false,
     shops: [],
     url: "",
   };
+
+  // 初期化
+  constructor(props: any) {
+    super(props);
+    this.getLocationInfo = this.getLocationInfo.bind(this);
+  }
 
   // 経度緯度情報を取得
   getLocationInfo() {
@@ -48,6 +55,9 @@ class RestaurantList extends Component {
       .catch((err) => {
         this.setState({ isLoadedShopInfo: false });
       })
+      .finally(() => {
+        this.setState({ isPushed: true });
+      }
       );
   }
 
@@ -59,6 +69,26 @@ class RestaurantList extends Component {
   }
 
 
+  render() {
+    return (
+      <div className="shopList">
+        <button onClick={this.getLocationInfo}>
+          現在地よりお店を検索
+        </button>
+        <ol>
+          {this.state.shops.map((index: any) => (
+            <li key={index.id}>{index.name}</li>
+          ))}
+          {this.state.isPushed &&
+            !this.state.isLoaded &&
+            <p> 位置情報が取得できませんでした。</p>}
+          {this.state.isPushed &&
+            !this.state.isLoadedShopInfo &&
+            <p>お店の情報を取得できませんでした。</p>}
+        </ol>
+      </div >
+    )
+  }
 }
 
 export default App;
