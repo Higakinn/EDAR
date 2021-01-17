@@ -16,18 +16,18 @@ class RestaurantList extends Component {
     isLoaded: false,
   };
 
-  render() {
+  // 経度緯度情報を取得
+  getLocationInfo() {
     navigator.geolocation.getCurrentPosition(
-      position => {
+      (position) => {
         this.setState({ longitude: position.coords.longitude, latitude: position.coords.latitude, isLoaded: true });
       },
-      error => { this.setState({ isLoaded: false }); }
+      (error) => {
+        this.setState({ isLoaded: false });
+      }
     );
+  }
 
-    return this.state.isLoaded ?
-      <div>経度は{this.state.longitude}であり、緯度は{this.state.latitude}である。</div>
-      :
-      <div>位置情報取得に失敗しました。</div>
   }
 }
 
