@@ -27,7 +27,7 @@ class RestaurantList extends Component {
                 this.setLocationInfoToURL();
             },
             (error) => {
-                this.setState({ isLoaded: false });
+                this.setState({ isPushed: true, isLoaded: false });
             }
         );
     }
