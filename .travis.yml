@@ -34,16 +34,16 @@ _build_deploy_docker: &build_deploy_docker
 
 jobs:
   include:
-    - stage: syntax
-      name: syntax check
-      <<: *build_docker
-      script:
-        - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
-    - stage: test
-      name: react test
-      <<: *build_docker
-      script:
-        - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
+    # - stage: syntax
+    #   name: syntax check
+    #   <<: *build_docker
+    #   script:
+    #     - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
+    # - stage: test
+    #   name: react test
+    #   <<: *build_docker
+    #   script:
+    #     - docker run -it -e CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
     - stage: deploy
       name: deploy firebase
       <<: *build_deploy_docker
