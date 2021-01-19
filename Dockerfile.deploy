@@ -11,4 +11,4 @@ COPY ./src/edar .
 RUN yarn add firebase-tools && yarn install
 RUN sed -i -e "s/__firebase_project__/${FIREBASE_PROJECT_ID}/" .firebaserc 
 # コンテナを起動する際に実行されるコマンド
-ENTRYPOINT [ "yarn", "start"]
+ENTRYPOINT [ "yarn", "build"]
