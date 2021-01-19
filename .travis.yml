@@ -51,4 +51,4 @@ jobs:
       # if: branch = master
       script:
         - echo "deploy firebase"
-        - docker run -it -e CI=true --entrypoint=bash $DEPLOY_DOCKER_IMAGE_NAME -c "yarn firebase deploy --token \"$FIREBASE_TOKEN\"
+        - docker run -it -e CI=true --entrypoint=bash $DEPLOY_DOCKER_IMAGE_NAME -c "yarn firebase deploy --token '$FIREBASE_TOKEN' "
