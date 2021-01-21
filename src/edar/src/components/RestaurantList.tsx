@@ -67,18 +67,17 @@ class RestaurantList extends Component {
 
     // 条件よりURLを設定
     setLocationInfoToURL() {
-        let url: string = "https://quiet-hamlet-14379.herokuapp.com/hgs?lat=" + this.state.latitude + "&lng=" + this.state.longitude + "&range=4&order=1";
+        let url: string = process.env['REACT_APP_URL'] + '/hgs?lat=' + this.state.latitude + '&lng=' + this.state.longitude + '&range=4&order=1';
         this.setState({ url: url });
         this.getShopInfo();
     }
-
 
     render() {
         return (
             <div className="shopList">
                 <button onClick={this.getLocationInfo}>
                     現在地よりお店を検索
-        </button>
+                </button>
                 <ol>
                     {this.state.shops.map((index: any) => (
                         <li key={index.id}>{index.name}</li>
