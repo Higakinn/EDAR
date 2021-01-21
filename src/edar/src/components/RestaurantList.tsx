@@ -11,6 +11,7 @@ class RestaurantList extends Component {
         isPushed: false,
         shops: [],
         url: "",
+        errorMessage: "",
     };
 
     // 初期化
@@ -27,7 +28,19 @@ class RestaurantList extends Component {
                 this.setLocationInfoToURL();
             },
             (error) => {
-                this.setState({ isPushed: true, isLoaded: false });
+                let errMsg;
+                switch (error.code) {
+                    case 1:
+                        errMsg = "位置情報の利用が許可されていません";
+                        break;
+                    case 2:
+                        errMsg = "デバイスの位置が判定できません";
+                        break;
+                    case 3:
+                        errMsg = "タイムアウトしました";
+                        break;
+                }
+                this.setState({ isPushed: true, isLoaded: false, errorMessage: errMsg });
             }
         );
     }
@@ -72,8 +85,8 @@ class RestaurantList extends Component {
                     ))}
                     {this.state.isPushed &&
                         !this.state.isLoaded &&
-                        <p> 位置情報が取得できませんでした。</p>}
-                    {this.state.isPushed &&
+                        <p> {this.state.errorMessage}</p>}
+                    {(this.state.isPushed && this.state.isLoaded) &&
                         !this.state.isLoadedShopInfo &&
                         <p>お店の情報を取得できませんでした。</p>}
                 </ol>
