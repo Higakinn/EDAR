@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+# 環境変数
+.env
