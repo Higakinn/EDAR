@@ -47,8 +47,8 @@ jobs:
     - stage: deploy
       name: deploy firebase
       <<: *build_deploy_docker
-      # masterブランチにマージされたときに実行する
-      if: branch = master
+      # mainブランチにマージされたときに実行する
+      if: branch = main
       script:
         - echo "deploy firebase"
         - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
