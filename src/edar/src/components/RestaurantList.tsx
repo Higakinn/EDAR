@@ -49,7 +49,7 @@ class RestaurantList extends Component {
     getShopInfo() {
         axios.get(this.state.url, {
             headers: {
-                'Authorization': 'Basic ' + base64.encode(process.env['REACT_APP_USER'] + ":" + process.env['REACT_APP_PASSWORD']),
+                'Authorization': 'Basic ' + base64.encode(process.env['REACT_APP_RSTRNT_API_USER'] + ":" + process.env['REACT_APP_RSTRNT_API_PASSWORD']),
                 'Content-Type': 'application/json'
             }
         })
@@ -67,7 +67,7 @@ class RestaurantList extends Component {
 
     // 条件よりURLを設定
     setLocationInfoToURL() {
-        let url: string = process.env['REACT_APP_URL'] + '/hgs?lat=' + this.state.latitude + '&lng=' + this.state.longitude + '&range=4&order=1';
+        let url: string = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + this.state.latitude + '&lng=' + this.state.longitude + '&range=4&order=1';
         this.setState({ url: url });
         this.getShopInfo();
     }
