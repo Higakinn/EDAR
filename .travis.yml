@@ -51,5 +51,5 @@ jobs:
       if: branch = main 
       script:
         - echo "deploy firebase"
-        - sed -e 's|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g' -e 's|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g' -e 's|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g' ./src/edar/.env.example > /src/edar/.env
-        - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
+        - sed -e 's|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g' -e 's|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g' -e 's|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g' ./src/edar/.env.example > ./src/edar/.env
+        - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
