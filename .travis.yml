@@ -34,16 +34,16 @@ _build_deploy_docker: &build_deploy_docker
 
 jobs:
   include: 
-    - stage: syntax 
-      name: syntax check
-      <<: *build_docker
-      script:
-        - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
-    - stage: test
-      name: react test
-      <<: *build_docker
-      script:
-        - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
+    # - stage: syntax 
+    #   name: syntax check
+    #   <<: *build_docker
+    #   script:
+    #     - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
+    # - stage: test
+    #   name: react test
+    #   <<: *build_docker
+    #   script:
+    #     - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
     - stage: deploy
       name: deploy firebase
       <<: *build_deploy_docker
@@ -52,4 +52,4 @@ jobs:
       script:
         - echo "deploy firebase"
         - sed -e 's|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g' -e 's|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g' -e 's|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g' ./src/edar/.env.example > ./src/edar/.env
-        - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
+        - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
