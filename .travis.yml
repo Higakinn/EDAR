@@ -29,22 +29,25 @@ _build_docker: &build_docker
     - docker build -t $DOCKER_IMAGE_NAME .
 _build_deploy_docker: &build_deploy_docker
   before_script:
+    # .envファイルを作成する
     - sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" ./src/edar/.env.example > ./src/edar/.env
     - docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
 # _test_in_docker: &test_in_docker
-
+script:
+  - echo "trigger is $TRAVIS_EVENT_TYPE"
+  - echo "$TRAVIS_PULL_REQUEST"
 jobs:
   include: 
-    # - stage: syntax 
-    #   name: syntax check
-    #   <<: *build_docker
-    #   script:
-    #     - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
-    # - stage: test
-    #   name: react test
-    #   <<: *build_docker
-    #   script:
-    #     - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
+    - stage: syntax 
+      name: syntax check
+      <<: *build_docker
+      script:
+        - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
+    - stage: test
+      name: react test
+      <<: *build_docker
+      script:
+        - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
     - stage: deploy
       name: deploy firebase
       <<: *build_deploy_docker
@@ -52,5 +55,4 @@ jobs:
       if: branch = main 
       script:
         - echo "deploy firebase"
-        - cat ./src/edar/.env
         - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
