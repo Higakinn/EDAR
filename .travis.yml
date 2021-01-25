@@ -52,7 +52,7 @@ jobs:
       name: deploy firebase
       <<: *build_deploy_docker
       # mainブランチにマージされたときに実行する
-      if: branch = main 
+      if: branch = main AND type NOT IN (pull_request)
       script:
         - echo "deploy firebase"
         - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
