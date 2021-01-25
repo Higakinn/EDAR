@@ -40,11 +40,13 @@ jobs:
   include: 
     - stage: syntax 
       name: syntax check
+      if: type IN (push)
       <<: *build_docker
       script:
         - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
     - stage: test
       name: react test
+      if: type IN (push)
       <<: *build_docker
       script:
         - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
