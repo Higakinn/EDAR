@@ -1,0 +1,60 @@
+language: node_js
+node_js:
+  - 12.16.1
+# linuxの仮想環境を使う
+os:
+  - linux
+
+# linuxの仮想環境にdockerをインストール
+services:
+  - docker
+
+# ステージ: 上から順に実行し、成功すると次のステージに進む
+stages:
+  # ci:文法チェック
+  - name: syntax
+  # ci:テストコードの実行
+  - name: test
+  # cd:firebaseへのデプロイ処理
+  - name: deploy
+
+# dockerのイメージ名を環境変数として設定
+env:
+  global:
+    - "DOCKER_IMAGE_NAME=edar_react_test"
+    - "DEPLOY_DOCKER_IMAGE_NAME=edar_deploy"
+# docker imageのビルド処理
+_build_docker: &build_docker
+  before_script:
+    - docker build -t $DOCKER_IMAGE_NAME .
+_build_deploy_docker: &build_deploy_docker
+  before_script:
+    # .envファイルを作成する
+    - sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" ./src/edar/.env.example > ./src/edar/.env
+    - docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
+# _test_in_docker: &test_in_docker
+script:
+  - echo "trigger is $TRAVIS_EVENT_TYPE"
+  - echo "$TRAVIS_PULL_REQUEST"
+jobs:
+  include: 
+    - stage: syntax 
+      name: syntax check
+      if: type IN (push)
+      <<: *build_docker
+      script:
+        - docker run -it --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
+    - stage: test
+      name: react test
+      if: type IN (push)
+      <<: *build_docker
+      script:
+        - docker run -it --env CI=true --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn test"
+    - stage: deploy
+      name: deploy firebase
+      <<: *build_deploy_docker
+      # mainブランチにマージされたときに実行する
+      if: branch = main AND type NOT IN (pull_request)
+      script:
+        - echo "deploy firebase"
+        - docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"

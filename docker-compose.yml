@@ -1,0 +1,10 @@
+version: "3"
+services:
+  react:
+    build:
+      context: .
+    volumes:
+      - ./src/edar/:/usr/src/edar/
+      - /usr/src/edar/node_modules
+    ports:
+      - 3000:3000
