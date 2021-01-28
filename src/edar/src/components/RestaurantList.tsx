@@ -100,24 +100,20 @@ const RestaurantList = () => {
     }, [longitude, latitude]);
 
     return (
-        <div className="shopList">
-            <ol>
-                {shops.map((index: any) => (
-                    <li key={index.id}>{index.name}</li>
-                ))}
-                {isPushed &&
-                    !isLoadedLocationInfo &&
-                    <p> {errorMessage}</p>}
-                {(isPushed && isLoadedLocationInfo) &&
-                    !isLoadedShopInfo &&
-                    <p>お店の情報を取得できませんでした。</p>}
-            </ol>
-        </div>
+        <>
                 <Grid container spacing={3} alignItems="center" justify="center" direction="column">
                     <Grid item>
                         <Button variant="contained" onClick={getLocationInfo}>
                             現在地よりお店を検索
                         </Button>
+                    </Grid>
+                    <Grid item>
+                        {isPushed &&
+                            !isLoadedLocationInfo &&
+                            <p> {errorMessage}</p>}
+                        {(isPushed && isLoadedLocationInfo) &&
+                            !isLoadedShopInfo &&
+                            <p>お店の情報を取得できませんでした。</p>}
                     </Grid>
                     {shops.map((output: any, index: number) => (
                         <Grid item>
@@ -175,6 +171,7 @@ const RestaurantList = () => {
                         </Grid>
                     ))}
                 </Grid>
+        </>
     )
 }
 
