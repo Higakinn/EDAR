@@ -29,6 +29,7 @@ const RestaurantList = () => {
     let [shops, setShops] = useState([]);
     let [url, setUrl] = useState("");
     let [errorMessage, setErrorMessage] = useState("");
+    let [genre, setgenre] = useState("");
     let [expanded, setExpanded] = useState(false);
     const classes = useStyles();
 
@@ -64,8 +65,9 @@ const RestaurantList = () => {
         );
     };
 
+    // 位置情報、ジャンルコードよりお店情報取得のURLを作成
     const setLocationInfoToURL = () => {
-        url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + latitude + '&lng=' + longitude + '&range=4&order=1&genre=G006';
+        url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + latitude + '&lng=' + longitude + '&range=4&order=1&genre=' + genre;
         setUrl(url);
         getShopInfo();
     };
@@ -96,17 +98,39 @@ const RestaurantList = () => {
         if (isLoadedLocationInfo) {
             setLocationInfoToURL();
         }
+        // TODO;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [longitude, latitude]);
+    }, [longitude, latitude, genre]);
+
+    // ジャンルが変更された際の処理
+    const changedgenre = (event: any) => {
+        genre = event.target.value;
+        setgenre(genre);
+    };
 
     return (
         <>
                 <Grid container spacing={3} alignItems="center" justify="center" direction="column">
                     <Grid item>
+                        <FormControl className={classes.formControl}>
+                            {/* TODO; */}
+                            <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
+                            <Select id="select" labelId="label" value={genre} onChange={(event) => changedgenre(event)}>
+                                <MenuItem value={'G007'}>中華</MenuItem>
+                                <MenuItem value={'G006'}>イタリアン</MenuItem>
+                                <MenuItem value={'G005'}>洋食</MenuItem>
+                                <MenuItem value={'G013'}>ラーメン</MenuItem>
+                                <MenuItem value={'G016'}>お好み焼き</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item>
                         <Button variant="contained" onClick={getLocationInfo}>
                             現在地よりお店を検索
                         </Button>
                     </Grid>
+                </Grid>
+                <Grid container justify="center">
                     <Grid item>
                         {isPushed &&
                             !isLoadedLocationInfo &&
@@ -177,6 +201,10 @@ const RestaurantList = () => {
 
 // CSS-in-JS
 const useStyles = makeStyles((theme) => ({
+    formControl: {
+        margin: theme.spacing(5),
+        minWidth: 150,
+    },
     cardRoot: {
         maxWidth: 345,
         margin: 15,
