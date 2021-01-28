@@ -48,7 +48,8 @@ const RestaurantList = () => {
     };
 
     // 経度緯度情報を取得
-    const getLocationInfo = () => {
+    const getLocationInfo = (event: any) => {
+        event.preventDefault();
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setIsLoadedLocationInfo(true);
@@ -120,25 +121,27 @@ const RestaurantList = () => {
     return (
         <>
             <ThemeProvider theme={darkTheme}>
-                <Grid container spacing={3} alignItems="center" justify="center" direction="column">
-                    <Grid item>
-                        <FormControl className={classes.formControl}>
-                            {/* TODO; */}
-                            <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
-                            <Select id="select" labelId="label" value={genre} onChange={(event) => changedgenre(event)}>
-                                <MenuItem value={'G007'}>中華</MenuItem>
-                                <MenuItem value={'G006'}>イタリアン</MenuItem>
-                                <MenuItem value={'G005'}>洋食</MenuItem>
-                                <MenuItem value={'G013'}>ラーメン</MenuItem>
-                                <MenuItem value={'G016'}>お好み焼き</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item>
-                        <Button variant="contained" onClick={getLocationInfo}>
-                            現在地よりお店を検索
-                        </Button>
-                    </Grid>
+                <Grid container spacing={3} alignItems="center" justify="center">
+                    <form onSubmit={(event) => getLocationInfo(event)}>
+                        <Grid item>
+                            <FormControl className={classes.formControl}>
+                                {/* TODO; */}
+                                <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
+                                <Select id="select" labelId="label" value={genre} onChange={(event) => changedgenre(event)} required>
+                                    <MenuItem value={'G007'}>中華</MenuItem>
+                                    <MenuItem value={'G006'}>イタリアン</MenuItem>
+                                    <MenuItem value={'G005'}>洋食</MenuItem>
+                                    <MenuItem value={'G013'}>ラーメン</MenuItem>
+                                    <MenuItem value={'G016'}>お好み焼き</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid>
+                            <Button type="submit" variant="contained" className={classes.sendButton}>
+                                現在地よりお店を検索
+                            </Button>
+                        </Grid>
+                    </form>
                 </Grid>
                 <Grid container justify="center">
                     <Grid item>
@@ -214,7 +217,15 @@ const RestaurantList = () => {
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(5),
-        minWidth: 150,
+        minWidth: 200,
+        marginLeft: "auto",
+        marginRight: "auto",
+    },
+    sendButton: {
+        margin: "12px 0",
+        width: "100%",
+        marginLeft: "auto",
+        marginRight: "auto",
     },
     cardRoot: {
         maxWidth: 345,
