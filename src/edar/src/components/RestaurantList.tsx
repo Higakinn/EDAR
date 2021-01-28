@@ -13,12 +13,21 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
+
+// テーマの設定
+const darkTheme = createMuiTheme({
+    palette: {
+        type: "light",
+    },
+});
 
 const RestaurantList = () => {
     let [latitude, setLatitude] = useState(0);
@@ -110,6 +119,7 @@ const RestaurantList = () => {
 
     return (
         <>
+            <ThemeProvider theme={darkTheme}>
                 <Grid container spacing={3} alignItems="center" justify="center" direction="column">
                     <Grid item>
                         <FormControl className={classes.formControl}>
@@ -195,6 +205,7 @@ const RestaurantList = () => {
                         </Grid>
                     ))}
                 </Grid>
+            </ThemeProvider>
         </>
     )
 }
