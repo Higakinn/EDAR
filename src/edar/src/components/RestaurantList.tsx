@@ -30,8 +30,7 @@ const darkTheme = createMuiTheme({
 });
 
 const RestaurantList = () => {
-    let [latitude, setLatitude] = useState(0);
-    let [longitude, setLongitude] = useState(0);
+    let [position, setPosition] = useState({ latitude: 0, longitude: 0 });
     let [isLoadedLocationInfo, setIsLoadedLocationInfo] = useState(false);
     let [isLoadedShopInfo, setIsLoadedShopInfo] = useState(false);
     let [isPushed, setIsPushed] = useState(false);
@@ -53,8 +52,8 @@ const RestaurantList = () => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 setIsLoadedLocationInfo(true);
-                setLongitude(position.coords.longitude);
-                setLatitude(position.coords.latitude);
+                const { latitude, longitude } = position.coords;
+                setPosition({ latitude, longitude });
             },
             (error) => {
                 switch (error.code) {
@@ -77,7 +76,7 @@ const RestaurantList = () => {
 
     // 位置情報、ジャンルコードよりお店情報取得のURLを作成
     const setLocationInfoToURL = () => {
-        url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + latitude + '&lng=' + longitude + '&range=4&order=1&genre=' + genre;
+        url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + position.latitude + '&lng=' + position.longitude + '&range=4&order=1&genre=' + genre;
         setUrl(url);
         getShopInfo();
     };
@@ -110,7 +109,7 @@ const RestaurantList = () => {
         }
         // TODO;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [longitude, latitude, genre]);
+    }, [position, genre]);
 
     // ジャンルが変更された際の処理
     const changedgenre = (event: any) => {
