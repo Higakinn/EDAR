@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import base64 from 'base-64';
+import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
@@ -100,9 +101,6 @@ const RestaurantList = () => {
 
     return (
         <div className="shopList">
-            <button onClick={getLocationInfo}>
-                現在地よりお店を検索
-            </button>
             <ol>
                 {shops.map((index: any) => (
                     <li key={index.id}>{index.name}</li>
@@ -116,6 +114,11 @@ const RestaurantList = () => {
             </ol>
         </div>
                 <Grid container spacing={3} alignItems="center" justify="center" direction="column">
+                    <Grid item>
+                        <Button variant="contained" onClick={getLocationInfo}>
+                            現在地よりお店を検索
+                        </Button>
+                    </Grid>
                     {shops.map((output: any, index: number) => (
                         <Grid item>
                             <Card className={classes.cardRoot} key={index}>
