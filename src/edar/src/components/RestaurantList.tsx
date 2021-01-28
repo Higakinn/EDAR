@@ -150,8 +150,8 @@ const RestaurantList = () => {
                             <p>お店の情報を取得できませんでした。</p>}
                     </Grid>
                     {shops.map((output: any, index: number) => (
-                        <Grid item>
-                            <Card className={classes.cardRoot} key={index}>
+                        <Grid item key={index}>
+                            <Card className={classes.cardRoot}>
                                 <CardHeader
                                     className={classes.cardHeader}
                                     avatar={
