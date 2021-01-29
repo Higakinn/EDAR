@@ -39,6 +39,7 @@ const RestaurantList = () => {
     let [errorMessage, setErrorMessage] = useState("");
     let [genre, setgenre] = useState("");
     let [expanded, setExpanded] = useState(false);
+    let [genreList, setGenreList] = useState([]);
     const classes = useStyles();
 
     // 折りたたみボタンを押した際のフラグ変更
@@ -111,6 +112,23 @@ const RestaurantList = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [position, genre]);
 
+    // ジャンル取得
+    useEffect(() => {
+        let genreUrl = process.env['REACT_APP_RSTRNT_API_URL'] + '/genre_master';
+        axios.get(genreUrl, {
+            headers: {
+                'Authorization': 'Basic ' + base64.encode(process.env['REACT_APP_RSTRNT_API_USER'] + ":" + process.env['REACT_APP_RSTRNT_API_PASSWORD']),
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => {
+                setGenreList(res.data.results.genre);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }, []);
+
     // ジャンルが変更された際の処理
     const changedgenre = (event: any) => {
         genre = event.target.value;
@@ -127,11 +145,9 @@ const RestaurantList = () => {
                                 {/* TODO; */}
                                 <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
                                 <Select id="select" labelId="label" value={genre} onChange={(event) => changedgenre(event)} required>
-                                    <MenuItem value={'G007'}>中華</MenuItem>
-                                    <MenuItem value={'G006'}>イタリアン</MenuItem>
-                                    <MenuItem value={'G005'}>洋食</MenuItem>
-                                    <MenuItem value={'G013'}>ラーメン</MenuItem>
-                                    <MenuItem value={'G016'}>お好み焼き</MenuItem>
+                                    {genreList.map((output: any, index: number) => (
+                                        <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
+                                    ))}
                                 </Select>
                             </FormControl>
                         </Grid>
