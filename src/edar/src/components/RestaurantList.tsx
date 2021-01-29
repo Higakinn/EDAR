@@ -106,6 +106,7 @@ const RestaurantList = () => {
     // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
     useEffect(() => {
         if (isLoadedLocationInfo) {
+            setIsPushed(false);
             setLocationInfoToURL();
         }
         // TODO;
@@ -162,10 +163,12 @@ const RestaurantList = () => {
                     <Grid item>
                         {isPushed &&
                             !isLoadedLocationInfo &&
-                            <p> {errorMessage}</p>}
+                            <p className={classes.sideInfo}> {errorMessage}</p>}
                         {(isPushed && isLoadedLocationInfo) &&
                             !isLoadedShopInfo &&
-                            <p>お店の情報を取得できませんでした。</p>}
+                            <p className={classes.sideInfo}>お店の情報を取得できませんでした。</p>}
+                        {(isLoadedShopInfo && (isLoadedLocationInfo && (isPushed && (shops.length === 0)))) &&
+                            <p className={classes.sideInfo}> 近くに該当ジャンルのお店がありませんでした。</p>}
                     </Grid>
                     {shops.map((output: any, index: number) => (
                         <Grid item key={index}>
@@ -235,6 +238,10 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 200,
         marginLeft: "auto",
         marginRight: "auto",
+    },
+    sideInfo: {
+        margin: theme.spacing(5),
+        fontSize: 18,
     },
     sendButton: {
         margin: "12px 0",
