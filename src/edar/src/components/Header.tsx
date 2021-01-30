@@ -1,76 +1,92 @@
-import React , {useState}from 'react';
+import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import HomeIcon from '@material-ui/icons/Home';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import StorefrontIcon from '@material-ui/icons/Storefront';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import PropTypes from 'prop-types';
 
-const DisabledTabs = () => {
-    const [value, setValue] = useState(2);
-  
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-      setValue(newValue);
-    };
-  
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        toolBar: {
+            minHeight: 36
+        },
+        subTitle: {
+            color: "#FFCC00",
+            [theme.breakpoints.down('sm')]: {
+                display: 'none',
+            }
+        },
+        sectionDesktop: {
+            display: 'none',
+            [theme.breakpoints.up('sm')]: {
+                display: 'flex',
+            },
+        },
+        sectionMobile: {
+            display: 'flex',
+            marginLeft: theme.spacing(1),
+            [theme.breakpoints.down('sm')]: {
+                display: 'none',
+            }
+        }
+    }),
+);
+
+function GridMapping(props: any) {
+    const items: { message: string, icon: any }[] = props.items
+    const titles: { title: string, subtitle: string } = props.titles
+    const classes = useStyles();
     return (
-      <Paper square>
-        <Tabs
-          value={value}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={handleChange}
-          aria-label="disabled tabs example"
-        >
-          <Tab label="Active" />
-          <Tab label="Disabled" />
-          <Tab label="Active" />
-        </Tabs>
-      </Paper>
+        <Grid container>
+            <Grid item xs={4} sm={4} >
+                <Typography variant="h6">
+                    {titles.title}
+                </Typography >
+                <Typography variant="caption" className={classes.subTitle}>
+                    {titles.subtitle}
+                </Typography>
+            </Grid>
+            {
+                items.map((data: any) => {
+                    return <Grid item xs={2} sm={2} key={data.message}>
+                        <IconButton aria-label="delete">
+                            {React.createElement(data.icon, { color: 'primary' })}
+                            <Typography variant="caption" className={classes.sectionMobile}>{data.message}</Typography>
+                        </IconButton>
+                    </Grid>
+                })
+            }
+        </Grid >
+    )
+}
+
+export default function Header(props: any) {
+    const classes = useStyles();
+    const item: { message: string, icon: any }[] = [
+        { message: "飲食店予約", icon: HomeIcon },
+        { message: "デリバリ-", icon: LocalMallIcon },
+        { message: "テイクアウト", icon: StorefrontIcon },
+        { message: "ログイン", icon: AccountBoxIcon },
+    ]
+    const titles: { title: string, subtitle: string } =
+        { title: props.title, subtitle: props.subtitle }
+
+    return (
+        <AppBar position='static' color='transparent'>
+            <Toolbar className={classes.toolBar}>
+                <GridMapping titles={titles} items={item} />
+            </Toolbar>
+        </AppBar>
     );
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 2,
-    },
-    menuButton: {
-      marginRight: theme.spacing(1),
-    },
-    title: {
-      flexGrow: 1,
-    },
-    subTittle: {
-        flexGrow: 1,
-        color: "#FFCC00"
-    },
-    tabs: {
-        flexGrow: 2
-    }
-  }),
-);
-
-export default function ButtonAppBar() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <AppBar position='static' color='inherit'>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title} display="inline">
-              EDAR
-          </Typography >
-          <Typography className={classes.subTittle}>
-            Easily decide on a restaurant
-          </Typography>
-          {/* <DisabledTabs className={classes.tabs}/> */}
-          <Button color="inherit" className={classes.tabs}>Login</Button>
-        </Toolbar>
-      </AppBar>
-      
-    </div>
-  );
-}
+Header.propTypes = {
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+};
