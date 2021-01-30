@@ -1,36 +1,54 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: "gray",
-    position: "fixed",
-    bottom: 0,
-    width: "100%",
-  },
-});
-
-export default function SimpleBottomNavigation() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-      className={classes.root}
-    >
-      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-    </BottomNavigation>
-  );
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Link color="inherit" href="https://material-ui.com/">
+                Your Website
+        </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
 }
+
+const useStyles = makeStyles((theme: any) => ({
+    footer: {
+        backgroundColor: theme.palette.action.selected,
+        marginBottom: 0,
+        width: '100%',
+        position: 'absolute',
+        bottom: 0,
+        padding: theme.spacing(3, 0),
+    },
+}));
+
+export default function Footer(props: any) {
+    const classes = useStyles();
+    const { description, title } = props;
+
+    return (
+        <footer className={classes.footer}>
+            <Container maxWidth="lg">
+                <Typography variant="h6" align="center" gutterBottom>
+                    {title}
+                </Typography>
+                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                    {description}
+                </Typography>
+                <Copyright />
+            </Container>
+        </footer>
+    );
+}
+
+Footer.propTypes = {
+    description: PropTypes.string,
+    title: PropTypes.string,
+};
