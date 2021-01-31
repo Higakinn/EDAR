@@ -21,6 +21,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // テーマの設定
 const darkTheme = createMuiTheme({
@@ -160,7 +161,7 @@ const RestaurantList = () => {
                     </form>
                 </Grid>
                 <Grid container justify="center">
-                    <Grid item>
+                    <Grid item xs={12} className={classes.messages}>
                         {isPushed &&
                             !isLoadedLocationInfo &&
                             <p className={classes.sideInfo}> {errorMessage}</p>}
@@ -169,6 +170,8 @@ const RestaurantList = () => {
                             <p className={classes.sideInfo}>お店の情報を取得できませんでした。</p>}
                         {(isLoadedShopInfo && (isLoadedLocationInfo && (isPushed && (shops.length === 0)))) &&
                             <p className={classes.sideInfo}> 近くに該当ジャンルのお店がありませんでした。</p>}
+                        {(!isPushed && isLoadedLocationInfo) &&
+                            <CircularProgress className={classes.sideInfo} disableShrink />}
                     </Grid>
                     {shops.map((output: any, index: number) => (
                         <Grid item key={index}>
@@ -242,6 +245,9 @@ const useStyles = makeStyles((theme) => ({
     sideInfo: {
         margin: theme.spacing(5),
         fontSize: 18,
+    },
+    messages: {
+        textAlign: "center"
     },
     sendButton: {
         margin: "12px 0",
