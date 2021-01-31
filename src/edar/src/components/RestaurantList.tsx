@@ -34,7 +34,7 @@ const RestaurantList = () => {
     let [position, setPosition] = useState({ latitude: 0, longitude: 0 });
     let [isLoadedLocationInfo, setIsLoadedLocationInfo] = useState(false);
     let [isLoadedShopInfo, setIsLoadedShopInfo] = useState(false);
-    let [isPushed, setIsPushed] = useState(false);
+    let [isProcessing, setIsProcessing] = useState(false);
     let [shops, setShops] = useState([]);
     let [url, setUrl] = useState("");
     let [errorMessage, setErrorMessage] = useState("");
@@ -52,6 +52,7 @@ const RestaurantList = () => {
 
     // 経度緯度情報を取得
     const getLocationInfo = (event: any) => {
+        setIsProcessing(true);
         event.preventDefault();
         navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -71,7 +72,7 @@ const RestaurantList = () => {
                         errorMessage = "タイムアウトしました";
                         break;
                 }
-                setIsPushed(true);
+                setIsProcessing(false);
                 setIsLoadedLocationInfo(false);
                 setErrorMessage(errorMessage);
             }
@@ -111,7 +112,7 @@ const RestaurantList = () => {
                 setIsLoadedShopInfo(false);
             })
             .finally(() => {
-                setIsPushed(true);
+                setIsProcessing(false);
             }
             );
     };
@@ -119,7 +120,7 @@ const RestaurantList = () => {
     // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
     useEffect(() => {
         if (isLoadedLocationInfo) {
-            setIsPushed(false);
+            setIsProcessing(true);
             setLocationInfoToURL();
         }
         // TODO;
@@ -174,15 +175,13 @@ const RestaurantList = () => {
                 </Grid>
                 <Grid container justify="center">
                     <Grid item xs={12} className={classes.messages}>
-                        {isPushed &&
-                            !isLoadedLocationInfo &&
+                        {(!isProcessing && !isLoadedLocationInfo) &&
                             <p className={classes.sideInfo}> {errorMessage}</p>}
-                        {(isPushed && isLoadedLocationInfo) &&
-                            !isLoadedShopInfo &&
+                        {(!isProcessing && isLoadedLocationInfo && !isLoadedShopInfo) &&
                             <p className={classes.sideInfo}>お店の情報を取得できませんでした。</p>}
-                        {(isLoadedShopInfo && (isLoadedLocationInfo && (isPushed && (shops.length === 0)))) &&
+                        {(!isProcessing && isLoadedLocationInfo && isLoadedShopInfo && (shops.length === 0)) &&
                             <p className={classes.sideInfo}> 近くに該当ジャンルのお店がありませんでした。</p>}
-                        {(!isPushed && isLoadedLocationInfo) &&
+                        {isProcessing &&
                             <CircularProgress className={classes.sideInfo} disableShrink />}
                     </Grid>
                     {shops.map((output: any, index: number) => {
