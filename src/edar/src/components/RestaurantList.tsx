@@ -39,13 +39,15 @@ const RestaurantList = () => {
     let [url, setUrl] = useState("");
     let [errorMessage, setErrorMessage] = useState("");
     let [genre, setgenre] = useState("");
-    let [expanded, setExpanded] = useState(false);
+    let [expanded, setExpanded]: [boolean[], any] = useState([]);
     let [genreList, setGenreList] = useState([]);
     const classes = useStyles();
 
     // 折りたたみボタンを押した際のフラグ変更
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
+    const handleExpandClick = (index: number) => {
+        let copyExpanded = expanded.slice();
+        copyExpanded[index] = !copyExpanded[index];
+        setExpanded(copyExpanded);
     };
 
     // 経度緯度情報を取得
@@ -82,6 +84,16 @@ const RestaurantList = () => {
         setUrl(url);
         getShopInfo();
     };
+
+    // カードの折りたたみを初期化
+    useEffect(() => {
+        let initExpanded: boolean[] = [];
+        shops.forEach((output: any, index: number) => {
+            initExpanded.push(false);
+        });
+        setExpanded(initExpanded);
+    }, [shops]);
+
 
     // 飲食店の情報を取得
     const getShopInfo = () => {
@@ -173,61 +185,63 @@ const RestaurantList = () => {
                         {(!isPushed && isLoadedLocationInfo) &&
                             <CircularProgress className={classes.sideInfo} disableShrink />}
                     </Grid>
-                    {shops.map((output: any, index: number) => (
-                        <Grid item key={index}>
-                            <Card className={classes.cardRoot}>
-                                <CardHeader
-                                    className={classes.cardHeader}
-                                    avatar={
-                                        <Avatar aria-label="index" className={classes.cardAvatar}>
-                                            {index + 1}
-                                        </Avatar>
-                                    }
-                                    action={
-                                        <IconButton aria-label="settings">
-                                            <MoreVertIcon />
-                                        </IconButton>
-                                    }
-                                    title={output.name}
-                                    subheader={output.budget.average}
-                                />
-                                <CardMedia
-                                    className={classes.cardMedia}
-                                    image={output.photo.pc.m}
-                                />
-                                <CardContent>
-                                    <Typography variant="body2" color="textPrimary" component="p" className={classes.cardMessage}>
-                                        {output.catch}
-                                        {output.access}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions disableSpacing>
-                                    <IconButton aria-label="add to favorites">
-                                        <FavoriteIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="share">
-                                        <ShareIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        className={clsx(classes.cardExpand, {
-                                            [classes.cardExpandOpen]: expanded,
-                                        })}
-                                        onClick={handleExpandClick}
-                                        aria-expanded={expanded}
-                                        aria-label="show more"
-                                    >
-                                        <ExpandMoreIcon />
-                                    </IconButton>
-                                </CardActions>
-                                <Collapse in={expanded} timeout="auto" unmountOnExit className={classes.cardCollapse}>
+                    {shops.map((output: any, index: number) => {
+                        return (
+                            <Grid item key={index}>
+                                <Card className={classes.cardRoot}>
+                                    <CardHeader
+                                        className={classes.cardHeader}
+                                        avatar={
+                                            <Avatar aria-label="index" className={classes.cardAvatar}>
+                                                {index + 1}
+                                            </Avatar>
+                                        }
+                                        action={
+                                            <IconButton aria-label="settings">
+                                                <MoreVertIcon />
+                                            </IconButton>
+                                        }
+                                        title={output.name}
+                                        subheader={output.budget.average}
+                                    />
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image={output.photo.pc.m}
+                                    />
                                     <CardContent>
-                                        <Typography paragraph>{output.access}</Typography>
-                                        <Typography paragraph>{output.address}</Typography>
+                                        <Typography variant="body2" color="textPrimary" component="p" className={classes.cardMessage}>
+                                            {output.catch}
+                                            {output.access}
+                                        </Typography>
                                     </CardContent>
-                                </Collapse>
-                            </Card>
-                        </Grid>
-                    ))}
+                                    <CardActions disableSpacing>
+                                        <IconButton aria-label="add to favorites">
+                                            <FavoriteIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="share">
+                                            <ShareIcon />
+                                        </IconButton>
+                                        <IconButton
+                                            className={clsx(classes.cardExpand, {
+                                                [classes.cardExpandOpen]: expanded[index],
+                                            })}
+                                            onClick={() => handleExpandClick(index)}
+                                            aria-expanded={expanded[index]}
+                                            aria-label="show more"
+                                        >
+                                            <ExpandMoreIcon />
+                                        </IconButton>
+                                    </CardActions>
+                                    <Collapse in={expanded[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
+                                        <CardContent>
+                                            <Typography paragraph>{output.access}</Typography>
+                                            <Typography paragraph>{output.address}</Typography>
+                                        </CardContent>
+                                    </Collapse>
+                                </Card>
+                            </Grid>
+                        );
+                    })}
                 </Grid>
             </ThemeProvider>
         </>
