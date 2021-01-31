@@ -24,7 +24,7 @@ import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 // テーマの設定
-const darkTheme = createMuiTheme({
+const theme = createMuiTheme({
     palette: {
         type: "light",
     },
@@ -157,7 +157,7 @@ const RestaurantList = () => {
 
     return (
         <>
-            <ThemeProvider theme={darkTheme}>
+            <ThemeProvider theme={theme}>
                 <Grid container spacing={3} alignItems="center" justify="center">
                     <form onSubmit={(event) => getLocationInfo(event)}>
                         <Grid item>
