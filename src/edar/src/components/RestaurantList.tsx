@@ -88,11 +88,16 @@ const RestaurantList = () => {
 
     // カードの折りたたみを初期化
     useEffect(() => {
-        let initExpanded: boolean[] = [];
-        shops.forEach((output: any, index: number) => {
-            initExpanded.push(false);
-        });
-        setExpanded(initExpanded);
+        if (isLoadedLocationInfo) {
+            console.log("hogehoge")
+            let initExpanded: boolean[] = [];
+            shops.forEach((output: any, index: number) => {
+                initExpanded.push(false);
+            });
+            setExpanded(initExpanded);
+        }
+        // TODO;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shops]);
 
 
