@@ -54,6 +54,10 @@ const RestaurantList = (props: Props) => {
     return (
         <>
             <Grid container justify="center">
+                {(!props.isProcessing && props.isLoadedLocationInfo && props.isLoadedShopInfo) &&
+                    <h3 className={classes.heading}>検索結果</h3>}
+            </Grid>
+            <Grid container justify="center">
                 <Grid item xs={12} className={classes.messages}>
                     {(!props.isProcessing && !props.isLoadedLocationInfo) &&
                         <p className={classes.sideInfo}> {props.errorMessage}</p>}
@@ -128,6 +132,14 @@ const RestaurantList = (props: Props) => {
 
 // CSS-in-JS
 const useStyles = makeStyles((theme) => ({
+    heading: {
+        borderBottom: '2px solid #1B73BA',
+        fontSize: '18px',
+        fontWeight: 'bold',
+        margin: '30 0 20',
+        paddingBottom: 5,
+        paddingTop: 50,
+    },
     sideInfo: {
         margin: theme.spacing(5),
         fontSize: 18,
