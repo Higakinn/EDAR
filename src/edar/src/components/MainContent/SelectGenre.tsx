@@ -4,6 +4,9 @@ import base64 from 'base-64';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import type { Shop, Genre } from './MainContent';
+import { getGenreList } from '../../Api';
+
 
 type Props = {
     setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>
@@ -14,16 +17,16 @@ type Props = {
     setIsLoadedLocationInfo: React.Dispatch<React.SetStateAction<boolean>>
     setErrorMessage: React.Dispatch<React.SetStateAction<string>>
     setgenre: React.Dispatch<React.SetStateAction<string>>
-    setGenreList: React.Dispatch<React.SetStateAction<never[]>>
+    setGenreList: React.Dispatch<React.SetStateAction<Genre[]>>
     setUrl: React.Dispatch<React.SetStateAction<string>>
-    setShops: React.Dispatch<React.SetStateAction<never[]>>
+    setShops: React.Dispatch<React.SetStateAction<Shop[]>>
     setIsLoadedShopInfo: React.Dispatch<React.SetStateAction<boolean>>
     genre: string
     position: {
         latitude: number;
         longitude: number;
     }
-    genreList: string[]
+    genreList: Genre[]
     isLoadedLocationInfo: boolean
     url: string
 }
@@ -32,7 +35,7 @@ const SelectGenre = (props: Props) => {
     const classes = useStyles();
 
     // 経度緯度情報を取得
-    const getLocationInfo = (event: any) => {
+    const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
         props.setIsProcessing(true);
         event.preventDefault();
         navigator.geolocation.getCurrentPosition(
@@ -139,7 +142,7 @@ const SelectGenre = (props: Props) => {
                             {/* TODO; */}
                             <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
                             <Select id="select" labelId="label" value={props.genre} onChange={(event) => changedgenre(event)} required>
-                                {props.genreList.map((output: any, index: number) => (
+                                {props.genreList.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
                             </Select>
@@ -171,5 +174,4 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
     },
 }));
-
 export default SelectGenre;

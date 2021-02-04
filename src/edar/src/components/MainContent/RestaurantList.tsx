@@ -17,10 +17,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import type { Shop } from './MainContent';
 
 type Props = {
-    setExpanded: any
-    shops: never[]
+    setExpanded: React.Dispatch<React.SetStateAction<boolean[]>>
+    shops: Shop[]
     isProcessing: boolean
     isLoadedLocationInfo: boolean
     isLoadedShopInfo: boolean
@@ -35,7 +36,7 @@ const RestaurantList = (props: Props) => {
     useEffect(() => {
         if (props.isLoadedLocationInfo) {
             let initExpanded: boolean[] = [];
-            props.shops.forEach((output: any, index: number) => {
+            props.shops.forEach(() => {
                 initExpanded.push(false);
             });
             props.setExpanded(initExpanded);
@@ -68,7 +69,7 @@ const RestaurantList = (props: Props) => {
                     {props.isProcessing &&
                         <CircularProgress className={classes.sideInfo} disableShrink />}
                 </Grid>
-                {props.shops.map((output: any, index: number) => {
+                {props.shops.map((output: Shop, index: number) => {
                     return (
                         <Grid item key={index}>
                             <Card className={classes.cardRoot}>
@@ -184,5 +185,4 @@ const useStyles = makeStyles((theme) => ({
         width: 300,
     },
 }));
-
 export default RestaurantList;
