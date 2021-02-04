@@ -29,7 +29,7 @@ type Props = {
     expanded: boolean[]
 }
 
-const RestaurantList = (props: Props) => {
+export default function RestaurantList(props: Props) {
     const classes = useStyles();
 
     // カードの折りたたみを初期化
@@ -185,4 +185,3 @@ const useStyles = makeStyles((theme) => ({
         width: 300,
     },
 }));
-export default RestaurantList;

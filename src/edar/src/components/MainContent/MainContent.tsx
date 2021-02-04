@@ -108,7 +108,7 @@ const theme = createMuiTheme({
     },
 });
 
-const MainContent = () => {
+export default function MainContent() {
     let [position, setPosition] = useState({ latitude: 0, longitude: 0 });
     let [isLoadedLocationInfo, setIsLoadedLocationInfo] = useState(false);
     let [isLoadedShopInfo, setIsLoadedShopInfo] = useState(false);
@@ -152,5 +152,3 @@ const MainContent = () => {
         </>
     )
 }
-
-export default MainContent;

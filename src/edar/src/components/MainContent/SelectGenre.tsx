@@ -31,7 +31,7 @@ type Props = {
     url: string
 }
 
-const SelectGenre = (props: Props) => {
+export default function SelectGenre(props: Props) {
     const classes = useStyles();
 
     // 経度緯度情報を取得
@@ -174,4 +174,3 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "auto",
     },
 }));
-export default SelectGenre;
