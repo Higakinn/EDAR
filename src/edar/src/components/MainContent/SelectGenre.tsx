@@ -108,7 +108,7 @@ export default function SelectGenre(props: Props) {
     // ジャンル取得
     useEffect(() => {
         getGenre()
-            .then((response: Genre[]) => { props.setGenreList(response); console.log("res:" + props.genreList) })
+            .then((response: Genre[]) => props.setGenreList(response))
             .catch((error) => console.log(error))
         // TODO;
         // eslint-disable-next-line react-hooks/exhaustive-deps
