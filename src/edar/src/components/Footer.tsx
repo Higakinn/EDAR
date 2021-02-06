@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
@@ -18,7 +18,7 @@ function Copyright() {
     );
 }
 
-const useStyles = makeStyles((theme: any) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     footer: {
         backgroundColor: theme.palette.action.selected,
         marginBottom: 0,
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
 }));
 
-export default function Footer(props: any) {
+export default function Footer(props: { title: string, description: string }) {
     const classes = useStyles();
     const { description, title } = props;
 

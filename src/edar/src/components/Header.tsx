@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         toolBar: {
@@ -38,9 +39,20 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function GridMapping(props: any) {
-    const items: { message: string, icon: any }[] = props.items
-    const titles: { title: string, subtitle: string } = props.titles
+type gridProps = {
+    items: {
+        message: string,
+        icon: React.ElementType<any>
+    }[],
+    titles: {
+        title: string,
+        subtitle: string
+    }
+};
+
+function GridMapping(props: gridProps) {
+    const items = props.items
+    const titles = props.titles
     const classes = useStyles();
     return (
         <Grid container>
@@ -53,7 +65,7 @@ function GridMapping(props: any) {
                 </Typography>
             </Grid>
             {
-                items.map((data: any) => {
+                items.map((data: { message: string, icon: React.ElementType<any> }) => {
                     return <Grid item xs={2} sm={2} key={data.message}>
                         <IconButton aria-label="delete">
                             {React.createElement(data.icon, { color: 'primary' })}
@@ -66,16 +78,15 @@ function GridMapping(props: any) {
     )
 }
 
-export default function Header(props: any) {
+export default function Header(props: { title: string, subtitle: string }) {
     const classes = useStyles();
-    const item: { message: string, icon: any }[] = [
+    const item = [
         { message: "飲食店予約", icon: HomeIcon },
         { message: "デリバリ-", icon: LocalMallIcon },
         { message: "テイクアウト", icon: StorefrontIcon },
         { message: "ログイン", icon: AccountBoxIcon },
     ]
-    const titles: { title: string, subtitle: string } =
-        { title: props.title, subtitle: props.subtitle }
+    const titles = { title: props.title, subtitle: props.subtitle }
 
     return (
         <AppBar position='static' color='transparent'>
