@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import base64 from 'base-64';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import type { Shop, Genre } from './MainContent';
-import { getGenreList } from '../../Api';
+import { getGenre, getPosition, getShopList } from './api';
 
 
 type Props = {
@@ -38,15 +36,15 @@ export default function SelectGenre(props: Props) {
     const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
         props.setIsProcessing(true);
         event.preventDefault();
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
+        getPosition()
+            .then((position: { latitude: number, longitude: number }) => {
                 props.setIsLoadedLocationInfo(true);
-                const { latitude, longitude } = position.coords;
+                const { latitude, longitude } = position;
                 props.setPosition({ latitude, longitude });
-            },
-            (error) => {
+            })
+            .catch((errorCode: number) => {
                 let errorMessage = "";
-                switch (error.code) {
+                switch (errorCode) {
                     case 1:
                         errorMessage = "位置情報の利用が許可されていません";
                         break;
@@ -60,8 +58,7 @@ export default function SelectGenre(props: Props) {
                 props.setIsProcessing(false);
                 props.setIsLoadedLocationInfo(false);
                 props.setErrorMessage(errorMessage);
-            }
-        );
+            })
     };
 
     // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
@@ -87,14 +84,9 @@ export default function SelectGenre(props: Props) {
     // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
     useEffect(() => {
         if (props.isLoadedLocationInfo) {
-            axios.get(props.url, {
-                headers: {
-                    'Authorization': 'Basic ' + base64.encode(process.env['REACT_APP_RSTRNT_API_USER'] + ":" + process.env['REACT_APP_RSTRNT_API_PASSWORD']),
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then((res) => {
-                    props.setShops(res.data.results.shop);
+            getShopList(props.url)
+                .then((shops: Shop[]) => {
+                    props.setShops(shops);
                     props.setIsLoadedShopInfo(true);
                 })
                 .catch((err) => {
@@ -102,8 +94,7 @@ export default function SelectGenre(props: Props) {
                 })
                 .finally(() => {
                     props.setIsProcessing(false);
-                }
-                );
+                });
         }
         // TODO;
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,19 +107,9 @@ export default function SelectGenre(props: Props) {
 
     // ジャンル取得
     useEffect(() => {
-        let genreUrl = process.env['REACT_APP_RSTRNT_API_URL'] + '/genre_master';
-        axios.get(genreUrl, {
-            headers: {
-                'Authorization': 'Basic ' + base64.encode(process.env['REACT_APP_RSTRNT_API_USER'] + ":" + process.env['REACT_APP_RSTRNT_API_PASSWORD']),
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => {
-                props.setGenreList(res.data.results.genre);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+        getGenre()
+            .then((response: Genre[]) => { props.setGenreList(response); console.log("res:" + props.genreList) })
+            .catch((error) => console.log(error))
         // TODO;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
