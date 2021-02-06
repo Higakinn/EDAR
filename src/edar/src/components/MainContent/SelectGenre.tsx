@@ -122,7 +122,7 @@ export default function SelectGenre(props: Props) {
                         <FormControl className={classes.formControl}>
                             {/* TODO; */}
                             <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
-                            <Select id="select" labelId="label" value={props.genre} onChange={(event) => changedgenre(event)} required>
+                            <Select data-testid="select" id="select" labelId="label" value={props.genre} onChange={(event) => changedgenre(event)} required>
                                 {props.genreList.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
@@ -130,7 +130,7 @@ export default function SelectGenre(props: Props) {
                         </FormControl>
                     </Grid>
                     <Grid>
-                        <Button type="submit" variant="contained" className={classes.sendButton}>
+                        <Button data-testid="seachButton" type="submit" variant="contained" className={classes.sendButton}>
                             現在地よりお店を検索
                         </Button>
                     </Grid>
