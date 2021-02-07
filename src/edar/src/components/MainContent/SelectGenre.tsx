@@ -67,7 +67,7 @@ export default function SelectGenre(props: Props) {
             props.setIsProcessing(true);
             setLocationInfoToURL();
         }
-        // TODO;
+        // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.position, props.genre]);
 
@@ -96,7 +96,7 @@ export default function SelectGenre(props: Props) {
                     props.setIsProcessing(false);
                 });
         }
-        // TODO;
+        // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.url]);
 
@@ -110,7 +110,7 @@ export default function SelectGenre(props: Props) {
         getGenre()
             .then((response: Genre[]) => props.setGenreList(response))
             .catch((error) => console.log(error))
-        // TODO;
+        // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -120,7 +120,7 @@ export default function SelectGenre(props: Props) {
                 <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)}>
                     <Grid item>
                         <FormControl className={classes.formControl}>
-                            {/* TODO; */}
+                            {/* TODO: (警告が出る) */}
                             <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
                             <Select
                                 data-testid="select"

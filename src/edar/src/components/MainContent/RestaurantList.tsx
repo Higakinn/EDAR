@@ -41,7 +41,7 @@ export default function RestaurantList(props: Props) {
             });
             props.setExpanded(initExpanded);
         }
-        // TODO;
+        // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.shops]);
 
