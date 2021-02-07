@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -132,7 +132,7 @@ export default function RestaurantList(props: Props) {
 }
 
 // CSS-in-JS
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     heading: {
         borderBottom: '2px solid #1B73BA',
         fontSize: '18px',

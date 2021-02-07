@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import type { Shop, Genre } from './MainContent';
 import { getGenre, getPosition, getShopList } from './api';
@@ -148,7 +148,7 @@ export default function SelectGenre(props: Props) {
 }
 
 // CSS-in-JS
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
     formControl: {
         margin: theme.spacing(5),
         minWidth: 200,
