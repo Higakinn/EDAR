@@ -101,7 +101,7 @@ export default function SelectGenre(props: Props) {
     }, [props.url]);
 
     // ジャンルが変更された際の処理
-    const changedgenre = (event: any) => {
+    const changedgenre = (event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => {
         props.setgenre(event.target.value);
     };
 
@@ -117,12 +117,19 @@ export default function SelectGenre(props: Props) {
     return (
         <>
             <Grid container spacing={3} alignItems="center" justify="center">
-                <form onSubmit={(event) => getLocationInfo(event)}>
+                <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)}>
                     <Grid item>
                         <FormControl className={classes.formControl}>
                             {/* TODO; */}
                             <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
-                            <Select data-testid="select" id="select" labelId="label" value={props.genre} onChange={(event) => changedgenre(event)} required>
+                            <Select
+                                data-testid="select"
+                                id="select"
+                                labelId="label"
+                                value={props.genre}
+                                onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
+                                required
+                            >
                                 {props.genreList.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
