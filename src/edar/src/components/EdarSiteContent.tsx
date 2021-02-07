@@ -21,8 +21,8 @@ const useStyles = makeStyles({
 export default function SiteContents() {
     const classes = useStyles();
     //https://picsum.photos/images より食品にかんする画像IDを抽出
-    const foodImgIds: number[] = [292, 488, 493, 674, 75, 766, 824, 1060, 1080, 225]
-    const foodImgId: number = foodImgIds[Math.floor(Math.random() * foodImgIds.length)]
+    const foodImgIds = [292, 488, 493, 674, 75, 766, 824, 1060, 1080, 225]
+    const foodImgId = foodImgIds[Math.floor(Math.random() * foodImgIds.length)]
     return (
         <Grid container>
             <Grid item xs={12} sm={12}>
