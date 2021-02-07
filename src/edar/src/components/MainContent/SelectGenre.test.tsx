@@ -1,9 +1,8 @@
-jest.mock('./api');
-
 import React, { useState } from 'react';
 import { render, screen, cleanup, fireEvent, getByLabelText } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import SelectGenre from '../MainContent/SelectGenre';
+jest.mock('./api');
 
 afterEach(cleanup);
 
