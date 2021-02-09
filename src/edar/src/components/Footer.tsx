@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: theme.palette.action.selected,
         marginBottom: 0,
         width: '100%',
-        position: 'absolute',
         bottom: 0,
         padding: theme.spacing(3, 0),
     },
