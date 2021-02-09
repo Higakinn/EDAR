@@ -1,10 +1,10 @@
 import './App.css';
-import RestaurantList from './components/RestaurantList';
+import MainContent from './components/MainContent/MainContent';
 
 function App() {
   return (
     <div className="App">
-      <RestaurantList />
+      <MainContent />
     </div>
   );
 }
