@@ -1,22 +1,23 @@
 name: Test CI
 
 on: push
+env:
+  DOCKER_IMAGE_NAME: edar_react_test
+  # DOCKER_FILE_NAME:
+  DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
 
 jobs:
   lint: #ジョブ名
     runs-on: ubuntu-latest #実行環境(Ubuntuの最新版環境で実行)
-    env:
-      DOCKER_IMAGE_NAME: edar_react_test
-      DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
     steps: #実行処理やコマンドを記述
       - name: git checkout current branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
       - name: create docker image
-        run: docker build -t $DOCKER_IMAGE_NAME .
+        run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
       - name: run docker container
-        run: docker run -t --entrypoint=bash $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
+        run: docker run -t --entrypoint=sh $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
   test:
     runs-on: ubuntu-latest
     needs: [lint]
@@ -26,11 +27,12 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: create docker image
-        run: docker build -t samle_image_name -f ./Dockerfile .
-      - name: run docker container test
-        run: docker run -t samle_image_name bin/sh -c "echo myproject deploy"
-  deploy:
-    # if: contains( github.ref, 'master')
+        run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
+      - name: run test in docker container
+        run: docker run -it --env CI=true --entrypoint=sh $DOCKER_IMAGE_NAME -c "yarn test"
+
+  staging_deploy:
+    if: contains( github.ref, 'develop')
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
@@ -39,6 +41,20 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: create docker image
-        run: docker build -t samle_image_name -f ./Dockerfile .
-      - name: run docker container deploy
-        run: docker run -t samle_image_name bin/sh -c "echo hogehoge deploy"
+        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
+      - name: run staging deploy in docker container
+        run: docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_STAGING_TOKEN}"
+
+  deploy:
+    if: contains( github.ref, 'master')
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: git checkout current branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: create docker image
+        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile .
+      - name: run deploy in docker container
+        run: docker run -it --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
