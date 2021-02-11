@@ -4,112 +4,85 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import type { Shop, Genre } from './MainContent';
 import { getGenre, getPosition, getShopList } from './api';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from '../../stores/rootReducer';
+import {
+    setPosition,
+    setErrorMessage,
+    createURL,
+    setShops,
+    setIsLoadedShopInfo,
+    setIsProcessing,
+    setGenre,
+    setGenreList
+} from '../../stores/shopInfomation';
 
-
-type Props = {
-    setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>
-    setPosition: React.Dispatch<React.SetStateAction<{
-        latitude: number;
-        longitude: number;
-    }>>
-    setIsLoadedLocationInfo: React.Dispatch<React.SetStateAction<boolean>>
-    setErrorMessage: React.Dispatch<React.SetStateAction<string>>
-    setgenre: React.Dispatch<React.SetStateAction<string>>
-    setGenreList: React.Dispatch<React.SetStateAction<Genre[]>>
-    setUrl: React.Dispatch<React.SetStateAction<string>>
-    setShops: React.Dispatch<React.SetStateAction<Shop[]>>
-    setIsLoadedShopInfo: React.Dispatch<React.SetStateAction<boolean>>
-    genre: string
-    position: {
-        latitude: number;
-        longitude: number;
-    }
-    genreList: Genre[]
-    isLoadedLocationInfo: boolean
-    url: string
-}
-
-export default function SelectGenre(props: Props) {
+export default function SelectGenre() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {
+        position,
+        genre,
+        url,
+        isLoadedLocationInfo,
+        genreList
+    } = useSelector((state: RootState) => state.shopInfomation);
 
     // 経度緯度情報を取得
     const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
-        props.setIsProcessing(true);
         event.preventDefault();
+        dispatch(setIsProcessing(true));
         getPosition()
             .then((position: { latitude: number, longitude: number }) => {
-                props.setIsLoadedLocationInfo(true);
                 const { latitude, longitude } = position;
-                props.setPosition({ latitude, longitude });
+                dispatch(setPosition({ latitude, longitude }));
             })
             .catch((errorCode: number) => {
-                let errorMessage = "";
-                switch (errorCode) {
-                    case 1:
-                        errorMessage = "位置情報の利用が許可されていません";
-                        break;
-                    case 2:
-                        errorMessage = "デバイスの位置が判定できません";
-                        break;
-                    case 3:
-                        errorMessage = "タイムアウトしました";
-                        break;
-                }
-                props.setIsProcessing(false);
-                props.setIsLoadedLocationInfo(false);
-                props.setErrorMessage(errorMessage);
+                dispatch(setErrorMessage(errorCode));
             })
     };
 
-    // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
+    // 経度、緯度、ジャンルが更新されたらお店取得URLを作成
     useEffect(() => {
-        if (props.isLoadedLocationInfo) {
-            props.setIsProcessing(true);
-            setLocationInfoToURL();
+        if (isLoadedLocationInfo) {
+            dispatch(createURL());
         }
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.position, props.genre]);
+    }, [position, genre]);
 
-    // 位置情報、ジャンルコードよりお店情報取得のURLを作成
-    const setLocationInfoToURL = () => {
-        const url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + props.position.latitude + '&lng=' + props.position.longitude + '&range=4&order=1&genre=' + props.genre;
-        if (props.url === url) {
-            props.setIsProcessing(false)
-        } else {
-            props.setUrl(url);
-        }
-    };
-
-    // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
+    // URLが更新されたらお店の情報を取得
     useEffect(() => {
-        if (props.isLoadedLocationInfo) {
-            getShopList(props.url)
+        if (isLoadedLocationInfo) {
+            getShopList(url)
                 .then((shops: Shop[]) => {
-                    props.setShops(shops);
-                    props.setIsLoadedShopInfo(true);
+                    dispatch(setShops(shops));
                 })
                 .catch((err) => {
-                    props.setIsLoadedShopInfo(false);
+                    dispatch(setIsLoadedShopInfo(false));
                 })
                 .finally(() => {
-                    props.setIsProcessing(false);
+                    dispatch(setIsProcessing(false));
                 });
         }
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.url]);
+    }, [url]);
 
     // ジャンルが変更された際の処理
     const changedgenre = (event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => {
-        props.setgenre(event.target.value);
+        dispatch(setGenre(event.target.value));
     };
 
     // ジャンル取得
     useEffect(() => {
         getGenre()
-            .then((response: Genre[]) => props.setGenreList(response))
-            .catch((error) => console.log(error))
+            .then((response: Genre[]) => {
+                dispatch(setGenreList(response));
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -126,11 +99,11 @@ export default function SelectGenre(props: Props) {
                                 data-testid="select"
                                 id="select"
                                 labelId="label"
-                                value={props.genre}
+                                value={genre}
                                 onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
                                 required
                             >
-                                {props.genreList.map((output: Genre, index: number) => (
+                                {genreList.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
                             </Select>
