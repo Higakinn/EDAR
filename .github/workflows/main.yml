@@ -46,7 +46,7 @@ jobs:
       - name: create docker image
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
       - name: run test in docker container
-        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn test"
+        run: docker run -t --env CI=true $DOCKER_IMAGE_NAME /bin/sh -c "yarn test"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
