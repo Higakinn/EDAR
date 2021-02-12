@@ -10,10 +10,10 @@ COPY ./src/edar .
 # パッケージのインストール
 
 RUN if [ "${STAGE}" = "CI" ]; then \
-    yarn install \
+    yarn install ; \
     else \
-    yarn add firebase-tools && yarn install \
-    fi
+    yarn add firebase-tools && yarn install ;\
+    fi 
 
 RUN sed -i -e "s/__firebase_project__/${FIREBASE_PROJECT_ID}/" .firebaserc 
 # コンテナを起動する際に実行されるコマンド
