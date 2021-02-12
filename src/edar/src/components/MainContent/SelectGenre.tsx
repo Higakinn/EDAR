@@ -16,7 +16,6 @@ export default function SelectGenre() {
         position,
         genre,
         url,
-        isLoadedLocationInfo,
         genreList
     } = useSelector((state: RootState) => state.shopInfomation);
 
@@ -26,12 +25,12 @@ export default function SelectGenre() {
         dispatch(fetchPosition());
     };
 
-    // 経度、緯度、ジャンルが更新されたらお店取得URLを作成
+    // 経度、緯度が更新されたらお店取得URLを作成
     useEffectCustom(() => {
         dispatch(createURL());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [position, genre]);
+    }, [position]);
 
     // URLが更新されたらお店の情報を取得
     useEffectCustom(() => {
