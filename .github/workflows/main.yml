@@ -1,34 +1,33 @@
 name: Test CI
 
 on: push
-env:
+
+env: # global環境変数を設定
   DOCKER_IMAGE_NAME: edar_react_test
   # DOCKER_FILE_NAME:
   DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
 jobs:
   lint: #ジョブ名
     runs-on: ubuntu-latest #実行環境(Ubuntuの最新版環境で実行)
     steps: #実行処理やコマンドを記述
-      - name: git checkout current branch
+      - name: git checkout current branch #作業ブランチにchekout
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: create docker image
+      - name: build docker image #docker imageをbuild
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
       - name: run docker container
-        run: docker run -t --entrypoint=sh $DOCKER_IMAGE_NAME -c "yarn eslint . --ext .tsx --ext .ts"
-      # テスト成功時はこちらのステップが実行される
-      - name: Slack Notification on Success
+        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
+      - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
           SLACK_CHANNEL: ci
           SLACK_TITLE: Test Success
           SLACK_COLOR: good
-
-      # テスト失敗時はこちらのステップが実行される
-      - name: Slack Notification on Failure
+      - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
         uses: rtCamp/action-slack-notify@v2.0.2
         if: failure()
         env:
@@ -47,7 +46,7 @@ jobs:
       - name: create docker image
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
       - name: run test in docker container
-        run: docker run -t --env CI=true --entrypoint=sh $DOCKER_IMAGE_NAME -c "yarn test"
+        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn test"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
@@ -73,7 +72,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: create docker image
-        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
+        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
       - name: run staging deploy in docker container
         run: docker run -t --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_STAGING_TOKEN}"
 
@@ -87,6 +86,6 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: create docker image
-        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile .
+        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
       - name: run deploy in docker container
         run: docker run -t --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
