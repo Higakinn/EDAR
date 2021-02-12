@@ -1,6 +1,7 @@
 FROM node:12.16.1-alpine
 
 ARG FIREBASE_PROJECT_ID
+ARG STAGE="CI"
 # コンテナ内で作業するディレクトリを指定
 WORKDIR /usr/src/edar
 
@@ -8,7 +9,12 @@ WORKDIR /usr/src/edar
 COPY ./src/edar .
 # パッケージのインストール
 
-RUN yarn add firebase-tools && yarn install
+RUN if [ "${STAGE}" = "CI" ]; then \
+    yarn install \
+    else \
+    yarn add firebase-tools && yarn install \
+    fi
+
 RUN sed -i -e "s/__firebase_project__/${FIREBASE_PROJECT_ID}/" .firebaserc 
 # コンテナを起動する際に実行されるコマンド
-ENTRYPOINT [ "yarn", "build"]
+CMD [ "yarn", "build"]
