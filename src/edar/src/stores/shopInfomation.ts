@@ -13,6 +13,7 @@ type State = {
     shops: Shop[]
     url: string
     errorMessage: string
+    shopErrorMessage: string
     genre: string
     genreList: Genre[]
     expanded: boolean[]
@@ -29,6 +30,7 @@ const initialState: State = {
     shops: [],
     url: '',
     errorMessage: '',
+    shopErrorMessage: '',
     genre: '',
     genreList: [],
     expanded: [],
@@ -76,9 +78,6 @@ const slice = createSlice({
             state.shops = action.payload;
             state.isLoadedShopInfo = true;
         },
-        setIsLoadedShopInfo: (state: State, action: PayloadAction<boolean>) => {
-            state.isLoadedShopInfo = action.payload;
-        },
         setIsProcessing: (state: State, action: PayloadAction<boolean>) => {
             state.isProcessing = action.payload;
         },
@@ -97,6 +96,11 @@ const slice = createSlice({
         },
         updateExpanded: (state: State, action: PayloadAction<number>) => {
             state.expanded[action.payload] = !state.expanded[action.payload];
+        },
+        setShopErrorMessage: (state: State) => {
+            state.shopErrorMessage = 'お店の情報を取得できませんでした。再リロードしてください。';
+            state.isLoadedShopInfo = false;
+            state.isProcessing = false;
         }
     }
 });
@@ -129,8 +133,7 @@ export function fetchShopList(url: string) {
             dispatch(setShops(await getShopList(url)));
             dispatch(setIsProcessing(false));
         } catch (error) {
-            dispatch(setIsLoadedShopInfo(false));
-            dispatch(setIsProcessing(false));
+            dispatch(setShopErrorMessage());
         }
     }
 }
@@ -140,12 +143,12 @@ export const {
     setErrorMessage,
     createURL,
     setShops,
-    setIsLoadedShopInfo,
     setIsProcessing,
     setGenre,
     setGenreList,
     initExpandedList,
     updateExpanded,
+    setShopErrorMessage,
 } = slice.actions;
 
 // reducerをエクスポート

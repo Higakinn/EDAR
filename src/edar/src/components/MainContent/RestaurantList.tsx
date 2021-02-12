@@ -31,6 +31,7 @@ export default function RestaurantList() {
         isLoadedLocationInfo,
         isLoadedShopInfo,
         errorMessage,
+        shopErrorMessage,
         expanded
     } = useSelector((state: RootState) => state.shopInfomation);
 
@@ -59,7 +60,7 @@ export default function RestaurantList() {
                     {(!isProcessing && !isLoadedLocationInfo) &&
                         <p className={classes.sideInfo}> {errorMessage}</p>}
                     {(!isProcessing && isLoadedLocationInfo && !isLoadedShopInfo) &&
-                        <p className={classes.sideInfo}>お店の情報を取得できませんでした。</p>}
+                        <p className={classes.sideInfo}>{shopErrorMessage}</p>}
                     {(!isProcessing && isLoadedLocationInfo && isLoadedShopInfo && (shops.length === 0)) &&
                         <p className={classes.sideInfo}> 近くに該当ジャンルのお店がありませんでした。</p>}
                     {isProcessing &&
