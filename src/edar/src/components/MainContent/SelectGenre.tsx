@@ -2,20 +2,11 @@ import React, { useEffect } from 'react';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
-import type { Shop, Genre } from './MainContent';
-import { getGenre, getPosition, getShopList } from './api';
+import type { Genre } from './MainContent';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../stores/rootReducer';
-import {
-    setPosition,
-    setErrorMessage,
-    createURL,
-    setShops,
-    setIsLoadedShopInfo,
-    setIsProcessing,
-    setGenre,
-    setGenreList
-} from '../../stores/shopInfomation';
+import { createURL, setGenre } from '../../stores/shopInfomation';
+import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation'
 
 export default function SelectGenre() {
     const classes = useStyles();
@@ -31,15 +22,7 @@ export default function SelectGenre() {
     // 経度緯度情報を取得
     const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(setIsProcessing(true));
-        getPosition()
-            .then((position: { latitude: number, longitude: number }) => {
-                const { latitude, longitude } = position;
-                dispatch(setPosition({ latitude, longitude }));
-            })
-            .catch((errorCode: number) => {
-                dispatch(setErrorMessage(errorCode));
-            })
+        dispatch(fetchPosition());
     };
 
     // 経度、緯度、ジャンルが更新されたらお店取得URLを作成
@@ -54,16 +37,7 @@ export default function SelectGenre() {
     // URLが更新されたらお店の情報を取得
     useEffect(() => {
         if (isLoadedLocationInfo) {
-            getShopList(url)
-                .then((shops: Shop[]) => {
-                    dispatch(setShops(shops));
-                })
-                .catch((err) => {
-                    dispatch(setIsLoadedShopInfo(false));
-                })
-                .finally(() => {
-                    dispatch(setIsProcessing(false));
-                });
+            dispatch(fetchShopList(url));
         }
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,13 +50,7 @@ export default function SelectGenre() {
 
     // ジャンル取得
     useEffect(() => {
-        getGenre()
-            .then((response: Genre[]) => {
-                dispatch(setGenreList(response));
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        dispatch(fetchGenreList());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

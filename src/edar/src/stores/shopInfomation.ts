@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import type { Shop, Genre } from '../components/MainContent/MainContent';
+import { getGenre, getPosition, getShopList } from '../api/api';
 
 type State = {
     position: {
@@ -100,6 +101,39 @@ const slice = createSlice({
     }
 });
 
+export function fetchPosition() {
+    return async function (dispatch: Dispatch) {
+        dispatch(setIsProcessing(true));
+        try {
+            const { latitude, longitude } = await getPosition();
+            dispatch(setPosition({ latitude, longitude }));
+        } catch (errorCode) {
+            dispatch(setErrorMessage(errorCode));
+        }
+    }
+}
+
+export function fetchGenreList() {
+    return async function (dispatch: Dispatch) {
+        try {
+            dispatch(setGenreList(await getGenre()));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export function fetchShopList(url: string) {
+    return async function (dispatch: Dispatch) {
+        try {
+            dispatch(setShops(await getShopList(url)));
+            dispatch(setIsProcessing(false));
+        } catch (error) {
+            dispatch(setIsLoadedShopInfo(false));
+            dispatch(setIsProcessing(false));
+        }
+    }
+}
 // action creatorをエクスポート
 export const {
     setPosition,

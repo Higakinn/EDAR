@@ -1,6 +1,6 @@
 import axios from 'axios';
 import base64 from 'base-64';
-import type { Genre, Shop } from './MainContent';
+import type { Genre, Shop } from '../components/MainContent/MainContent';
 
 export function getGenre(): Promise<Genre[]> {
     let genreUrl = process.env['REACT_APP_RSTRNT_API_URL'] + '/genre_master';
