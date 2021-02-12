@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import useEffectCustom from '../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -26,19 +27,15 @@ export default function SelectGenre() {
     };
 
     // 経度、緯度、ジャンルが更新されたらお店取得URLを作成
-    useEffect(() => {
-        if (isLoadedLocationInfo) {
-            dispatch(createURL());
-        }
+    useEffectCustom(() => {
+        dispatch(createURL());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [position, genre]);
 
     // URLが更新されたらお店の情報を取得
-    useEffect(() => {
-        if (isLoadedLocationInfo) {
-            dispatch(fetchShopList(url));
-        }
+    useEffectCustom(() => {
+        dispatch(fetchShopList(url));
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [url]);

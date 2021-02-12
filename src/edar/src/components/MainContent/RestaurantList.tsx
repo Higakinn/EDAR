@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import useEffectCustom from '../../customHooks/useEffectCustom';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
@@ -36,10 +37,8 @@ export default function RestaurantList() {
     } = useSelector((state: RootState) => state.shopInfomation);
 
     // カードの折りたたみを初期化
-    useEffect(() => {
-        if (isLoadedLocationInfo) {
-            dispatch(initExpandedList());
-        }
+    useEffectCustom(() => {
+        dispatch(initExpandedList());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [shops]);
