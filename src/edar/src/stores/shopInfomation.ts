@@ -12,7 +12,7 @@ type State = {
     isProcessing: boolean
     shops: Shop[]
     url: string
-    errorMessage: string
+    positionErrorMessage: string
     shopErrorMessage: string
     genre: string
     genreList: Genre[]
@@ -29,7 +29,7 @@ const initialState: State = {
     isProcessing: false,
     shops: [],
     url: '',
-    errorMessage: '',
+    positionErrorMessage: '',
     shopErrorMessage: '',
     genre: '',
     genreList: [],
@@ -44,16 +44,16 @@ const slice = createSlice({
             state.position = action.payload;
             state.isLoadedLocationInfo = true;
         },
-        setErrorMessage: (state: State, action: PayloadAction<number>) => {
+        setPositionErrorMessage: (state: State, action: PayloadAction<number>) => {
             switch (action.payload) {
                 case 1:
-                    state.errorMessage = "位置情報の利用が許可されていません";
+                    state.positionErrorMessage = "位置情報の利用が許可されていません";
                     break;
                 case 2:
-                    state.errorMessage = "デバイスの位置が判定できません";
+                    state.positionErrorMessage = "デバイスの位置が判定できません";
                     break;
                 case 3:
-                    state.errorMessage = "タイムアウトしました";
+                    state.positionErrorMessage = "タイムアウトしました";
                     break;
             }
             state.isProcessing = false;
@@ -77,6 +77,7 @@ const slice = createSlice({
         setShops: (state: State, action: PayloadAction<Shop[]>) => {
             state.shops = action.payload;
             state.isLoadedShopInfo = true;
+            state.isProcessing = false;
         },
         setIsProcessing: (state: State, action: PayloadAction<boolean>) => {
             state.isProcessing = action.payload;
@@ -112,7 +113,7 @@ export function fetchPosition() {
             const { latitude, longitude } = await getPosition();
             dispatch(setPosition({ latitude, longitude }));
         } catch (errorCode) {
-            dispatch(setErrorMessage(errorCode));
+            dispatch(setPositionErrorMessage(errorCode));
         }
     }
 }
@@ -131,7 +132,6 @@ export function fetchShopList(url: string) {
     return async function (dispatch: Dispatch) {
         try {
             dispatch(setShops(await getShopList(url)));
-            dispatch(setIsProcessing(false));
         } catch (error) {
             dispatch(setShopErrorMessage());
         }
@@ -140,7 +140,7 @@ export function fetchShopList(url: string) {
 // action creatorをエクスポート
 export const {
     setPosition,
-    setErrorMessage,
+    setPositionErrorMessage,
     createURL,
     setShops,
     setIsProcessing,

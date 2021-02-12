@@ -30,7 +30,7 @@ export default function RestaurantList() {
         isProcessing,
         isLoadedLocationInfo,
         isLoadedShopInfo,
-        errorMessage,
+        positionErrorMessage,
         shopErrorMessage,
         expanded
     } = useSelector((state: RootState) => state.shopInfomation);
@@ -58,7 +58,7 @@ export default function RestaurantList() {
             <Grid container justify="center">
                 <Grid item xs={12} className={classes.messages}>
                     {(!isProcessing && !isLoadedLocationInfo) &&
-                        <p className={classes.sideInfo}> {errorMessage}</p>}
+                        <p className={classes.sideInfo}> {positionErrorMessage}</p>}
                     {(!isProcessing && isLoadedLocationInfo && !isLoadedShopInfo) &&
                         <p className={classes.sideInfo}>{shopErrorMessage}</p>}
                     {(!isProcessing && isLoadedLocationInfo && isLoadedShopInfo && (shops.length === 0)) &&
