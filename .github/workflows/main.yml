@@ -1,4 +1,4 @@
-name: Test CI
+name: EDAR CI CD 
 
 on: push
 
@@ -7,85 +7,127 @@ env: # global環境変数を設定
   # DOCKER_FILE_NAME:
   DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  REACT_APP_RSTRNT_API_USER: ${{ secrets.REACT_APP_RSTRNT_API_USER }}
+  REACT_APP_RSTRNT_API_PASSWORD: ${{ secrets.REACT_APP_RSTRNT_API_PASSWORD }}
+  REACT_APP_RSTRNT_API_URL: ${{ secrets.REACT_APP_RSTRNT_API_URL }}
 
 jobs:
+
   lint: #ジョブ名
     runs-on: ubuntu-latest #実行環境(Ubuntuの最新版環境で実行)
-    steps: #実行処理やコマンドを記述
-      - name: git checkout current branch #作業ブランチにchekout
-        uses: actions/checkout@v2
+    steps: #実行処理やコマンドを記述(上からnameの内容が実行される)
+      - name: Git checkout current branch #作業ブランチにchekout
+        uses: actions/checkout@v2 #サードパーティの公開アクションを利用
         with:
           ref: ${{ github.ref }}
-      - name: build docker image #docker imageをbuild
+      - name: Build docker image
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
-      - name: run docker container
+      - name: Run lint in docker container
         run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
           SLACK_CHANNEL: ci
-          SLACK_TITLE: Test Success
+          SLACK_TITLE: Lint Success(CI)
           SLACK_COLOR: good
       - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
         uses: rtCamp/action-slack-notify@v2.0.2
         if: failure()
         env:
           SLACK_CHANNEL: ci
-          SLACK_TITLE: Test Failure
+          SLACK_TITLE: Lint Failure(CI)
           SLACK_COLOR: danger
 
   test:
     runs-on: ubuntu-latest
     needs: [lint]
     steps:
-      - name: git checkout current branch
+      - name: Git checkout current branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: create docker image
+      - name: Build docker image
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
-      - name: run test in docker container
+      - name: Run test in docker container
         run: docker run -t --env CI=true $DOCKER_IMAGE_NAME /bin/sh -c "yarn test"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
         uses: rtCamp/action-slack-notify@v2.0.2
         env:
           SLACK_CHANNEL: ci
-          SLACK_TITLE: Test Success
+          SLACK_TITLE: Test Success(CI)
           SLACK_COLOR: good
       - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
         uses: rtCamp/action-slack-notify@v2.0.2
         if: failure()
         env:
           SLACK_CHANNEL: ci
-          SLACK_TITLE: Test Failure
+          SLACK_TITLE: Test Failure(CI)
           SLACK_COLOR: danger
 
   staging_deploy:
-    if: contains( github.ref, 'develop')
+    if: contains( github.ref, 'develop') #developブランチにpushされたときに実行する
     runs-on: ubuntu-latest
     needs: [lint, test]
+    env: 
+      FIREBASE_STAGING_TOKEN: ${{ secrets.FIREBASE_STAGING_TOKEN }}
+      FIREBASE_STAGING_PROJECT_ID: ${{ secrets.FIREBASE_STAGING_PROJECT_ID }}
     steps:
-      - name: git checkout current branch
+      - name: Git checkout current branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: create docker image
-        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
-      - name: run staging deploy in docker container
+      - name: Build docker image
+        run: |
+          sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" ./src/edar/.env.example > ./src/edar/.env
+          docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_STAGING_PROJECT_ID
+      - name: Run staging deploy in docker container
         run: docker run -t --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_STAGING_TOKEN}"
+      - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Staging Deploy Success(CD)
+          SLACK_COLOR: good
+      - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Staging Deploy Failure(CD)
+          SLACK_COLOR: danger
 
   deploy:
-    if: contains( github.ref, 'master')
+    if: contains( github.ref, 'main') #mainブランチにpushされたときに実行する
     runs-on: ubuntu-latest
     needs: [lint, test]
+    env: 
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
     steps:
-      - name: git checkout current branch
+      - name: Git checkout current branch
         uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - name: create docker image
-        run: docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
-      - name: run deploy in docker container
+      - name: Build docker image
+        run: |
+          sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" ./src/edar/.env.example > ./src/edar/.env
+          docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg STAGE="CD" --build-arg FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID
+      - name: Run deploy in docker container
         run: docker run -t --env CI=true --entrypoint=sh $DEPLOY_DOCKER_IMAGE_NAME -c "yarn build && yarn firebase deploy --token ${FIREBASE_TOKEN}"
+      - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Deploy Success(CD)
+          SLACK_COLOR: good
+      - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Deploy Failure(CD)
+          SLACK_COLOR: danger
