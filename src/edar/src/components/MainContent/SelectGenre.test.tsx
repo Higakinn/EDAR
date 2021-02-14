@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { render, screen, cleanup, fireEvent, getByLabelText } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import React from 'react';
+import { render, screen, cleanup } from '@testing-library/react';
 import SelectGenre from '../MainContent/SelectGenre';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation';
-import { RootState } from '../../stores/rootReducer';
 import type { Genre } from './MainContent';
 import userEvent from '@testing-library/user-event';
 
@@ -55,7 +52,7 @@ describe('RestaurantListコンポーネント', () => {
     });
 
     test('検索ボタンが表示されているか', () => {
-        const dom = render(<SelectGenre />);
+        render(<SelectGenre />);
         expect(screen.getByText('現在地よりお店を検索')).toBeInTheDocument();
     });
 

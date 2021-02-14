@@ -1,8 +1,8 @@
-import React from 'react';
-import { render, screen, cleanup, fireEvent, getByLabelText } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchPosition, fetchGenreList, fetchShopList } from './shopInfomation';
+// import React from 'react';
+// import { render, screen, cleanup, fireEvent, getByLabelText } from '@testing-library/react';
+// import { act } from 'react-dom/test-utils';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchPosition, fetchGenreList, fetchShopList } from './shopInfomation';
 
 jest.mock('./__mocks__/api');
 

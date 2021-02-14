@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import RestaurantList from '../MainContent/RestaurantList';
 import type { Shop } from './MainContent';
 import { useSelector, useDispatch } from 'react-redux';
@@ -116,8 +115,8 @@ type State = {
     expanded: boolean[]
 }
 
-describe('RestaurantListコンポーネント', () => {
-    const initialState: State = {
+describe('お店の情報が取得できなければエラー表示', () => {
+    let initialState: State = {
         isLoadedLocationInfo: true,
         isLoadedShopInfo: false,
         isProcessing: false,
@@ -142,8 +141,8 @@ describe('RestaurantListコンポーネント', () => {
     });
 });
 
-describe('RestaurantListコンポーネント', () => {
-    const initialState: State = {
+describe('位置情報の利用が許可されていなければエラー表示', () => {
+    let initialState: State = {
         isLoadedLocationInfo: false,
         isLoadedShopInfo: false,
         isProcessing: false,
@@ -168,8 +167,8 @@ describe('RestaurantListコンポーネント', () => {
     });
 });
 
-describe('RestaurantListコンポーネント', () => {
-    const initialState: State = {
+describe('選択ジャンルのお店が周辺に無ければ、その旨を表示', () => {
+    let initialState: State = {
         isLoadedLocationInfo: true,
         isLoadedShopInfo: true,
         isProcessing: false,
@@ -194,8 +193,8 @@ describe('RestaurantListコンポーネント', () => {
     });
 });
 
-describe('RestaurantListコンポーネント', () => {
-    const initialState: State = {
+describe('タイトルの表示', () => {
+    let initialState: State = {
         isLoadedLocationInfo: true,
         isLoadedShopInfo: true,
         isProcessing: false,
@@ -220,8 +219,8 @@ describe('RestaurantListコンポーネント', () => {
     });
 });
 
-describe('RestaurantListコンポーネント', () => {
-    const initialState: State = {
+describe('折りたたみ開閉ボタンが押されて開いた時、詳細の表示', () => {
+    let initialState: State = {
         isLoadedLocationInfo: true,
         isLoadedShopInfo: true,
         isProcessing: false,
