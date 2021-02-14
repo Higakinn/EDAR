@@ -2,46 +2,77 @@ import React, { useState } from 'react';
 import { render, screen, cleanup, fireEvent, getByLabelText } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import SelectGenre from '../MainContent/SelectGenre';
-jest.mock('./api');
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation';
+import { RootState } from '../../stores/rootReducer';
+import type { Genre } from './MainContent';
+import userEvent from '@testing-library/user-event';
 
 afterEach(cleanup);
 
-describe('RestaurantListコンポーネント', () => {
-    test('検索ボタンが表示されているか', async () => {
-        await act(async () => {
-            const setIsProcessing = jest.fn();
-            const setPosition = jest.fn();
-            const setIsLoadedLocationInfo = jest.fn();
-            const setErrorMessage = jest.fn();
-            const setgenre = jest.fn();
-            const setGenreList = jest.fn();
-            const setUrl = jest.fn();
-            const setShops = jest.fn();
-            const setIsLoadedShopInfo = jest.fn();
+jest.mock('../../stores/shopInfomation');
+jest.mock('react-redux');
+const useSelectorMock = useSelector as jest.Mock;
+const useDispatchMock = useDispatch as jest.Mock;
 
-            const dom = render(<SelectGenre
-                setIsProcessing={setIsProcessing}
-                setPosition={setPosition}
-                setIsLoadedLocationInfo={setIsLoadedLocationInfo}
-                setErrorMessage={setErrorMessage}
-                setgenre={setgenre}
-                setGenreList={setGenreList}
-                setUrl={setUrl}
-                setShops={setShops}
-                setIsLoadedShopInfo={setIsLoadedShopInfo}
-                genre={""}
-                position={{ latitude: 0, longitude: 0 }}
-                genreList={[]}
-                isLoadedLocationInfo={false}
-                url={""}
-            />);
-            expect(screen.getByText('現在地よりお店を検索')).toBeInTheDocument();
-        })
+type State = {
+    position: {
+        latitude: number
+        longitude: number
+    }
+    url: string
+    genre: string
+    genreList: Genre[]
+}
+
+describe('RestaurantListコンポーネント', () => {
+    const testData: State = {
+        position: {
+            latitude: 132,
+            longitude: 32,
+        },
+        url: 'https://shopInfo/test/url',
+        genre: 'G001',
+        genreList: [
+            {
+                code: 'G001',
+                name: '中華'
+            },
+            {
+                code: 'G002',
+                name: 'イタリアン'
+            }
+        ],
+    };
+
+    beforeEach(() => {
+        useSelectorMock.mockReturnValue(testData);
+        useDispatchMock.mockReturnValue(jest.fn());
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks()
+    });
+
+    test('検索ボタンが表示されているか', () => {
+        const dom = render(<SelectGenre />);
+        expect(screen.getByText('現在地よりお店を検索')).toBeInTheDocument();
+    });
+
+    test('ジャンルのプルダウンを押すとジャンル一覧が表示される', () => {
+        render(<SelectGenre />);
+        userEvent.click(screen.getByTestId('select'));
+        expect(screen.getByText('中華')).toBeInTheDocument();
+    });
+
+    test('ジャンルを選択し、現在地よりお店を検索ボタンを押せるか', () => {
+        render(<SelectGenre />);
+        userEvent.click(screen.getByTestId('select'));
+        userEvent.click(screen.getByText('中華'));
+        userEvent.click(screen.getByTestId('seachButton'));
     });
 
     test.skip('ジャンル取得APIから情報を取得できているかは目視にて確認', () => { });
-
-    test.skip('ジャンルを選択し、現在地よりお店を検索ボタンを押すと、現在地を取得するかは目視で確認', () => { });
 
     test.skip('現在地、ジャンルよりURLを作成し、お店の情報を取得できているかを目視で確認', () => { });
 
