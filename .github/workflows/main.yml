@@ -28,13 +28,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:test
+      - name: Push docker image to GitHub Container Registry
+        run: |
+            docker tag $DOCKER_IMAGE_NAME ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:test
+            docker push ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:test
       - name: Run lint in docker container
         run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
