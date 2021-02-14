@@ -34,7 +34,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/$DOCKER_IMAGE_NAME:test
+            ghcr.io/${{ github.repository_owner }}/${DOCKER_IMAGE_NAME}:test
       - name: Run lint in docker container
         run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
