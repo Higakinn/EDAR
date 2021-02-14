@@ -1,115 +1,52 @@
 import React, { useEffect } from 'react';
+import useEffectCustom from '../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
-import type { Shop, Genre } from './MainContent';
-import { getGenre, getPosition, getShopList } from './api';
+import type { Genre } from './MainContent';
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from '../../stores/rootReducer';
+import { createURL, setGenre } from '../../stores/shopInfomation';
+import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation'
 
-
-type Props = {
-    setIsProcessing: React.Dispatch<React.SetStateAction<boolean>>
-    setPosition: React.Dispatch<React.SetStateAction<{
-        latitude: number;
-        longitude: number;
-    }>>
-    setIsLoadedLocationInfo: React.Dispatch<React.SetStateAction<boolean>>
-    setErrorMessage: React.Dispatch<React.SetStateAction<string>>
-    setgenre: React.Dispatch<React.SetStateAction<string>>
-    setGenreList: React.Dispatch<React.SetStateAction<Genre[]>>
-    setUrl: React.Dispatch<React.SetStateAction<string>>
-    setShops: React.Dispatch<React.SetStateAction<Shop[]>>
-    setIsLoadedShopInfo: React.Dispatch<React.SetStateAction<boolean>>
-    genre: string
-    position: {
-        latitude: number;
-        longitude: number;
-    }
-    genreList: Genre[]
-    isLoadedLocationInfo: boolean
-    url: string
-}
-
-export default function SelectGenre(props: Props) {
+export default function SelectGenre() {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {
+        position,
+        genre,
+        url,
+        genreList
+    } = useSelector((state: RootState) => state.shopInfomation);
 
     // 経度緯度情報を取得
     const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
-        props.setIsProcessing(true);
         event.preventDefault();
-        getPosition()
-            .then((position: { latitude: number, longitude: number }) => {
-                props.setIsLoadedLocationInfo(true);
-                const { latitude, longitude } = position;
-                props.setPosition({ latitude, longitude });
-            })
-            .catch((errorCode: number) => {
-                let errorMessage = "";
-                switch (errorCode) {
-                    case 1:
-                        errorMessage = "位置情報の利用が許可されていません";
-                        break;
-                    case 2:
-                        errorMessage = "デバイスの位置が判定できません";
-                        break;
-                    case 3:
-                        errorMessage = "タイムアウトしました";
-                        break;
-                }
-                props.setIsProcessing(false);
-                props.setIsLoadedLocationInfo(false);
-                props.setErrorMessage(errorMessage);
-            })
+        dispatch(fetchPosition());
     };
 
-    // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
-    useEffect(() => {
-        if (props.isLoadedLocationInfo) {
-            props.setIsProcessing(true);
-            setLocationInfoToURL();
-        }
+    // 経度、緯度が更新されたらお店取得URLを作成
+    useEffectCustom(() => {
+        dispatch(createURL());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.position, props.genre]);
+    }, [position]);
 
-    // 位置情報、ジャンルコードよりお店情報取得のURLを作成
-    const setLocationInfoToURL = () => {
-        const url = process.env['REACT_APP_RSTRNT_API_URL'] + '/hgs?lat=' + props.position.latitude + '&lng=' + props.position.longitude + '&range=4&order=1&genre=' + props.genre;
-        if (props.url === url) {
-            props.setIsProcessing(false)
-        } else {
-            props.setUrl(url);
-        }
-    };
-
-    // 経度、緯度が更新されたらsetLocationInfoToURL関数を呼び出す。
-    useEffect(() => {
-        if (props.isLoadedLocationInfo) {
-            getShopList(props.url)
-                .then((shops: Shop[]) => {
-                    props.setShops(shops);
-                    props.setIsLoadedShopInfo(true);
-                })
-                .catch((err) => {
-                    props.setIsLoadedShopInfo(false);
-                })
-                .finally(() => {
-                    props.setIsProcessing(false);
-                });
-        }
+    // URLが更新されたらお店の情報を取得
+    useEffectCustom(() => {
+        dispatch(fetchShopList(url));
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.url]);
+    }, [url]);
 
     // ジャンルが変更された際の処理
     const changedgenre = (event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => {
-        props.setgenre(event.target.value);
+        dispatch(setGenre(event.target.value));
     };
 
     // ジャンル取得
     useEffect(() => {
-        getGenre()
-            .then((response: Genre[]) => props.setGenreList(response))
-            .catch((error) => console.log(error))
+        dispatch(fetchGenreList());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -126,11 +63,11 @@ export default function SelectGenre(props: Props) {
                                 data-testid="select"
                                 id="select"
                                 labelId="label"
-                                value={props.genre}
+                                value={genre}
                                 onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
                                 required
                             >
-                                {props.genreList.map((output: Genre, index: number) => (
+                                {genreList.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
                             </Select>

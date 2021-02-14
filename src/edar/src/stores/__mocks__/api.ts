@@ -1,4 +1,4 @@
-import type { Genre, Shop } from '../../MainContent/MainContent';
+import type { Genre, Shop } from '../../components/MainContent/MainContent';
 
 export async function getGenre(): Promise<Genre[]> {
     const genreList = [
