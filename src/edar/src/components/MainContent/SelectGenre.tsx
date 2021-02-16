@@ -57,13 +57,14 @@ export default function SelectGenre() {
             <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)} className={classes.selectSection}>
                 <Grid container spacing={3} alignItems="center" justify="center">
                     <Grid item xs='auto'>
-                        <FormControl className={classes.formControl}>
+                        <FormControl className={classes.formControl} variant="outlined">
                             {/* TODO: (警告が出る) */}
-                            <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
+                            <InputLabel htmlFor="select" color="primary" id="label">ジャンル</InputLabel>
                             <Select
                                 data-testid="select"
                                 id="select"
                                 labelId="label"
+                                label='ジャンル'
                                 value={genre}
                                 onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
                                 required
@@ -95,6 +96,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         minWidth: 150,
         marginLeft: "auto",
         marginRight: "auto",
+        backgroundColor: '#fff'
     },
     sendButton: {
         margin: "12px 0",
