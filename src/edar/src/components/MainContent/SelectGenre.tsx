@@ -110,4 +110,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         margin: '30px',
         padding: '30px',
     },
+    selectSection: {
+        backgroundColor: '#fff'
+    }
 }));
