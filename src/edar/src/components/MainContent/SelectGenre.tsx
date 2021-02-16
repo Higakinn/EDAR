@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../stores/rootReducer';
 import { createURL, setGenre } from '../../stores/shopInfomation';
 import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation'
+import NarrowDown from './NarrowDown';
 
 export default function SelectGenre() {
     const classes = useStyles();
@@ -53,9 +54,9 @@ export default function SelectGenre() {
 
     return (
         <>
-            <Grid container spacing={3} alignItems="center" justify="center">
-                <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)}>
-                    <Grid item>
+            <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)} className={classes.selectSection}>
+                <Grid container spacing={3} alignItems="center" justify="center">
+                    <Grid item xs='auto'>
                         <FormControl className={classes.formControl}>
                             {/* TODO: (警告が出る) */}
                             <InputLabel htmlFor="select" color="secondary" id="label">ジャンル</InputLabel>
@@ -73,13 +74,16 @@ export default function SelectGenre() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid>
+                    <Grid item xs='auto'>
+                        <NarrowDown />
+                    </Grid>
+                    <Grid item xs='auto'>
                         <Button data-testid="seachButton" type="submit" variant="contained" className={classes.sendButton}>
                             現在地よりお店を検索
                         </Button>
                     </Grid>
-                </form>
-            </Grid>
+                </Grid>
+            </form>
         </>
     )
 }
@@ -88,7 +92,7 @@ export default function SelectGenre() {
 const useStyles = makeStyles((theme: Theme) => ({
     formControl: {
         margin: theme.spacing(5),
-        minWidth: 200,
+        minWidth: 150,
         marginLeft: "auto",
         marginRight: "auto",
     },
@@ -97,5 +101,10 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: "100%",
         marginLeft: "auto",
         marginRight: "auto",
+    },
+    narrowDown: {
+        width: '250px',
+        margin: '30px',
+        padding: '30px',
     },
 }));

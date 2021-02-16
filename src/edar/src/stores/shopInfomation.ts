@@ -17,6 +17,7 @@ type State = {
     genre: string
     genreList: Genre[]
     expanded: boolean[]
+    range: string
 }
 
 const initialState: State = {
@@ -34,6 +35,7 @@ const initialState: State = {
     genre: '',
     genreList: [],
     expanded: [],
+    range: '3',
 };
 
 const slice = createSlice({
@@ -66,13 +68,18 @@ const slice = createSlice({
                 state.position.latitude +
                 '&lng=' +
                 state.position.longitude +
-                '&range=4&order=1&genre=' +
+                '&range=' +
+                state.range +
+                '&order=1&genre=' +
                 state.genre;
             if (state.url === url) {
                 state.isProcessing = false;
             } else {
                 state.url = url;
             }
+        },
+        updateRange: (state: State, action: PayloadAction<string>) => {
+            state.range = action.payload;
         },
         setShops: (state: State, action: PayloadAction<Shop[]>) => {
             state.shops = action.payload;
@@ -149,6 +156,7 @@ export const {
     initExpandedList,
     updateExpanded,
     setShopErrorMessage,
+    updateRange,
 } = slice.actions;
 
 // reducerをエクスポート
