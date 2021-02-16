@@ -3,6 +3,7 @@ import useEffectCustom from '../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './MainContent';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../stores/rootReducer';
@@ -79,8 +80,14 @@ export default function SelectGenre() {
                         <NarrowDown />
                     </Grid>
                     <Grid item xs='auto'>
-                        <Button data-testid="seachButton" type="submit" variant="contained" className={classes.sendButton}>
-                            現在地よりお店を検索
+                        <Button
+                            data-testid="seachButton"
+                            type="submit"
+                            variant="contained"
+                            className={classes.sendButton}
+                            startIcon={<SearchIcon />}
+                        >
+                            現在地より検索
                         </Button>
                     </Grid>
                 </Grid>
