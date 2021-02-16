@@ -101,6 +101,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     sendButton: {
         margin: "12px 0",
         width: "100%",
+        height: 45,
         marginLeft: "auto",
         marginRight: "auto",
     },

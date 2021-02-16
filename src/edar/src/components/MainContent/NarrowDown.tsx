@@ -9,7 +9,6 @@ import Dialog from '@material-ui/core/Dialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../stores/rootReducer';
@@ -124,7 +123,6 @@ export default function NarrowDown() {
                     size='large'
                     onClick={handleClickNarrowDown}
                     startIcon={<MenuIcon />}
-                    endIcon={<ArrowDropDownIcon />}
                     className={classes.narrowDownButton}
                 >
                     絞り込み
@@ -155,7 +153,7 @@ const useStyles = makeStyles((theme: Theme) =>
             maxHeight: 435,
         },
         narrowDownButton: {
-            height: 45,
+            height: 53,
         }
     }),
 );
