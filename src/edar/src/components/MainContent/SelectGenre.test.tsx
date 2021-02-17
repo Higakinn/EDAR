@@ -53,7 +53,7 @@ describe('RestaurantListコンポーネント', () => {
 
     test('検索ボタンが表示されているか', () => {
         render(<SelectGenre />);
-        expect(screen.getByText('現在地よりお店を検索')).toBeInTheDocument();
+        expect(screen.getByText('現在地より検索')).toBeInTheDocument();
     });
 
     test('ジャンルのプルダウンを押すとジャンル一覧が表示される', () => {

@@ -124,6 +124,7 @@ export default function NarrowDown() {
                     onClick={handleClickNarrowDown}
                     startIcon={<MenuIcon />}
                     className={classes.narrowDownButton}
+                    data-testid="narrowDown"
                 >
                     絞り込み
                 </Button>
