@@ -35,12 +35,12 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
     const radioGroupRef = useRef<HTMLElement>(null);
     const dispatch = useDispatch();
     const { range } = useSelector((state: RootState) => state.shopInfomation);
-    const [value, setValue] = useState(range);
+    const [code, setCode] = useState(range.code);
 
     // キャンセルを押した際に前回値を再設定
     useEffect(() => {
         if (!isOpenDialog) {
-            setValue(range);
+            setCode(range.code);
         }
     }, [isOpenDialog, range]);
 
@@ -56,11 +56,12 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
 
     const handleOk = () => {
         onClose();
-        dispatch(updateRange(value));
+        let label = distance[Number(code) - 1].label;
+        dispatch(updateRange({ code, label }));
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue((event.target as HTMLInputElement).value);
+        setCode((event.target as HTMLInputElement).value);
     };
 
     return (
@@ -80,7 +81,7 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
                     <RadioGroup
                         ref={radioGroupRef}
                         name="narrowDown"
-                        value={value}
+                        value={code}
                         onChange={handleChange}
                     >
                         {distance.map((distance) => (

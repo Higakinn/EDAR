@@ -18,7 +18,8 @@ export default function SelectGenre() {
         position,
         genre,
         url,
-        genreList
+        genreList,
+        range
     } = useSelector((state: RootState) => state.shopInfomation);
 
     // 経度緯度情報を取得
@@ -58,6 +59,9 @@ export default function SelectGenre() {
             <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => getLocationInfo(event)} className={classes.selectSection}>
                 <Grid container spacing={3} alignItems="center" justify="center">
                     <Grid item xs='auto'>
+                        <NarrowDown />
+                    </Grid>
+                    <Grid item xs='auto'>
                         <FormControl className={classes.formControl} variant="outlined">
                             {/* TODO: (警告が出る) */}
                             <InputLabel htmlFor="select" color="primary" id="label">ジャンル</InputLabel>
@@ -76,8 +80,15 @@ export default function SelectGenre() {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs='auto'>
-                        <NarrowDown />
+                </Grid>
+                <Grid container spacing={3} alignItems="center" justify="center">
+                    <Grid item xs='auto' className={classes.option}>
+                        <Grid item xs='auto'>
+                            <span className={classes.optionLabel}>エリア</span>現在地
+                        </Grid>
+                        <Grid item xs='auto'>
+                            <span className={classes.optionLabel}>範囲</span>{range.label}
+                        </Grid>
                     </Grid>
                     <Grid item xs='auto'>
                         <Button
@@ -100,14 +111,14 @@ export default function SelectGenre() {
 const useStyles = makeStyles((theme: Theme) => ({
     formControl: {
         margin: theme.spacing(5),
-        minWidth: 150,
+        minWidth: 200,
         marginLeft: "auto",
         marginRight: "auto",
         backgroundColor: '#fff'
     },
     sendButton: {
         margin: "12px 0",
-        width: "100%",
+        width: "190px",
         height: 45,
         marginLeft: "auto",
         marginRight: "auto",
@@ -119,5 +130,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     selectSection: {
         backgroundColor: '#fff'
-    }
+    },
+    option: {
+        color: '#3cb371',
+        fontSize: '17px',
+        [theme.breakpoints.down('sm')]: {
+            color: '#3cb371',
+            fontSize: '15px',
+        }
+    },
+    optionLabel: {
+        padding: '0px 10px',
+        marginRight: '10px',
+        border: '1px solid #3cb371',
+        borderRadius: '5px',
+    },
 }));

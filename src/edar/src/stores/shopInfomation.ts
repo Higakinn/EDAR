@@ -17,7 +17,10 @@ type State = {
     genre: string
     genreList: Genre[]
     expanded: boolean[]
-    range: string
+    range: {
+        code: string
+        label: string
+    }
 }
 
 const initialState: State = {
@@ -35,7 +38,10 @@ const initialState: State = {
     genre: '',
     genreList: [],
     expanded: [],
-    range: '3',
+    range: {
+        code: '3',
+        label: '～1000m'
+    },
 };
 
 const slice = createSlice({
@@ -69,7 +75,7 @@ const slice = createSlice({
                 '&lng=' +
                 state.position.longitude +
                 '&range=' +
-                state.range +
+                state.range.code +
                 '&order=1&genre=' +
                 state.genre;
             if (state.url === url) {
@@ -78,7 +84,7 @@ const slice = createSlice({
                 state.url = url;
             }
         },
-        updateRange: (state: State, action: PayloadAction<string>) => {
+        updateRange: (state: State, action: PayloadAction<{ code: string, label: string }>) => {
             state.range = action.payload;
         },
         setShops: (state: State, action: PayloadAction<Shop[]>) => {
