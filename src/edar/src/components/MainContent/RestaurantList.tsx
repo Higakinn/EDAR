@@ -65,6 +65,8 @@ export default function RestaurantList() {
                     {isProcessing &&
                         <CircularProgress className={classes.sideInfo} disableShrink />}
                 </Grid>
+            </Grid>
+            <Grid container justify="space-evenly">
                 {shops.map((output: Shop, index: number) => {
                     return (
                         <Grid item key={index}>
