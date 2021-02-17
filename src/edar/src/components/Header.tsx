@@ -15,10 +15,13 @@ import PropTypes from 'prop-types';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         toolBar: {
-            minHeight: 36
+            minHeight: 36,
+        },
+        titleBlock: {
+            margin: 'auto',
         },
         subTitle: {
-            color: "#FFCC00",
+            color: "#008000",
             [theme.breakpoints.down('sm')]: {
                 display: 'none',
             }
@@ -56,7 +59,7 @@ function GridMapping(props: gridProps) {
     const classes = useStyles();
     return (
         <Grid container>
-            <Grid item xs={4} sm={4} >
+            <Grid item xs={4} sm={4} className={classes.titleBlock}>
                 <Typography variant="h6">
                     {titles.title}
                 </Typography >
