@@ -26,12 +26,12 @@ export interface NarrowDownDialogRawProps {
     classes: Record<'paper', string>;
     id: string;
     keepMounted: boolean;
-    isOpenDialog: boolean;
-    onClose: () => void;
+    isOpeningDialog: boolean;
+    onCloseDialog: () => void;
 }
 
 function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
-    const { onClose, isOpenDialog, ...other } = props;
+    const { onCloseDialog, isOpeningDialog, ...other } = props;
     const radioGroupRef = useRef<HTMLElement>(null);
     const dispatch = useDispatch();
     const { range } = useSelector((state: RootState) => state.shopInfomation);
@@ -39,28 +39,28 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
 
     // キャンセルを押した際に前回値を再設定
     useEffect(() => {
-        if (!isOpenDialog) {
+        if (!isOpeningDialog) {
             setCode(range.code);
         }
-    }, [isOpenDialog, range]);
+    }, [isOpeningDialog, range]);
 
-    const handleEntering = () => {
+    const openedNarrowDownDialog = () => {
         if (radioGroupRef.current != null) {
             radioGroupRef.current.focus();
         }
     };
 
-    const handleCancel = () => {
-        onClose();
+    const canceledNarrowDownDialog = () => {
+        onCloseDialog();
     };
 
-    const handleOk = () => {
-        onClose();
+    const decidedNarrowDownSetting = () => {
+        onCloseDialog();
         let label = distance[Number(code) - 1].label;
         dispatch(updateRange({ code, label }));
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const doChangeRange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setCode((event.target as HTMLInputElement).value);
     };
 
@@ -68,9 +68,9 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
         <>
             <Dialog
                 maxWidth="xs"
-                onEntering={handleEntering}
-                onClose={onClose}
-                open={isOpenDialog}
+                onEntering={openedNarrowDownDialog}
+                onClose={onCloseDialog}
+                open={isOpeningDialog}
                 {...other}
             >
                 <DialogTitle id="narrow-down-dialog-title">絞り込み</DialogTitle>
@@ -82,7 +82,7 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
                         ref={radioGroupRef}
                         name="narrowDown"
                         value={code}
-                        onChange={handleChange}
+                        onChange={doChangeRange}
                     >
                         {distance.map((distance) => (
                             <FormControlLabel value={distance.code} key={distance.code} control={<Radio color="primary" />} label={distance.label} />
@@ -90,10 +90,10 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
                     </RadioGroup>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleCancel} color="primary">
+                    <Button autoFocus onClick={canceledNarrowDownDialog} color="primary">
                         キャンセル
                     </Button>
-                    <Button onClick={handleOk} color="primary">
+                    <Button onClick={decidedNarrowDownSetting} color="primary">
                         設定する
                     </Button>
                 </DialogActions>
@@ -105,14 +105,14 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
 
 export default function NarrowDown() {
     const classes = useStyles();
-    const [isOpenDialog, setIsOpenDialog] = useState(false);
+    const [isOpeningDialog, setIsOpeningDialog] = useState(false);
 
-    const handleClickNarrowDown = () => {
-        setIsOpenDialog(true);
+    const clickNarrowDownButton = () => {
+        setIsOpeningDialog(true);
     };
 
-    const handleClose = () => {
-        setIsOpenDialog(false);
+    const onCloseDialog = () => {
+        setIsOpeningDialog(false);
     };
 
     return (
@@ -122,7 +122,7 @@ export default function NarrowDown() {
                     variant="outlined"
                     color="primary"
                     size='large'
-                    onClick={handleClickNarrowDown}
+                    onClick={clickNarrowDownButton}
                     startIcon={<MenuIcon />}
                     className={classes.narrowDownButton}
                     data-testid="narrowDown"
@@ -135,8 +135,8 @@ export default function NarrowDown() {
                     }}
                     id="narrowDown"
                     keepMounted
-                    isOpenDialog={isOpenDialog}
-                    onClose={handleClose}
+                    isOpeningDialog={isOpeningDialog}
+                    onCloseDialog={onCloseDialog}
                 />
             </div>
         </>
