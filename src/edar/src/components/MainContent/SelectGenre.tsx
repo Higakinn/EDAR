@@ -84,10 +84,12 @@ export default function SelectGenre() {
                 <Grid container spacing={3} alignItems="center" justify="center">
                     <Grid item xs='auto' className={classes.option}>
                         <Grid item xs='auto'>
-                            <span className={classes.optionLabel}>エリア</span>現在地
+                            <span className={classes.optionLabel}>エリア</span>
+                            <span>現在地</span>
                         </Grid>
                         <Grid item xs='auto'>
-                            <span className={classes.optionLabel}>範囲</span>{range.label}
+                            <span className={classes.optionLabel}>範囲</span>
+                            <span>{range.label}</span>
                         </Grid>
                     </Grid>
                     <Grid item xs='auto'>

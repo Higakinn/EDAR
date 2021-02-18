@@ -13,12 +13,18 @@ const useDispatchMock = useDispatch as jest.Mock;
 
 
 type State = {
-    range: string
+    range: {
+        code: string
+        label: string
+    }
 }
 
 describe('NarrowDownコンポーネント', () => {
     const testData: State = {
-        range: '5',
+        range: {
+            code: '3',
+            label: '～1000m'
+        },
     };
 
     beforeEach(() => {

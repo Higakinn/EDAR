@@ -20,9 +20,13 @@ type State = {
     url: string
     genre: string
     genreList: Genre[]
+    range: {
+        code: string
+        label: string
+    }
 }
 
-describe('RestaurantListコンポーネント', () => {
+describe('SelectGenreコンポーネント', () => {
     const testData: State = {
         position: {
             latitude: 132,
@@ -40,6 +44,10 @@ describe('RestaurantListコンポーネント', () => {
                 name: 'イタリアン'
             }
         ],
+        range: {
+            code: '3',
+            label: '～1000m'
+        },
     };
 
     beforeEach(() => {
