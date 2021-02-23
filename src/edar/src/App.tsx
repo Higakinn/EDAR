@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   app: {
     width: '100%',
     textAlign: 'center',
+    minHeight: '100vh',
+    position: 'relative',
+    paddingBottom: '124.13px',/*←footerの高さ*/
+    boxSizing: 'border-box',/*←全て含めてmin-height:100vhに*/
   },
   center: {
     width: '960px',
