@@ -22,6 +22,8 @@ import type { Shop } from './MainContent';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../stores/rootReducer';
 import { initExpandedList, updateExpanded } from '../../stores/shopInfomation';
+import { Link } from 'react-router-dom';
+
 
 export default function RestaurantList() {
     const classes = useStyles();
@@ -83,7 +85,13 @@ export default function RestaurantList() {
                                             <MoreVertIcon />
                                         </IconButton>
                                     }
-                                    title={output.name}
+                                    title={
+                                        <Link to={{
+                                            pathname: `/detail/?index=${index}`,
+                                        }}>
+                                            {output.name}
+                                        </Link>
+                                    }
                                     subheader={output.budget.average}
                                 />
                                 <CardMedia
