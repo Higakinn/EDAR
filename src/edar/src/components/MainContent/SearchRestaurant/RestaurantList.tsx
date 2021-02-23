@@ -1,5 +1,5 @@
 import React from 'react';
-import useEffectCustom from '../../customHooks/useEffectCustom';
+import useEffectCustom from '../../../customHooks/useEffectCustom';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
@@ -18,12 +18,11 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import type { Shop } from './MainContent';
+import type { Shop } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../stores/rootReducer';
-import { initExpandedList, updateExpanded } from '../../stores/shopInfomation';
+import { RootState } from '../../../stores/rootReducer';
+import { initExpandedList, updateExpanded } from '../../../stores/shopInfomation';
 import { Link } from 'react-router-dom';
-
 
 export default function RestaurantList() {
     const classes = useStyles();
@@ -87,7 +86,8 @@ export default function RestaurantList() {
                                     }
                                     title={
                                         <Link to={{
-                                            pathname: `/detail/?index=${index}`,
+                                            pathname: `/detail`,
+                                            search: `?index=${index}`,
                                         }}>
                                             {output.name}
                                         </Link>

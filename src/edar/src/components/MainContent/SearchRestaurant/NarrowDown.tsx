@@ -11,8 +11,8 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../stores/rootReducer';
-import { updateRange } from '../../stores/shopInfomation';
+import { RootState } from '../../../stores/rootReducer';
+import { updateRange } from '../../../stores/shopInfomation';
 
 const distance = [
     { code: '1', label: '～300m' },

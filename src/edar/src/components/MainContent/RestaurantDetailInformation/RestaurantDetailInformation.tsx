@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
-import { Shop } from '../MainContent';
+import { Shop } from '../SearchRestaurant/SearchRestaurant';
 import useQuery from '../../../customHooks/useQuery';
 
 interface TabPanelProps {
