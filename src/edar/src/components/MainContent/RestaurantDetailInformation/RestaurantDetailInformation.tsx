@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
@@ -44,14 +42,6 @@ function labelProps(index: number) {
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
-
-// テーマの設定
-const theme = createMuiTheme({
-    palette: {
-        type: "light",
-    },
-});
-
 
 function TabsInfomation(props: { shop: Shop }) {
     const { shop } = props;
@@ -116,14 +106,12 @@ export default function RestaurantDetailInformation() {
 
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <Box p={3}>
-                    <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].middle_area.name}</Typography>
-                    <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].genre.name}</Typography>
-                    <Typography className={classes.shopName} component='div'>{shops[selectedShopIndex].name}</Typography>
-                </Box>
-                <TabsInfomation shop={shops[selectedShopIndex]} />
-            </ThemeProvider>
+            <Box p={3}>
+                <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].middle_area.name}</Typography>
+                <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].genre.name}</Typography>
+                <Typography className={classes.shopName} component='div'>{shops[selectedShopIndex].name}</Typography>
+            </Box>
+            <TabsInfomation shop={shops[selectedShopIndex]} />
         </>
     )
 }

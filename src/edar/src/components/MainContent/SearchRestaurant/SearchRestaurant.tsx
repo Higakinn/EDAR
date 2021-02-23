@@ -1,6 +1,4 @@
 import React from 'react';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import RestaurantList from './RestaurantList';
 import SelectGenre from './SelectGenre';
 
@@ -101,20 +99,11 @@ export type Genre = {
     name: string
 }
 
-// テーマの設定
-const theme = createMuiTheme({
-    palette: {
-        type: "light",
-    },
-});
-
 export default function MainContent() {
     return (
         <>
-            <ThemeProvider theme={theme}>
-                <SelectGenre />
-                <RestaurantList />
-            </ThemeProvider>
+            <SelectGenre />
+            <RestaurantList />
         </>
     )
 }
