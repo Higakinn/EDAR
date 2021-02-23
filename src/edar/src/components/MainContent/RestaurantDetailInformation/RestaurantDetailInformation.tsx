@@ -10,7 +10,6 @@ import Box from '@material-ui/core/Box';
 import { useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
 import { Shop } from '../SearchRestaurant/SearchRestaurant';
-import useQuery from '../../../customHooks/useQuery';
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -113,20 +112,17 @@ function TabsInfomation(props: { shop: Shop }) {
 
 export default function RestaurantDetailInformation() {
     const classes = useStyles();
-    const { shops } = useSelector((state: RootState) => state.shopInfomation);
-    const query = useQuery();
-
-    const index = Number(query.get('index'));
+    const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInfomation);
 
     return (
         <>
             <ThemeProvider theme={theme}>
                 <Box p={3}>
-                    <Typography className={classes.genreName} component='div'>{shops[index].middle_area.name}</Typography>
-                    <Typography className={classes.genreName} component='div'>{shops[index].genre.name}</Typography>
-                    <Typography className={classes.shopName} component='div'>{shops[index].name}</Typography>
+                    <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].middle_area.name}</Typography>
+                    <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].genre.name}</Typography>
+                    <Typography className={classes.shopName} component='div'>{shops[selectedShopIndex].name}</Typography>
                 </Box>
-                <TabsInfomation shop={shops[index]} />
+                <TabsInfomation shop={shops[selectedShopIndex]} />
             </ThemeProvider>
         </>
     )

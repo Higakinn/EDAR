@@ -21,7 +21,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import type { Shop } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
-import { initExpandedList, updateExpanded } from '../../../stores/shopInfomation';
+import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInfomation';
 import { Link } from 'react-router-dom';
 
 export default function RestaurantList() {
@@ -85,10 +85,10 @@ export default function RestaurantList() {
                                         </IconButton>
                                     }
                                     title={
-                                        <Link to={{
-                                            pathname: `/detail`,
-                                            search: `?index=${index}`,
-                                        }}>
+                                        <Link
+                                            to={{ pathname: `/detail/${index}` }}
+                                            onClick={() => dispatch(updateSelectedShopIndex(index))}
+                                        >
                                             {output.name}
                                         </Link>
                                     }
