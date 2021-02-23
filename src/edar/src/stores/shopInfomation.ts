@@ -21,6 +21,7 @@ type State = {
         code: string
         label: string
     }
+    selectedShopIndex: number
 }
 
 const initialState: State = {
@@ -42,6 +43,7 @@ const initialState: State = {
         code: '3',
         label: '～1000m'
     },
+    selectedShopIndex: 0,
 };
 
 const slice = createSlice({
@@ -115,7 +117,10 @@ const slice = createSlice({
             state.shopErrorMessage = 'お店の情報を取得できませんでした。再リロードしてください。';
             state.isLoadedShopInfo = false;
             state.isProcessing = false;
-        }
+        },
+        updateSelectedShopIndex: (state: State, action: PayloadAction<number>) => {
+            state.selectedShopIndex = action.payload;
+        },
     }
 });
 
@@ -163,6 +168,7 @@ export const {
     updateExpanded,
     setShopErrorMessage,
     updateRange,
+    updateSelectedShopIndex,
 } = slice.actions;
 
 // reducerをエクスポート

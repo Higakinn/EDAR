@@ -18,7 +18,7 @@ export default function App() {
           <EdarSiteTop />
           <div className={classes.center}>
             <Route exact path='/' component={MainContent} />
-            <Route exact path='/detail' component={RestaurantDetailInformation} />
+            <Route exact path='/detail/:index' component={RestaurantDetailInformation} />
           </div>
           <Footer title="EDAR" description="~ Easily decide on a restaurant ~" />
         </BrowserRouter>
