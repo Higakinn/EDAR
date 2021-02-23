@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
-import RestaurantList from '../MainContent/RestaurantList';
+import RestaurantList from './RestaurantList';
 import type { Shop } from './MainContent';
 import { useSelector, useDispatch } from 'react-redux';
 

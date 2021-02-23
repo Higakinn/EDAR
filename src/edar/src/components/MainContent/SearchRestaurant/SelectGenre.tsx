@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
-import useEffectCustom from '../../customHooks/useEffectCustom';
+import useEffectCustom from '../../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
-import type { Genre } from './MainContent';
+import type { Genre } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../stores/rootReducer';
-import { createURL, setGenre } from '../../stores/shopInfomation';
-import { fetchPosition, fetchGenreList, fetchShopList } from '../../stores/shopInfomation'
+import { RootState } from '../../../stores/rootReducer';
+import { createURL, setGenre } from '../../../stores/shopInfomation';
+import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInfomation'
 import NarrowDown from './NarrowDown';
 
 export default function SelectGenre() {

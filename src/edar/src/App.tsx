@@ -1,5 +1,5 @@
 import Header from './components/Header'
-import MainContent from './components/MainContent/MainContent';
+import MainContent from './components/MainContent/SearchRestaurant/SearchRestaurant';
 import EdarSiteTop from './components/EdarSiteTop'
 import Footer from './components/Footer'
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -18,7 +18,7 @@ export default function App() {
           <EdarSiteTop />
           <div className={classes.center}>
             <Route exact path='/' component={MainContent} />
-            <Route exact path='/detail/:index' component={RestaurantDetailInformation} />
+            <Route exact path='/detail' component={RestaurantDetailInformation} />
           </div>
           <Footer title="EDAR" description="~ Easily decide on a restaurant ~" />
         </BrowserRouter>

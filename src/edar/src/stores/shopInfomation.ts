@@ -1,5 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
-import type { Shop, Genre } from '../components/MainContent/MainContent';
+import type { Shop, Genre } from '../components/MainContent/SearchRestaurant/SearchRestaurant';
 import { getGenre, getPosition, getShopList } from '../api/api';
 
 type State = {
