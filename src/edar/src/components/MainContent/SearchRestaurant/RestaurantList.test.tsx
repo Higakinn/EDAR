@@ -1,12 +1,13 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import RestaurantList from './RestaurantList';
-import type { Shop } from './MainContent';
+import type { Shop } from './SearchRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 
 afterEach(cleanup);
 
-jest.mock('../../stores/shopInfomation');
+jest.mock('../../../stores/shopInfomation');
 jest.mock('react-redux');
 const useSelectorMock = useSelector as jest.Mock;
 const useDispatchMock = useDispatch as jest.Mock;
@@ -214,7 +215,11 @@ describe('タイトルの表示', () => {
     });
 
     test('タイトルの表示', () => {
-        render(<RestaurantList />);
+        render(
+            <BrowserRouter>
+                <RestaurantList />
+            </BrowserRouter>
+        );
         expect(screen.getByText(shops[0].name)).toBeInTheDocument();
     });
 });
@@ -240,7 +245,11 @@ describe('折りたたみ開閉ボタンが押されて開いた時、詳細の�
     });
 
     test('折りたたみ開閉ボタンが押されて開いた時、詳細の表示', () => {
-        render(<RestaurantList />);
+        render(
+            <BrowserRouter>
+                <RestaurantList />
+            </BrowserRouter>
+        );
         expect(screen.getByText(/東京都新宿区西新宿２‐７‐２/)).toBeInTheDocument();
     });
 });
