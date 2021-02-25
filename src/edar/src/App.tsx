@@ -1,5 +1,6 @@
-import Header from './components/Header'
+
 import MainContent from './components/MainContent/SearchRestaurant/SearchRestaurant';
+import Header from './components/Header/Header'
 import EdarSiteTop from './components/EdarSiteTop'
 import Footer from './components/Footer'
 import { makeStyles, Theme } from "@material-ui/core/styles";
