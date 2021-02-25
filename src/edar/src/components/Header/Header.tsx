@@ -8,9 +8,11 @@ import LocalMallIcon from '@material-ui/icons/LocalMall';
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
-
+import Login from './Login';
+import TakeOut from './TakeOut';
+import Delivery from './Delivery';
+import Reservation from './Reservation';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,19 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 display: 'none',
             }
         },
-        sectionDesktop: {
-            display: 'none',
-            [theme.breakpoints.up('sm')]: {
-                display: 'flex',
-            },
-        },
-        sectionMobile: {
-            display: 'flex',
-            marginLeft: theme.spacing(1),
-            [theme.breakpoints.down('sm')]: {
-                display: 'none',
-            }
-        }
     }),
 );
 
@@ -67,19 +56,23 @@ function GridMapping(props: gridProps) {
                     {titles.subtitle}
                 </Typography>
             </Grid>
-            {
-                items.map((data: { message: string, icon: React.ElementType<any> }) => {
-                    return <Grid item xs={2} sm={2} key={data.message}>
-                        <IconButton aria-label="delete">
-                            {React.createElement(data.icon, { color: 'primary' })}
-                            <Typography variant="caption" className={classes.sectionMobile}>{data.message}</Typography>
-                        </IconButton>
-                    </Grid>
-                })
-            }
+            <Grid item xs={2} sm={2}>
+                <Reservation message={items[0].message} icon={items[0].icon} />
+            </Grid>
+            <Grid item xs={2} sm={2}>
+                <Delivery message={items[1].message} icon={items[1].icon} />
+            </Grid>
+            <Grid item xs={2} sm={2}>
+                <TakeOut message={items[2].message} icon={items[2].icon} />
+            </Grid>
+            <Grid item xs={2} sm={2}>
+                <Login message={items[3].message} icon={items[3].icon} />
+            </Grid>
         </Grid >
     )
 }
+
+
 
 export default function Header(props: { title: string, subtitle: string }) {
     const classes = useStyles();
