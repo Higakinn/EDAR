@@ -9,7 +9,7 @@ import StorefrontIcon from '@material-ui/icons/Storefront';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import Login from './Login';
+import Account from './Account';
 import TakeOut from './TakeOut';
 import Delivery from './Delivery';
 import Reservation from './Reservation';
@@ -66,7 +66,7 @@ function GridMapping(props: gridProps) {
                 <TakeOut message={items[2].message} icon={items[2].icon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Login message={items[3].message} icon={items[3].icon} />
+                <Account message={items[3].message} icon={items[3].icon} />
             </Grid>
         </Grid >
     )
@@ -80,7 +80,7 @@ export default function Header(props: { title: string, subtitle: string }) {
         { message: "飲食店予約", icon: HomeIcon },
         { message: "デリバリ-", icon: LocalMallIcon },
         { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "ログイン", icon: AccountBoxIcon },
+        { message: "アカウント", icon: AccountBoxIcon },
     ]
     const titles = { title: props.title, subtitle: props.subtitle }
 
