@@ -1,5 +1,6 @@
-
 import MainContent from './components/MainContent/SearchRestaurant/SearchRestaurant';
+import React, { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import Header from './components/Header/Header'
 import EdarSiteTop from './components/EdarSiteTop'
 import Footer from './components/Footer'
@@ -8,9 +9,23 @@ import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter, Route } from 'react-router-dom';
 import RestaurantDetailInformation from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
+import { firebaseApp } from './firebase/Authentication';
+import { updateUserInfomation } from './stores/userInfomation';
 
 export default function App() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  // ログインしているアカウントがあれば、ログイン情報を更新
+  useEffect(() => {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      if (user) {
+        const { email, displayName } = user;
+        dispatch(updateUserInfomation({ email, displayName }));
+      }
+    })
+  }, [dispatch]);
+
   return (
     <>
       <ThemeProvider theme={theme}>
