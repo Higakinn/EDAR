@@ -22,13 +22,13 @@ export interface loginDialogRawProps {
     onCloseDialog: () => void;
 }
 
-function LoginDialogRaw(props: loginDialogRawProps) {
+const LoginDialogRaw = (props: loginDialogRawProps) => {
     const { onCloseDialog, isOpeningDialog, ...other } = props;
     const dispatch = useDispatch();
     const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
 
     // ログイン処理をして、ユーザー情報をreduxにて管理
-    const processLoginWithGoogle = async () => {
+    async function processLoginWithGoogle() {
         try {
             const user = await loginWithGoogle();
             const { email, displayName, photoURL } = user;
@@ -41,7 +41,7 @@ function LoginDialogRaw(props: loginDialogRawProps) {
     };
 
     // ログアウト処理
-    const processLogout = () => {
+    function processLogout() {
         logout();
         dispatch(clearUserInfomation());
         onCloseDialog();
@@ -49,7 +49,7 @@ function LoginDialogRaw(props: loginDialogRawProps) {
     };
 
     // ダイアログを閉じた時
-    const canceledDialog = () => {
+    function canceledDialog() {
         onCloseDialog();
     };
 
@@ -90,17 +90,17 @@ function LoginDialogRaw(props: loginDialogRawProps) {
     );
 }
 
-export default function Account(props: { message: string, icon: React.ElementType<any> }) {
+const Account = (props: { message: string, icon: React.ElementType<any> }) => {
     const classes = useStyles();
     const { message, icon } = props;
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
     const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
 
-    const clickLoginButton = () => {
+    function clickLoginButton() {
         setIsOpeningDialog(true);
     };
 
-    const onCloseDialog = () => {
+    function onCloseDialog() {
         setIsOpeningDialog(false);
     };
 
@@ -130,6 +130,8 @@ export default function Account(props: { message: string, icon: React.ElementTyp
         </>
     );
 }
+
+export default Account;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

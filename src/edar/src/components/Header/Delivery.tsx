@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-export default function Delivery(props: { message: string, icon: React.ElementType<any> }) {
+const Delivery = (props: { message: string, icon: React.ElementType<any> }) => {
     const classes = useStyles();
     const { message, icon } = props;
 
@@ -16,6 +16,8 @@ export default function Delivery(props: { message: string, icon: React.ElementTy
         </>
     );
 }
+
+export default Delivery;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
