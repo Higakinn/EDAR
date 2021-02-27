@@ -42,7 +42,7 @@ type gridProps = {
     }
 };
 
-function GridMapping(props: gridProps) {
+const GridMapping = (props: gridProps) => {
     const items = props.items
     const titles = props.titles
     const classes = useStyles();
@@ -72,9 +72,7 @@ function GridMapping(props: gridProps) {
     )
 }
 
-
-
-export default function Header(props: { title: string, subtitle: string }) {
+const Header = (props: { title: string, subtitle: string }) => {
     const classes = useStyles();
     const item = [
         { message: "飲食店予約", icon: HomeIcon },
@@ -92,6 +90,8 @@ export default function Header(props: { title: string, subtitle: string }) {
         </AppBar>
     );
 }
+
+export default Header;
 
 Header.propTypes = {
     title: PropTypes.string,

@@ -27,6 +27,6 @@ export function loginWithGoogle(): Promise<firebase.User> {
 }
 
 // ログオフ処理
-export const logout = () => {
+export function logout() {
     firebaseApp.auth().signOut()
 }

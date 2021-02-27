@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-export default function Reservation(props: { message: string, icon: React.ElementType<any> }) {
+const Reservation = (props: { message: string, icon: React.ElementType<any> }) => {
     const classes = useStyles();
     const { message, icon } = props;
 
@@ -16,6 +16,8 @@ export default function Reservation(props: { message: string, icon: React.Elemen
         </>
     );
 }
+
+export default Reservation;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
