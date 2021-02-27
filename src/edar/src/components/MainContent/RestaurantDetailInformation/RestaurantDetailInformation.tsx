@@ -43,7 +43,7 @@ function labelProps(index: number) {
     };
 }
 
-function TabsInfomation(props: { shop: Shop }) {
+function TabInformation(props: { shop: Shop }) {
     const { shop } = props;
     const classes = useStyles();
     const theme = useTheme();
@@ -102,7 +102,7 @@ function TabsInfomation(props: { shop: Shop }) {
 
 export default function RestaurantDetailInformation() {
     const classes = useStyles();
-    const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInfomation);
+    const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInformation);
 
     return (
         <>
@@ -111,7 +111,7 @@ export default function RestaurantDetailInformation() {
                 <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].genre.name}</Typography>
                 <Typography className={classes.shopName} component='div'>{shops[selectedShopIndex].name}</Typography>
             </Box>
-            <TabsInfomation shop={shops[selectedShopIndex]} />
+            <TabInformation shop={shops[selectedShopIndex]} />
         </>
     )
 }

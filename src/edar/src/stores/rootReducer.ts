@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import shopInfomationReducer from './shopInfomation';
+import shopInformationReducer from './shopInformation';
 
 const rootReducer = combineReducers({
-    shopInfomation: shopInfomationReducer,
+    shopInformation: shopInformationReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

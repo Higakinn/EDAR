@@ -7,8 +7,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
-import { createURL, setGenre } from '../../../stores/shopInfomation';
-import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInfomation'
+import { createURL, setGenre } from '../../../stores/shopInformation';
+import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInformation'
 import NarrowDown from './NarrowDown';
 
 export default function SelectGenre() {
@@ -20,7 +20,7 @@ export default function SelectGenre() {
         url,
         genreList,
         range
-    } = useSelector((state: RootState) => state.shopInfomation);
+    } = useSelector((state: RootState) => state.shopInformation);
 
     // 経度緯度情報を取得
     const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {

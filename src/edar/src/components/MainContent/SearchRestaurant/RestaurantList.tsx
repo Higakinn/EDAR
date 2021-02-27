@@ -21,7 +21,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import type { Shop } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
-import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInfomation';
+import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInformation';
 import { Link } from 'react-router-dom';
 
 export default function RestaurantList() {
@@ -35,7 +35,7 @@ export default function RestaurantList() {
         positionErrorMessage,
         shopErrorMessage,
         expanded
-    } = useSelector((state: RootState) => state.shopInfomation);
+    } = useSelector((state: RootState) => state.shopInformation);
 
     // カードの折りたたみを初期化
     useEffectCustom(() => {

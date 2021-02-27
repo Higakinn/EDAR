@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 afterEach(cleanup);
 
-jest.mock('../../../stores/shopInfomation');
+jest.mock('../../../stores/shopInformation');
 jest.mock('react-redux');
 const useSelectorMock = useSelector as jest.Mock;
 const useDispatchMock = useDispatch as jest.Mock;

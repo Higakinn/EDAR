@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
-import { updateRange } from '../../../stores/shopInfomation';
+import { updateRange } from '../../../stores/shopInformation';
 
 const distance = [
     { code: '1', label: '～300m' },
@@ -34,7 +34,7 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
     const { onCloseDialog, isOpeningDialog, ...other } = props;
     const radioGroupRef = useRef<HTMLElement>(null);
     const dispatch = useDispatch();
-    const { range } = useSelector((state: RootState) => state.shopInfomation);
+    const { range } = useSelector((state: RootState) => state.shopInformation);
     const [code, setCode] = useState(range.code);
 
     // キャンセルを押した際に前回値を再設定
