@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
+import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithGoogle, logout } from "../../firebase/Authentication";
 import { updateUserInfomation, clearUserInfomation } from '../../stores/userInfomation';
@@ -30,8 +31,8 @@ function LoginDialogRaw(props: loginDialogRawProps) {
     const processLoginWithGoogle = async () => {
         try {
             const user = await loginWithGoogle();
-            const { email, displayName } = user;
-            dispatch(updateUserInfomation({ email, displayName }));
+            const { email, displayName, photoURL } = user;
+            dispatch(updateUserInfomation({ email, displayName, photoURL }));
             onCloseDialog();
             alert('ログインが成功しました。');
         } catch (error) {
@@ -93,6 +94,7 @@ export default function Account(props: { message: string, icon: React.ElementTyp
     const classes = useStyles();
     const { message, icon } = props;
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
+    const { user, isLogining } = useSelector((state: RootState) => state.userInfomation);
 
     const clickLoginButton = () => {
         setIsOpeningDialog(true);
@@ -106,7 +108,13 @@ export default function Account(props: { message: string, icon: React.ElementTyp
         <>
             <div className={classes.root}>
                 <IconButton aria-label="account-button" onClick={clickLoginButton}>
-                    {React.createElement(icon, { color: 'primary' })}
+
+                    {(isLogining) &&
+                        (<Avatar alt={user.displayName!} src={user.photoURL!} color='primary' className={classes.loginIcon} />)
+                    }
+                    {(!isLogining) &&
+                        React.createElement(icon, { color: 'primary' })
+                    }
                     <Typography variant="caption" className={classes.sectionMobile}>{message}</Typography>
                 </IconButton>
                 <LoginDialogRaw
@@ -140,6 +148,10 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             width: '80%',
             maxHeight: 435,
+        },
+        loginIcon: {
+            width: theme.spacing(2.8),
+            height: theme.spacing(2.8),
         },
     }),
 );

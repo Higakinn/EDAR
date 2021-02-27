@@ -20,8 +20,8 @@ export default function App() {
   useEffect(() => {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
-        const { email, displayName } = user;
-        dispatch(updateUserInfomation({ email, displayName }));
+        const { email, displayName, photoURL } = user;
+        dispatch(updateUserInfomation({ email, displayName, photoURL }));
       }
     })
   }, [dispatch]);
