@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import shopInformationReducer from './shopInformation';
-import userInfomationReducer from './userInfomation';
+import userInfomationReducer from './userInformation';
 
 const rootReducer = combineReducers({
     shopInformation: shopInformationReducer,

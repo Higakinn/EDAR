@@ -9,8 +9,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter, Route } from 'react-router-dom';
 import RestaurantDetailInformation from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
 import Footer from './components/Footer/Footer'
-import { firebaseApp } from './firebase/Authentication';
-import { updateUserInfomation } from './stores/userInfomation';
+import { firebaseApp } from './firebase/authentication';
+import { updateUserInfomation } from './stores/userInformation';
 
 export default function App() {
   const classes = useStyles();
