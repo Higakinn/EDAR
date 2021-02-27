@@ -16,14 +16,14 @@ interface TabPanelProps {
     selectedIndex: number;
 }
 
-const createIdLabel = (index: number) => {
+function createIdLabel(index: number) {
     return {
         id: `full-width-tab-${index}`,
         'aria-controls': `full-width-tabpanel-${index}`,
     };
 }
 
-function TabPanel(props: TabPanelProps) {
+const TabPanel = (props: TabPanelProps) => {
     const { children, selectedIndex, index, dir } = props;
 
     return (
@@ -43,7 +43,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function TabsComponent(props: { shop: Shop }) {
+const TabsComponent = (props: { shop: Shop }) => {
     const { shop } = props;
     const classes = useStyles();
     const theme = useTheme();
@@ -100,7 +100,7 @@ function TabsComponent(props: { shop: Shop }) {
     );
 }
 
-export default function RestaurantDetailInformation() {
+const RestaurantDetailInformation = () => {
     const classes = useStyles();
     const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInformation);
 
@@ -115,6 +115,8 @@ export default function RestaurantDetailInformation() {
         </>
     )
 }
+
+export default RestaurantDetailInformation;
 
 // CSS-in-JS
 const useStyles = makeStyles((theme: Theme) => ({
