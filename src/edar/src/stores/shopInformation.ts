@@ -124,7 +124,7 @@ const slice = createSlice({
     }
 });
 
-export function fetchPosition() {
+export const fetchPosition = () => {
     return async function (dispatch: Dispatch) {
         dispatch(setIsProcessing(true));
         try {
@@ -136,7 +136,7 @@ export function fetchPosition() {
     }
 }
 
-export function fetchGenreList() {
+export const fetchGenreList = () => {
     return async function (dispatch: Dispatch) {
         try {
             dispatch(setGenreList(await getGenre()));
@@ -146,7 +146,7 @@ export function fetchGenreList() {
     }
 }
 
-export function fetchShopList(url: string) {
+export const fetchShopList = (url: string) => {
     return async function (dispatch: Dispatch) {
         try {
             dispatch(setShops(await getShopList(url)));

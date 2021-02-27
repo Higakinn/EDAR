@@ -16,6 +16,13 @@ interface TabPanelProps {
     selectedIndex: number;
 }
 
+const createIdLabel = (index: number) => {
+    return {
+        id: `full-width-tab-${index}`,
+        'aria-controls': `full-width-tabpanel-${index}`,
+    };
+}
+
 function TabPanel(props: TabPanelProps) {
     const { children, selectedIndex, index, dir } = props;
 
@@ -36,14 +43,7 @@ function TabPanel(props: TabPanelProps) {
     );
 }
 
-function labelProps(index: number) {
-    return {
-        id: `full-width-tab-${index}`,
-        'aria-controls': `full-width-tabpanel-${index}`,
-    };
-}
-
-function TabInformation(props: { shop: Shop }) {
+function TabsComponent(props: { shop: Shop }) {
     const { shop } = props;
     const classes = useStyles();
     const theme = useTheme();
@@ -65,10 +65,10 @@ function TabInformation(props: { shop: Shop }) {
                         variant="fullWidth"
                         aria-label="full width tabs"
                     >
-                        <Tab label="トップ" {...labelProps(0)} />
-                        <Tab label="メニュー" {...labelProps(1)} />
-                        <Tab label="ギャラリー" {...labelProps(2)} />
-                        <Tab label="マップ" {...labelProps(3)} />
+                        <Tab label="トップ" {...createIdLabel(0)} />
+                        <Tab label="メニュー" {...createIdLabel(1)} />
+                        <Tab label="ギャラリー" {...createIdLabel(2)} />
+                        <Tab label="マップ" {...createIdLabel(3)} />
 
                     </Tabs>
                 </AppBar>
@@ -111,7 +111,7 @@ export default function RestaurantDetailInformation() {
                 <Typography className={classes.genreName} component='div'>{shops[selectedShopIndex].genre.name}</Typography>
                 <Typography className={classes.shopName} component='div'>{shops[selectedShopIndex].name}</Typography>
             </Box>
-            <TabInformation shop={shops[selectedShopIndex]} />
+            <TabsComponent shop={shops[selectedShopIndex]} />
         </>
     )
 }
