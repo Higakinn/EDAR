@@ -10,8 +10,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from "react-redux";
-import { loginWithGoogle, logout } from "../../firebase/Authentication";
-import { updateUserInfomation, clearUserInfomation } from '../../stores/userInfomation';
+import { loginWithGoogle, logout } from "../../firebase/authentication";
+import { updateUserInfomation, clearUserInfomation } from '../../stores/userInformation';
 import { RootState } from '../../stores/rootReducer';
 
 export interface loginDialogRawProps {
