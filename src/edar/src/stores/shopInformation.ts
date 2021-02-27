@@ -47,7 +47,7 @@ const initialState: State = {
 };
 
 const slice = createSlice({
-    name: 'shopInfomation',
+    name: 'shopInformation',
     initialState,
     reducers: {
         setPosition: (state: State, action: PayloadAction<{ latitude: number, longitude: number }>) => {
