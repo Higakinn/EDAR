@@ -25,7 +25,7 @@ export interface loginDialogRawProps {
 function LoginDialogRaw(props: loginDialogRawProps) {
     const { onCloseDialog, isOpeningDialog, ...other } = props;
     const dispatch = useDispatch();
-    const { user, isLogining } = useSelector((state: RootState) => state.userInfomation);
+    const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
 
     // ログイン処理をして、ユーザー情報をreduxにて管理
     const processLoginWithGoogle = async () => {
@@ -94,7 +94,7 @@ export default function Account(props: { message: string, icon: React.ElementTyp
     const classes = useStyles();
     const { message, icon } = props;
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
-    const { user, isLogining } = useSelector((state: RootState) => state.userInfomation);
+    const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
 
     const clickLoginButton = () => {
         setIsOpeningDialog(true);
