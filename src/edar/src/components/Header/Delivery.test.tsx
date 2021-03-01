@@ -10,14 +10,14 @@ afterEach(cleanup);
 
 describe('Deliveryコンポーネント', () => {
     const items = [
-        { message: "飲食店予約", icon: HomeIcon },
-        { message: "デリバリ-", icon: LocalMallIcon },
-        { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "アカウント", icon: AccountBoxIcon },
+        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
     ];
 
     test('デリバリーボタンの表示', () => {
-        render(<Delivery message={items[1].message} icon={items[1].icon} />);
-        expect(screen.getByText(items[1].message)).toBeInTheDocument();
+        render(<Delivery menuLabel={items[1].menuLabel} menuIcon={items[1].menuIcon} />);
+        expect(screen.getByText(items[1].menuLabel)).toBeInTheDocument();
     });
 });

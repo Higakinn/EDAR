@@ -14,26 +14,26 @@ import { loginWithGoogle, logout } from "../../firebase/authentication";
 import { updateUserInfomation, clearUserInfomation } from '../../stores/userInformation';
 import { RootState } from '../../stores/rootReducer';
 
-export interface loginDialogRawProps {
+export interface LoginDialogRawProps {
     classes: Record<'paper', string>;
     id: string;
     keepMounted: boolean;
     isOpeningDialog: boolean;
-    onCloseDialog: () => void;
+    closeAccountDialog: () => void;
 }
 
-const LoginDialogRaw = (props: loginDialogRawProps) => {
-    const { onCloseDialog, isOpeningDialog, ...other } = props;
+const LoginDialogRaw = (props: LoginDialogRawProps) => {
+    const { closeAccountDialog, isOpeningDialog, ...other } = props;
     const dispatch = useDispatch();
-    const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
+    const { user, isLoggedIn } = useSelector((state: RootState) => state.userInformation);
 
     // ログイン処理をして、ユーザー情報をreduxにて管理
-    async function processLoginWithGoogle() {
+    async function setLoggedInUserWithGoogle() {
         try {
             const user = await loginWithGoogle();
             const { email, displayName, photoURL } = user;
             dispatch(updateUserInfomation({ email, displayName, photoURL }));
-            onCloseDialog();
+            closeAccountDialog();
             alert('ログインが成功しました。');
         } catch (error) {
             alert('ログインに失敗しました。もう一度やり直してください。')
@@ -41,23 +41,18 @@ const LoginDialogRaw = (props: loginDialogRawProps) => {
     };
 
     // ログアウト処理
-    function processLogout() {
+    function logOutUser() {
         logout();
         dispatch(clearUserInfomation());
-        onCloseDialog();
+        closeAccountDialog();
         alert('ログアウトしました。');
-    };
-
-    // ダイアログを閉じた時
-    function canceledDialog() {
-        onCloseDialog();
     };
 
     return (
         <>
             <Dialog
                 maxWidth="xs"
-                onClose={onCloseDialog}
+                onClose={closeAccountDialog}
                 open={isOpeningDialog}
                 {...other}
             >
@@ -66,9 +61,9 @@ const LoginDialogRaw = (props: loginDialogRawProps) => {
                     <DialogContentText>
                         連携アカウント
                     </DialogContentText>
-                    <Button variant="outlined" onClick={processLoginWithGoogle}>Googleアカウントでログイン</Button>
+                    <Button variant="outlined" onClick={setLoggedInUserWithGoogle}>Googleアカウントでログイン</Button>
                 </DialogContent>
-                {(isLogining) && (
+                {(isLoggedIn) && (
                     <DialogContent dividers>
                         <DialogContentText>
                             {user.email}でログインしています。
@@ -76,11 +71,11 @@ const LoginDialogRaw = (props: loginDialogRawProps) => {
                     </DialogContent>
                 )}
                 <DialogActions>
-                    <Button autoFocus onClick={canceledDialog} color="primary">
+                    <Button autoFocus onClick={closeAccountDialog} color="primary">
                         キャンセル
                     </Button>
-                    {(isLogining) && (
-                        <Button onClick={processLogout} color="primary">
+                    {(isLoggedIn) && (
+                        <Button onClick={logOutUser} color="primary">
                             ログアウト
                         </Button>
                     )}
@@ -90,32 +85,31 @@ const LoginDialogRaw = (props: loginDialogRawProps) => {
     );
 }
 
-const Account = (props: { message: string, icon: React.ElementType<any> }) => {
+const Account = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
     const classes = useStyles();
-    const { message, icon } = props;
+    const { menuLabel, menuIcon } = props;
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
-    const { user, isLogining } = useSelector((state: RootState) => state.userInformation);
+    const { user, isLoggedIn } = useSelector((state: RootState) => state.userInformation);
 
-    function clickLoginButton() {
+    function openAccountDialog() {
         setIsOpeningDialog(true);
     };
 
-    function onCloseDialog() {
+    function closeAccountDialog() {
         setIsOpeningDialog(false);
     };
 
     return (
         <>
             <div className={classes.root}>
-                <IconButton aria-label="account-button" onClick={clickLoginButton}>
-
-                    {(isLogining) &&
+                <IconButton aria-label="account-button" onClick={openAccountDialog}>
+                    {(isLoggedIn) &&
                         (<Avatar alt={user.displayName!} src={user.photoURL!} color='primary' className={classes.loginIcon} />)
                     }
-                    {(!isLogining) &&
-                        React.createElement(icon, { color: 'primary' })
+                    {(!isLoggedIn) &&
+                        React.createElement(menuIcon, { color: 'primary' })
                     }
-                    <Typography variant="caption" className={classes.sectionMobile}>{message}</Typography>
+                    <Typography variant="caption" className={classes.sectionMobile}>{menuLabel}</Typography>
                 </IconButton>
                 <LoginDialogRaw
                     classes={{
@@ -124,7 +118,7 @@ const Account = (props: { message: string, icon: React.ElementType<any> }) => {
                     id="account"
                     keepMounted
                     isOpeningDialog={isOpeningDialog}
-                    onCloseDialog={onCloseDialog}
+                    closeAccountDialog={closeAccountDialog}
                 />
             </div>
         </>

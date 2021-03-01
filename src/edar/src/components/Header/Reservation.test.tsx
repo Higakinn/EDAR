@@ -11,14 +11,14 @@ afterEach(cleanup);
 
 describe('Reservationコンポーネント', () => {
     const items = [
-        { message: "飲食店予約", icon: HomeIcon },
-        { message: "デリバリ-", icon: LocalMallIcon },
-        { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "アカウント", icon: AccountBoxIcon },
+        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
     ];
 
     test('予約ボタンの表示', () => {
-        render(<Delivery message={items[0].message} icon={items[0].icon} />);
-        expect(screen.getByText(items[0].message)).toBeInTheDocument();
+        render(<Delivery menuLabel={items[0].menuLabel} menuIcon={items[0].menuIcon} />);
+        expect(screen.getByText(items[0].menuLabel)).toBeInTheDocument();
     });
 });
