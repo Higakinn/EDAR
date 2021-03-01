@@ -17,7 +17,7 @@ type State = {
     shops: Shop[]
 }
 
-describe('RestaurantDetailInfomationコンポーネント', () => {
+describe('RestaurantDetailInformationコンポーネント', () => {
     // 模擬入力データ
     const testData: State = {
         selectedShopIndex: 0,
