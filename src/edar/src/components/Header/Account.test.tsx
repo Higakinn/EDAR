@@ -9,7 +9,7 @@ import Account from './Account';
 
 afterEach(cleanup);
 
-jest.mock('../../stores/shopInfomation');
+jest.mock('../../stores/shopInformation');
 jest.mock('react-redux');
 const useSelectorMock = useSelector as jest.Mock;
 const useDispatchMock = useDispatch as jest.Mock;
@@ -20,15 +20,15 @@ type State = {
         displayName: string | null
         photoURL: string | null
     }
-    isLogining: boolean
+    isLoggedIn: boolean
 }
 
 describe('Accountコンポーネント>ログインしていない状態', () => {
     const items = [
-        { message: "飲食店予約", icon: HomeIcon },
-        { message: "デリバリ-", icon: LocalMallIcon },
-        { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "アカウント", icon: AccountBoxIcon },
+        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
     ];
     const initialState: State = {
         user: {
@@ -36,7 +36,7 @@ describe('Accountコンポーネント>ログインしていない状態', () =>
             displayName: null,
             photoURL: null,
         },
-        isLogining: false,
+        isLoggedIn: false,
     };
 
     beforeEach(() => {
@@ -49,22 +49,22 @@ describe('Accountコンポーネント>ログインしていない状態', () =>
     });
 
     test('アカウントボタンの表示', () => {
-        render(<Account message={items[3].message} icon={items[3].icon} />);
-        expect(screen.getByText(items[3].message)).toBeInTheDocument();
+        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
+        expect(screen.getByText(items[3].menuLabel)).toBeInTheDocument();
     });
 
     test('アカウントダイアログのキャンセルボタンが表示されているか', () => {
-        render(<Account message={items[3].message} icon={items[3].icon} />);
+        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
         expect(screen.getByText('キャンセル')).toBeInTheDocument();
     });
 });
 
 describe('Accountコンポーネント>ログインしている状態', () => {
     const items = [
-        { message: "飲食店予約", icon: HomeIcon },
-        { message: "デリバリ-", icon: LocalMallIcon },
-        { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "アカウント", icon: AccountBoxIcon },
+        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
     ];
     const initialState: State = {
         user: {
@@ -72,7 +72,7 @@ describe('Accountコンポーネント>ログインしている状態', () => {
             displayName: 'test',
             photoURL: 'http://test.com',
         },
-        isLogining: true,
+        isLoggedIn: true,
     };
 
     beforeEach(() => {
@@ -85,7 +85,7 @@ describe('Accountコンポーネント>ログインしている状態', () => {
     });
 
     test('ログイン中のメールアドレスが表示されているか', () => {
-        render(<Account message={items[3].message} icon={items[3].icon} />);
+        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
         expect(screen.getByText(initialState.user.email + 'でログインしています。')).toBeInTheDocument();
     });
 });

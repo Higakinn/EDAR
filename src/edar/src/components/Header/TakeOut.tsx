@@ -3,15 +3,15 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-const TakeOut = (props: { message: string, icon: React.ElementType<any> }) => {
+const TakeOut = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
     const classes = useStyles();
-    const { message, icon } = props;
+    const { menuLabel, menuIcon } = props;
 
     return (
         <>
             <IconButton aria-label="login-button">
-                {React.createElement(icon, { color: 'primary' })}
-                <Typography variant="caption" className={classes.sectionMobile}>{message}</Typography>
+                {React.createElement(menuIcon, { color: 'primary' })}
+                <Typography variant="caption" className={classes.sectionMobile}>{menuLabel}</Typography>
             </IconButton>
         </>
     );

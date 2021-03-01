@@ -31,10 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-type gridProps = {
-    items: {
-        message: string,
-        icon: React.ElementType<any>
+type GridProps = {
+    headerMenus: {
+        menuLabel: string,
+        menuIcon: React.ElementType<any>
     }[],
     titles: {
         title: string,
@@ -42,9 +42,8 @@ type gridProps = {
     }
 };
 
-const GridMapping = (props: gridProps) => {
-    const items = props.items
-    const titles = props.titles
+const GridMapping = (props: GridProps) => {
+    const { headerMenus, titles } = props;
     const classes = useStyles();
     return (
         <Grid container>
@@ -57,16 +56,16 @@ const GridMapping = (props: gridProps) => {
                 </Typography>
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Reservation message={items[0].message} icon={items[0].icon} />
+                <Reservation menuLabel={headerMenus[0].menuLabel} menuIcon={headerMenus[0].menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Delivery message={items[1].message} icon={items[1].icon} />
+                <Delivery menuLabel={headerMenus[1].menuLabel} menuIcon={headerMenus[1].menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <TakeOut message={items[2].message} icon={items[2].icon} />
+                <TakeOut menuLabel={headerMenus[2].menuLabel} menuIcon={headerMenus[2].menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Account message={items[3].message} icon={items[3].icon} />
+                <Account menuLabel={headerMenus[3].menuLabel} menuIcon={headerMenus[3].menuIcon} />
             </Grid>
         </Grid >
     )
@@ -74,18 +73,18 @@ const GridMapping = (props: gridProps) => {
 
 const Header = (props: { title: string, subtitle: string }) => {
     const classes = useStyles();
-    const item = [
-        { message: "飲食店予約", icon: HomeIcon },
-        { message: "デリバリ-", icon: LocalMallIcon },
-        { message: "テイクアウト", icon: StorefrontIcon },
-        { message: "アカウント", icon: AccountBoxIcon },
-    ]
-    const titles = { title: props.title, subtitle: props.subtitle }
+    const headerMenus = [
+        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    ];
+    const titles = { title: props.title, subtitle: props.subtitle };
 
     return (
         <AppBar position='static' color='transparent'>
             <Toolbar className={classes.toolBar}>
-                <GridMapping titles={titles} items={item} />
+                <GridMapping titles={titles} headerMenus={headerMenus} />
             </Toolbar>
         </AppBar>
     );

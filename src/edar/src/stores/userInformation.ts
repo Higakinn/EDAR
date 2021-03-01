@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type State = {
-    isLogining: boolean
+    isLoggedIn: boolean
     user: {
         email: string | null
         displayName: string | null
@@ -10,7 +10,7 @@ type State = {
 }
 
 const initialState: State = {
-    isLogining: false,
+    isLoggedIn: false,
     user: {
         email: null,
         displayName: null,
@@ -28,11 +28,11 @@ const slice = createSlice({
             photoURL: string | null
         }>) => {
             state.user = action.payload;
-            state.isLogining = true;
+            state.isLoggedIn = true;
         },
         clearUserInfomation: (state: State) => {
             state.user = { email: null, displayName: null, photoURL: null };
-            state.isLogining = false;
+            state.isLoggedIn = false;
         }
     }
 });
