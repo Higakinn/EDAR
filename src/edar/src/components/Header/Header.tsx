@@ -33,9 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type GridProps = {
     headerMenus: {
-        menuLabel: string,
-        menuIcon: React.ElementType<any>
-    }[],
+        reservation: { menuLabel: string, menuIcon: React.ElementType<any> },
+        delivery: { menuLabel: string, menuIcon: React.ElementType<any> },
+        takeOut: { menuLabel: string, menuIcon: React.ElementType<any> },
+        account: { menuLabel: string, menuIcon: React.ElementType<any> },
+    }
     titles: {
         title: string,
         subtitle: string
@@ -56,16 +58,16 @@ const GridMapping = (props: GridProps) => {
                 </Typography>
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Reservation menuLabel={headerMenus[0].menuLabel} menuIcon={headerMenus[0].menuIcon} />
+                <Reservation menuLabel={headerMenus.reservation.menuLabel} menuIcon={headerMenus.reservation.menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Delivery menuLabel={headerMenus[1].menuLabel} menuIcon={headerMenus[1].menuIcon} />
+                <Delivery menuLabel={headerMenus.delivery.menuLabel} menuIcon={headerMenus.delivery.menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <TakeOut menuLabel={headerMenus[2].menuLabel} menuIcon={headerMenus[2].menuIcon} />
+                <TakeOut menuLabel={headerMenus.takeOut.menuLabel} menuIcon={headerMenus.takeOut.menuIcon} />
             </Grid>
             <Grid item xs={2} sm={2}>
-                <Account menuLabel={headerMenus[3].menuLabel} menuIcon={headerMenus[3].menuIcon} />
+                <Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />
             </Grid>
         </Grid >
     )
@@ -73,12 +75,12 @@ const GridMapping = (props: GridProps) => {
 
 const Header = (props: { title: string, subtitle: string }) => {
     const classes = useStyles();
-    const headerMenus = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
     const titles = { title: props.title, subtitle: props.subtitle };
 
     return (
