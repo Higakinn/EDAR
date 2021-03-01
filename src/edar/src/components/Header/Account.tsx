@@ -11,7 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithGoogle, logout } from "../../firebase/authentication";
-import { updateUserInfomation, clearUserInfomation } from '../../stores/userInformation';
+import { updateUserInformation, clearUserInformation } from '../../stores/userInformation';
 import { RootState } from '../../stores/rootReducer';
 
 export interface LoginDialogRawProps {
@@ -32,7 +32,7 @@ const LoginDialogRaw = (props: LoginDialogRawProps) => {
         try {
             const user = await loginWithGoogle();
             const { email, displayName, photoURL } = user;
-            dispatch(updateUserInfomation({ email, displayName, photoURL }));
+            dispatch(updateUserInformation({ email, displayName, photoURL }));
             closeAccountDialog();
             alert('ログインが成功しました。');
         } catch (error) {
@@ -43,7 +43,7 @@ const LoginDialogRaw = (props: LoginDialogRawProps) => {
     // ログアウト処理
     function logOutUser() {
         logout();
-        dispatch(clearUserInfomation());
+        dispatch(clearUserInformation());
         closeAccountDialog();
         alert('ログアウトしました。');
     };

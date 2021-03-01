@@ -10,7 +10,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import RestaurantDetailInformation from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
 import Footer from './components/Footer/Footer'
 import { firebaseApp } from './firebase/authentication';
-import { updateUserInfomation } from './stores/userInformation';
+import { updateUserInformation } from './stores/userInformation';
 
 export default function App() {
   const classes = useStyles();
@@ -21,7 +21,7 @@ export default function App() {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if (user) {
         const { email, displayName, photoURL } = user;
-        dispatch(updateUserInfomation({ email, displayName, photoURL }));
+        dispatch(updateUserInformation({ email, displayName, photoURL }));
       }
     })
   }, [dispatch]);

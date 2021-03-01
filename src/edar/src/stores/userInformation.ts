@@ -19,10 +19,10 @@ const initialState: State = {
 };
 
 const slice = createSlice({
-    name: 'userInfomation',
+    name: 'userInformation',
     initialState,
     reducers: {
-        updateUserInfomation: (state: State, action: PayloadAction<{
+        updateUserInformation: (state: State, action: PayloadAction<{
             email: string | null,
             displayName: string | null,
             photoURL: string | null
@@ -30,7 +30,7 @@ const slice = createSlice({
             state.user = action.payload;
             state.isLoggedIn = true;
         },
-        clearUserInfomation: (state: State) => {
+        clearUserInformation: (state: State) => {
             state.user = { email: null, displayName: null, photoURL: null };
             state.isLoggedIn = false;
         }
@@ -39,8 +39,8 @@ const slice = createSlice({
 
 // action creatorをエクスポート
 export const {
-    updateUserInfomation,
-    clearUserInfomation,
+    updateUserInformation,
+    clearUserInformation,
 } = slice.actions;
 
 // reducerをエクスポート
