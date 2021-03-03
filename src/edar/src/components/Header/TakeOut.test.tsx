@@ -10,15 +10,15 @@ afterEach(cleanup);
 
 
 describe('TakeOutコンポーネント', () => {
-    const items = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
 
     test('テイクアウトボタンの表示', () => {
-        render(<Delivery menuLabel={items[2].menuLabel} menuIcon={items[2].menuIcon} />);
-        expect(screen.getByText(items[2].menuLabel)).toBeInTheDocument();
+        render(<Delivery menuLabel={headerMenus.takeOut.menuLabel} menuIcon={headerMenus.takeOut.menuIcon} />);
+        expect(screen.getByText(headerMenus.takeOut.menuLabel)).toBeInTheDocument();
     });
 });

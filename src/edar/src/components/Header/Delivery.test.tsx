@@ -9,15 +9,15 @@ import Delivery from './Delivery';
 afterEach(cleanup);
 
 describe('Deliveryコンポーネント', () => {
-    const items = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
 
     test('デリバリーボタンの表示', () => {
-        render(<Delivery menuLabel={items[1].menuLabel} menuIcon={items[1].menuIcon} />);
-        expect(screen.getByText(items[1].menuLabel)).toBeInTheDocument();
+        render(<Delivery menuLabel={headerMenus.delivery.menuLabel} menuIcon={headerMenus.delivery.menuIcon} />);
+        expect(screen.getByText(headerMenus.delivery.menuLabel)).toBeInTheDocument();
     });
 });

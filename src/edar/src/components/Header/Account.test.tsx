@@ -24,12 +24,12 @@ type State = {
 }
 
 describe('Accountコンポーネント>ログインしていない状態', () => {
-    const items = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
     const initialState: State = {
         user: {
             email: null,
@@ -49,23 +49,23 @@ describe('Accountコンポーネント>ログインしていない状態', () =>
     });
 
     test('アカウントボタンの表示', () => {
-        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
-        expect(screen.getByText(items[3].menuLabel)).toBeInTheDocument();
+        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
+        expect(screen.getByText(headerMenus.account.menuLabel)).toBeInTheDocument();
     });
 
     test('アカウントダイアログのキャンセルボタンが表示されているか', () => {
-        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
+        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
         expect(screen.getByText('キャンセル')).toBeInTheDocument();
     });
 });
 
 describe('Accountコンポーネント>ログインしている状態', () => {
-    const items = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
     const initialState: State = {
         user: {
             email: 'test@test.com',
@@ -85,7 +85,7 @@ describe('Accountコンポーネント>ログインしている状態', () => {
     });
 
     test('ログイン中のメールアドレスが表示されているか', () => {
-        render(<Account menuLabel={items[3].menuLabel} menuIcon={items[3].menuIcon} />);
+        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
         expect(screen.getByText(initialState.user.email + 'でログインしています。')).toBeInTheDocument();
     });
 });
