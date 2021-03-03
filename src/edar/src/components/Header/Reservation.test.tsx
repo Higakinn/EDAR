@@ -10,15 +10,15 @@ afterEach(cleanup);
 
 
 describe('Reservationコンポーネント', () => {
-    const items = [
-        { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    ];
+    const headerMenus = {
+        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
+        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
+        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
+        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
+    };
 
     test('予約ボタンの表示', () => {
-        render(<Delivery menuLabel={items[0].menuLabel} menuIcon={items[0].menuIcon} />);
-        expect(screen.getByText(items[0].menuLabel)).toBeInTheDocument();
+        render(<Delivery menuLabel={headerMenus.reservation.menuLabel} menuIcon={headerMenus.reservation.menuIcon} />);
+        expect(screen.getByText(headerMenus.reservation.menuLabel)).toBeInTheDocument();
     });
 });
