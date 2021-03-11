@@ -1,6 +1,6 @@
 import React from 'react';
-import RestaurantList from './RestaurantList';
-import SelectGenre from './SelectGenre';
+import { RestaurantList } from './RestaurantList';
+import { SelectGenre } from './SelectGenre';
 
 export type Shop = {
     "access": string

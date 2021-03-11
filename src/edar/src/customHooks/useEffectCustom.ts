@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 // 初回レンダリング時に実行されないカスタムフック
-const useEffectCustom = (func: React.EffectCallback, dependencyList?: React.DependencyList) => {
+function useEffectCustom(func: React.EffectCallback, dependencyList?: React.DependencyList) {
     const fisrtFlgRef = useRef(true);
 
     useEffect(() => {

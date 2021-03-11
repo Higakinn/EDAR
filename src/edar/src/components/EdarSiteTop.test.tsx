@@ -1,4 +1,4 @@
-import EdarSiteTop from './EdarSiteTop';
+import { EdarSiteTop } from './EdarSiteTop';
 import { render } from '@testing-library/react';
 
 test('EdarSiteTop: 適切なtitleが取得できるかどうか', () => {

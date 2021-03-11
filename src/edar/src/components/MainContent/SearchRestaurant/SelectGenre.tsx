@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from '../../../stores/rootReducer';
 import { createURL, setGenre } from '../../../stores/shopInformation';
 import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInformation'
-import NarrowDown from './NarrowDown';
+import { NarrowDown } from './NarrowDown';
 
-export default function SelectGenre() {
+export const SelectGenre = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {
@@ -23,7 +23,7 @@ export default function SelectGenre() {
     } = useSelector((state: RootState) => state.shopInformation);
 
     // 経度緯度情報を取得
-    const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
+    function getLocationInfo(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         dispatch(fetchPosition());
     };
@@ -43,7 +43,7 @@ export default function SelectGenre() {
     }, [url]);
 
     // ジャンルが変更された際の処理
-    const changedgenre = (event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => {
+    function changedgenre(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) {
         dispatch(setGenre(event.target.value));
     };
 

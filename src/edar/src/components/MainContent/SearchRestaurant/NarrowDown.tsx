@@ -30,7 +30,7 @@ export interface NarrowDownDialogRawProps {
     onCloseDialog: () => void;
 }
 
-function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
+const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
     const { onCloseDialog, isOpeningDialog, ...other } = props;
     const radioGroupRef = useRef<HTMLElement>(null);
     const dispatch = useDispatch();
@@ -44,23 +44,23 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
         }
     }, [isOpeningDialog, range]);
 
-    const openedNarrowDownDialog = () => {
+    function openedNarrowDownDialog() {
         if (radioGroupRef.current != null) {
             radioGroupRef.current.focus();
         }
     };
 
-    const canceledNarrowDownDialog = () => {
+    function canceledNarrowDownDialog() {
         onCloseDialog();
     };
 
-    const decidedNarrowDownSetting = () => {
+    function decidedNarrowDownSetting() {
         onCloseDialog();
         let label = distance[Number(code) - 1].label;
         dispatch(updateRange({ code, label }));
     };
 
-    const doChangeRange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    function doChangeRange(event: React.ChangeEvent<HTMLInputElement>) {
         setCode((event.target as HTMLInputElement).value);
     };
 
@@ -103,15 +103,15 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
     );
 }
 
-export default function NarrowDown() {
+export const NarrowDown = () => {
     const classes = useStyles();
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
 
-    const clickNarrowDownButton = () => {
+    function clickNarrowDownButton() {
         setIsOpeningDialog(true);
     };
 
-    const onCloseDialog = () => {
+    function onCloseDialog() {
         setIsOpeningDialog(false);
     };
 

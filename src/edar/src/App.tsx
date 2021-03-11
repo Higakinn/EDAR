@@ -2,17 +2,17 @@ import MainContent from './components/MainContent/SearchRestaurant/SearchRestaur
 import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import Header from './components/Header/Header'
-import EdarSiteTop from './components/EdarSiteTop'
+import { EdarSiteTop } from './components/EdarSiteTop'
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter, Route } from 'react-router-dom';
 import RestaurantDetailInformation from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
-import Footer from './components/Footer/Footer'
+import { Footer } from './components/Footer/Footer'
 import { firebaseApp } from './firebase/authentication';
 import { updateUserInformation } from './stores/userInformation';
 
-export default function App() {
+export const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 

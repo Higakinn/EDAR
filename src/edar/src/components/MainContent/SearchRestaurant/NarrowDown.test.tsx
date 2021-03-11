@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
-import NarrowDown from './NarrowDown';
+import { NarrowDown } from './NarrowDown';
 import { useSelector, useDispatch } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 

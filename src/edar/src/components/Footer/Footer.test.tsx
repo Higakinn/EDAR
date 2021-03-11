@@ -1,4 +1,4 @@
-import Footer from './Footer';
+import { Footer } from './Footer';
 import { render, screen } from '@testing-library/react';
 
 test('footer: 指定した引数がレンダリングされているかどうか', () => {

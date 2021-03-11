@@ -24,7 +24,7 @@ import { RootState } from '../../../stores/rootReducer';
 import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInformation';
 import { Link } from 'react-router-dom';
 
-export default function RestaurantList() {
+export const RestaurantList = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {
@@ -45,7 +45,7 @@ export default function RestaurantList() {
     }, [shops]);
 
     // 折りたたみボタンを押した際のフラグ変更
-    const handleExpandClick = (index: number) => {
+    function handleExpandClick(index: number) {
         dispatch(updateExpanded(index));
     };
 
