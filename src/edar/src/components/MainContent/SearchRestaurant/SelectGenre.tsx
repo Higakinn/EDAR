@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { createURL, setGenre } from '../../../stores/shopInformation';
 import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInformation'
 import { NarrowDown } from './NarrowDown';

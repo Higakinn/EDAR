@@ -20,7 +20,7 @@ import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import type { Shop } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInformation';
 import { Link } from 'react-router-dom';
 

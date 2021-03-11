@@ -12,14 +12,14 @@ import Avatar from '@material-ui/core/Avatar';
 import { useDispatch, useSelector } from "react-redux";
 import { loginWithGoogle, logout } from "../../firebase/authentication";
 import { updateUserInformation, clearUserInformation } from '../../stores/userInformation';
-import { RootState } from '../../stores/rootReducer';
+import type { RootState } from '../../stores/rootReducer';
 
-export interface LoginDialogRawProps {
-    classes: Record<'paper', string>;
-    id: string;
-    keepMounted: boolean;
-    isOpeningDialog: boolean;
-    closeAccountDialog: () => void;
+type LoginDialogRawProps = {
+    classes: Record<'paper', string>,
+    id: string,
+    keepMounted: boolean,
+    isOpeningDialog: boolean,
+    closeAccountDialog: () => void
 }
 
 const LoginDialogRaw = (props: LoginDialogRawProps) => {

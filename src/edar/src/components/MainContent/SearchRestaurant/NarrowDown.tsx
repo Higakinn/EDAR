@@ -11,7 +11,7 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { updateRange } from '../../../stores/shopInformation';
 
 const distanceList = [
@@ -22,7 +22,7 @@ const distanceList = [
     { code: '5', label: '～3000m' },
 ];
 
-export interface NarrowDownDialogRawProps {
+type NarrowDownDialogRawProps = {
     classes: Record<'paper', string>;
     id: string;
     keepMounted: boolean;
