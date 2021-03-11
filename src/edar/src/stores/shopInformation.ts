@@ -16,7 +16,7 @@ type State = {
     shopErrorMessage: string
     genre: string
     genreList: Genre[]
-    expanded: boolean[]
+    expandedArray: boolean[]
     range: {
         code: string
         label: string
@@ -38,7 +38,7 @@ const initialState: State = {
     shopErrorMessage: '',
     genre: '',
     genreList: [],
-    expanded: [],
+    expandedArray: [],
     range: {
         code: '3',
         label: '～1000m'
@@ -108,10 +108,10 @@ const slice = createSlice({
             state.shops.forEach(() => {
                 initExpanded.push(false);
             });
-            state.expanded = initExpanded;
+            state.expandedArray = initExpanded;
         },
         updateExpanded: (state: State, action: PayloadAction<number>) => {
-            state.expanded[action.payload] = !state.expanded[action.payload];
+            state.expandedArray[action.payload] = !state.expandedArray[action.payload];
         },
         setShopErrorMessage: (state: State) => {
             state.shopErrorMessage = 'お店の情報を取得できませんでした。再リロードしてください。';

@@ -34,7 +34,7 @@ export const RestaurantList = () => {
         isLoadedShopInfo,
         positionErrorMessage,
         shopErrorMessage,
-        expanded
+        expandedArray
     } = useSelector((state: RootState) => state.shopInformation);
 
     // カードの折りたたみを初期化
@@ -113,16 +113,16 @@ export const RestaurantList = () => {
                                     </IconButton>
                                     <IconButton
                                         className={clsx(classes.cardExpand, {
-                                            [classes.cardExpandOpen]: expanded[index],
+                                            [classes.cardExpandOpen]: expandedArray[index],
                                         })}
                                         onClick={() => handleExpandClick(index)}
-                                        aria-expanded={expanded[index]}
+                                        aria-expanded={expandedArray[index]}
                                         aria-label="show more"
                                     >
                                         <ExpandMoreIcon />
                                     </IconButton>
                                 </CardActions>
-                                <Collapse in={expanded[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
+                                <Collapse in={expandedArray[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
                                     <CardContent>
                                         <Typography paragraph>{output.access}</Typography>
                                         <Typography paragraph>{output.address}</Typography>
