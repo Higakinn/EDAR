@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 // 初回レンダリング時に実行されないカスタムフック
-function useEffectCustom(func: React.EffectCallback, dependencyList?: React.DependencyList) {
+export function useEffectCustom(func: React.EffectCallback, dependencyList?: React.DependencyList) {
     const fisrtFlgRef = useRef(true);
 
     useEffect(() => {
@@ -14,5 +14,3 @@ function useEffectCustom(func: React.EffectCallback, dependencyList?: React.Depe
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, dependencyList);
 };
-
-export default useEffectCustom;

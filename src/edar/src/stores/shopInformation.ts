@@ -172,4 +172,4 @@ export const {
 } = slice.actions;
 
 // reducerをエクスポート
-export default slice.reducer;
+export const shopInformationReducer = slice.reducer;

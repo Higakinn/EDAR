@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
-import RestaurantDetailInformation from './RestaurantDetailInformation';
+import { RestaurantDetailInformation } from './RestaurantDetailInformation';
 import { useSelector, useDispatch } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import type { Shop } from '../SearchRestaurant/SearchRestaurant'

@@ -5,7 +5,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import HomeIcon from '@material-ui/icons/Home';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import StorefrontIcon from '@material-ui/icons/Storefront';
-import Account from './Account';
+import { Account } from './Account';
 
 afterEach(cleanup);
 

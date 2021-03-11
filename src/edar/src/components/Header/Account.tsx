@@ -85,7 +85,7 @@ const LoginDialogRaw = (props: LoginDialogRawProps) => {
     );
 }
 
-const Account = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
+export const Account = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
     const classes = useStyles();
     const { menuLabel, menuIcon } = props;
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
@@ -124,8 +124,6 @@ const Account = (props: { menuLabel: string, menuIcon: React.ElementType<any> })
         </>
     );
 }
-
-export default Account;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

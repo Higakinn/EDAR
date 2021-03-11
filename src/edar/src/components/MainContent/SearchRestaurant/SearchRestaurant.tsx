@@ -99,7 +99,7 @@ export type Genre = {
     name: string
 }
 
-export default function MainContent() {
+export const MainContent = () => {
     return (
         <>
             <SelectGenre />

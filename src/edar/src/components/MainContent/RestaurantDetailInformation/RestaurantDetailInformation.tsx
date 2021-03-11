@@ -100,7 +100,7 @@ const TabsComponent = (props: { shop: Shop }) => {
     );
 }
 
-const RestaurantDetailInformation = () => {
+export const RestaurantDetailInformation = () => {
     const classes = useStyles();
     const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInformation);
 
@@ -115,8 +115,6 @@ const RestaurantDetailInformation = () => {
         </>
     )
 }
-
-export default RestaurantDetailInformation;
 
 // CSS-in-JS
 const useStyles = makeStyles((theme: Theme) => ({

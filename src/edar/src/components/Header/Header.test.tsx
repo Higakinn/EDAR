@@ -1,7 +1,7 @@
-import Header from './Header';
+import { Header } from './Header';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux'
-import store from '../../store';
+import { store } from '../../store';
 
 test('header: 指定した引数がレンダリングされているかどうか', () => {
     render(

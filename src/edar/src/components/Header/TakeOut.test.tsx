@@ -4,7 +4,7 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import HomeIcon from '@material-ui/icons/Home';
 import LocalMallIcon from '@material-ui/icons/LocalMall';
 import StorefrontIcon from '@material-ui/icons/Storefront';
-import Delivery from './Delivery';
+import { Delivery } from './Delivery';
 
 afterEach(cleanup);
 

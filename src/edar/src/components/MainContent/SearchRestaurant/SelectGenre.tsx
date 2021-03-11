@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import useEffectCustom from '../../../customHooks/useEffectCustom';
+import { useEffectCustom } from '../../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
