@@ -1,0 +1,41 @@
+name: EDAR CI CD 
+
+on: push
+
+env: # global環境変数を設定
+  DOCKER_IMAGE_NAME: edar_react_test
+  # DOCKER_FILE_NAME:
+  DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  REACT_APP_RSTRNT_API_USER: ${{ secrets.REACT_APP_RSTRNT_API_USER }}
+  REACT_APP_RSTRNT_API_PASSWORD: ${{ secrets.REACT_APP_RSTRNT_API_PASSWORD }}
+  REACT_APP_RSTRNT_API_URL: ${{ secrets.REACT_APP_RSTRNT_API_URL }}
+
+jobs:
+
+  lint: #ジョブ名
+    runs-on: ubuntu-latest #実行環境(Ubuntuの最新版環境で実行)
+    steps: #実行処理やコマンドを記述(上からnameの内容が実行される)
+      - name: Git checkout current branch #作業ブランチにchekout
+        uses: actions/checkout@v2 #サードパーティの公開アクションを利用
+        with:
+          ref: ${{ github.ref }}
+      - name: Build docker image
+        run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
+      - name: Run lint in docker container
+        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
+      # -----------------------------------　slackへ通知 ----------------------------------------------------------------
+      - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Lint Success(CI)
+          SLACK_COLOR: good
+      - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Lint Failure(CI)
+          SLACK_COLOR: danger

@@ -1,0 +1,53 @@
+name: EDAR CI CD 
+
+on: push
+
+env: # global環境変数を設定
+  DOCKER_IMAGE_NAME: edar_react_test
+  # DOCKER_FILE_NAME:
+  DEPLOY_DOCKER_IMAGE_NAME: edar_deploy
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  REACT_APP_RSTRNT_API_USER: ${{ secrets.REACT_APP_RSTRNT_API_USER }}
+  REACT_APP_RSTRNT_API_PASSWORD: ${{ secrets.REACT_APP_RSTRNT_API_PASSWORD }}
+  REACT_APP_RSTRNT_API_URL: ${{ secrets.REACT_APP_RSTRNT_API_URL }}
+
+jobs:
+  push_docker_image:
+    if: contains( github.ref, 'release') #developブランチにpushされたときに実行する
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: Git checkout current branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Build docker image
+        run: |
+          sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" ./src/edar/.env.example > ./src/edar/.env
+          docker build -t $DEPLOY_DOCKER_IMAGE_NAME -f ./Dockerfile.deploy . --build-arg FIREBASE_PROJECT_ID=$FIREBASE_STAGING_PROJECT_ID
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+      - name: Push Docker image to GitHub Container Registry
+        run: |
+            IMAGE_TAG=$(echo ${{ github.ref }} | sed -e "s#refs/tags/v##g") 
+            docker tag $DOCKER_IMAGE_NAME ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:$IMAGE_TAG
+            docker push ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:IMAGE_TAG
+      # -----------------------------------　slackへ通知 ----------------------------------------------------------------
+      - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
+        if: success()
+        uses: rtCamp/action-slack-notify@v2.0.2
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Push Docker image to GitHub Container Registry Deploy Success(CI)
+          SLACK_COLOR: good
+      - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
+        uses: rtCamp/action-slack-notify@v2.0.2
+        if: failure()
+        env:
+          SLACK_CHANNEL: ci
+          SLACK_TITLE: Push Docker image to GitHub Container Registry Deploy Failure(CI)
+          SLACK_COLOR: danger
