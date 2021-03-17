@@ -19,7 +19,7 @@ type State = {
     }
     url: string
     genre: string
-    genreList: Genre[]
+    genres: Genre[]
     range: {
         code: string
         label: string
@@ -34,7 +34,7 @@ describe('SelectGenreコンポーネント', () => {
         },
         url: 'https://shopInfo/test/url',
         genre: 'G001',
-        genreList: [
+        genres: [
             {
                 code: 'G001',
                 name: '中華'

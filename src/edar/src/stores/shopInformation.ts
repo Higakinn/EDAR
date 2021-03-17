@@ -15,7 +15,7 @@ type State = {
     positionErrorMessage: string
     shopErrorMessage: string
     genre: string
-    genreList: Genre[]
+    genres: Genre[]
     expandedArray: boolean[]
     range: {
         code: string
@@ -37,7 +37,7 @@ const initialState: State = {
     positionErrorMessage: '',
     shopErrorMessage: '',
     genre: '',
-    genreList: [],
+    genres: [],
     expandedArray: [],
     range: {
         code: '3',
@@ -101,7 +101,7 @@ const slice = createSlice({
             state.genre = action.payload;
         },
         setGenreList: (state: State, action: PayloadAction<Genre[]>) => {
-            state.genreList = action.payload;
+            state.genres = action.payload;
         },
         initExpandedList: (state: State) => {
             let initExpanded: boolean[] = [];

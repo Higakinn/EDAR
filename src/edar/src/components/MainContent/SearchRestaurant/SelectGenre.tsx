@@ -18,7 +18,7 @@ export const SelectGenre = () => {
         position,
         genre,
         url,
-        genreList,
+        genres,
         range
     } = useSelector((state: RootState) => state.shopInformation);
 
@@ -74,7 +74,7 @@ export const SelectGenre = () => {
                                 onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
                                 required
                             >
-                                {genreList.map((output: Genre, index: number) => (
+                                {genres.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
                             </Select>
