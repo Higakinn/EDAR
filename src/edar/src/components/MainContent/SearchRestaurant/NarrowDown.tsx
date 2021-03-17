@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from '../../../stores/rootReducer';
 import { updateRange } from '../../../stores/shopInformation';
 
-const distanceList = [
+const distanceDict = [
     { code: '1', label: '～300m' },
     { code: '2', label: '～500m' },
     { code: '3', label: '～1000m' },
@@ -56,7 +56,7 @@ const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
 
     function decidedNarrowDownSetting() {
         onCloseDialog();
-        let label = distanceList[Number(code) - 1].label;
+        let label = distanceDict[Number(code) - 1].label;
         dispatch(updateRange({ code, label }));
     };
 
@@ -84,7 +84,7 @@ const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
                         value={code}
                         onChange={doChangeRange}
                     >
-                        {distanceList.map((distance) => (
+                        {distanceDict.map((distance) => (
                             <FormControlLabel value={distance.code} key={distance.code} control={<Radio color="primary" />} label={distance.label} />
                         ))}
                     </RadioGroup>
