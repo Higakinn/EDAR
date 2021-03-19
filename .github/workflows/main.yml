@@ -91,7 +91,7 @@ jobs:
         run: |
             IMAGE_TAG=$(echo ${{ github.ref }} | sed -e "s#refs/heads/release/v##g") 
             docker tag $DEPLOY_DOCKER_IMAGE_NAME ghcr.io/${{ github.repository_owner }}/edar:$IMAGE_TAG
-            docker push ghcr.io/${{ github.repository_owner }}/edar:IMAGE_TAG
+            docker push ghcr.io/${{ github.repository_owner }}/edar:$IMAGE_TAG
       # -----------------------------------　slackへ通知 ----------------------------------------------------------------
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
