@@ -1,5 +1,5 @@
 import React from 'react';
-import useEffectCustom from '../../../customHooks/useEffectCustom';
+import { useEffectCustom } from '../../../customHooks/useEffectCustom';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
@@ -20,11 +20,11 @@ import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import type { Shop } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInformation';
 import { Link } from 'react-router-dom';
 
-export default function RestaurantList() {
+export const RestaurantList = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {
@@ -34,7 +34,7 @@ export default function RestaurantList() {
         isLoadedShopInfo,
         positionErrorMessage,
         shopErrorMessage,
-        expanded
+        expandedArray
     } = useSelector((state: RootState) => state.shopInformation);
 
     // カードの折りたたみを初期化
@@ -45,7 +45,7 @@ export default function RestaurantList() {
     }, [shops]);
 
     // 折りたたみボタンを押した際のフラグ変更
-    const handleExpandClick = (index: number) => {
+    function handleExpandClick(index: number) {
         dispatch(updateExpanded(index));
     };
 
@@ -113,16 +113,16 @@ export default function RestaurantList() {
                                     </IconButton>
                                     <IconButton
                                         className={clsx(classes.cardExpand, {
-                                            [classes.cardExpandOpen]: expanded[index],
+                                            [classes.cardExpandOpen]: expandedArray[index],
                                         })}
                                         onClick={() => handleExpandClick(index)}
-                                        aria-expanded={expanded[index]}
+                                        aria-expanded={expandedArray[index]}
                                         aria-label="show more"
                                     >
                                         <ExpandMoreIcon />
                                     </IconButton>
                                 </CardActions>
-                                <Collapse in={expanded[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
+                                <Collapse in={expandedArray[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
                                     <CardContent>
                                         <Typography paragraph>{output.access}</Typography>
                                         <Typography paragraph>{output.address}</Typography>

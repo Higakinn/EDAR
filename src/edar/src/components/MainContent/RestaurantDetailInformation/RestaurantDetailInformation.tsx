@@ -6,14 +6,14 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
-import { Shop } from '../SearchRestaurant/SearchRestaurant';
+import type { RootState } from '../../../stores/rootReducer';
+import type { Shop } from '../SearchRestaurant/SearchRestaurant';
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    dir?: string;
-    index: number;
-    selectedIndex: number;
+type TabPanelProps = {
+    children?: React.ReactNode,
+    dir?: string,
+    index: number,
+    selectedIndex: number
 }
 
 function createIdLabel(index: number) {
@@ -100,7 +100,7 @@ const TabsComponent = (props: { shop: Shop }) => {
     );
 }
 
-const RestaurantDetailInformation = () => {
+export const RestaurantDetailInformation = () => {
     const classes = useStyles();
     const { shops, selectedShopIndex } = useSelector((state: RootState) => state.shopInformation);
 
@@ -115,8 +115,6 @@ const RestaurantDetailInformation = () => {
         </>
     )
 }
-
-export default RestaurantDetailInformation;
 
 // CSS-in-JS
 const useStyles = makeStyles((theme: Theme) => ({

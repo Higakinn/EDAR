@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function SiteContents() {
+export const EdarSiteTop = () => {
     const classes = useStyles();
     //https://picsum.photos/images より食品にかんする画像IDを抽出
     const foodImgIds = [292, 488, 493, 674, 75, 766, 824, 1060, 1080, 225]
@@ -37,8 +37,3 @@ export default function SiteContents() {
         </Grid>
     );
 }
-
-
-
-
-

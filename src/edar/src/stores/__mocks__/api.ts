@@ -1,7 +1,7 @@
 import type { Genre, Shop } from '../../components/MainContent/SearchRestaurant/SearchRestaurant';
 
 export async function getGenre(): Promise<Genre[]> {
-    const genreList = [
+    const genres = [
         {
             "code": "G001",
             "name": "居酒屋"
@@ -72,7 +72,7 @@ export async function getGenre(): Promise<Genre[]> {
         }
     ];
     return new Promise((resolve, reject) => {
-        resolve(genreList);
+        resolve(genres);
     })
 }
 

@@ -9,10 +9,10 @@ import StorefrontIcon from '@material-ui/icons/Storefront';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
-import Account from './Account';
-import TakeOut from './TakeOut';
-import Delivery from './Delivery';
-import Reservation from './Reservation';
+import { Account } from './Account';
+import { TakeOut } from './TakeOut';
+import { Delivery } from './Delivery';
+import { Reservation } from './Reservation';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -73,7 +73,7 @@ const GridMapping = (props: GridProps) => {
     )
 }
 
-const Header = (props: { title: string, subtitle: string }) => {
+export const Header = (props: { title: string, subtitle: string }) => {
     const classes = useStyles();
     const headerMenus = {
         reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
@@ -91,8 +91,6 @@ const Header = (props: { title: string, subtitle: string }) => {
         </AppBar>
     );
 }
-
-export default Header;
 
 Header.propTypes = {
     title: PropTypes.string,

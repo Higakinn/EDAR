@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
-import RestaurantList from './RestaurantList';
+import { RestaurantList } from './RestaurantList';
 import type { Shop } from './SearchRestaurant';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -113,7 +113,7 @@ type State = {
     shops: Shop[]
     positionErrorMessage: string
     shopErrorMessage: string
-    expanded: boolean[]
+    expandedArray: boolean[]
 }
 
 describe('お店の情報が取得できなければエラー表示', () => {
@@ -124,7 +124,7 @@ describe('お店の情報が取得できなければエラー表示', () => {
         shops: [],
         positionErrorMessage: '',
         shopErrorMessage: 'お店の情報を取得できませんでした。',
-        expanded: [],
+        expandedArray: [],
     };
 
     beforeEach(() => {
@@ -150,7 +150,7 @@ describe('位置情報の利用が許可されていなければエラー表示'
         shops: [],
         positionErrorMessage: '位置情報の利用が許可されていません',
         shopErrorMessage: '',
-        expanded: [],
+        expandedArray: [],
     };
 
     beforeEach(() => {
@@ -176,7 +176,7 @@ describe('選択ジャンルのお店が周辺に無ければ、その旨を表�
         shops: [],
         positionErrorMessage: '',
         shopErrorMessage: '',
-        expanded: [],
+        expandedArray: [],
     };
 
     beforeEach(() => {
@@ -202,7 +202,7 @@ describe('タイトルの表示', () => {
         shops: shops,
         positionErrorMessage: '',
         shopErrorMessage: '',
-        expanded: [],
+        expandedArray: [],
     };
 
     beforeEach(() => {
@@ -232,7 +232,7 @@ describe('折りたたみ開閉ボタンが押されて開いた時、詳細の�
         shops: shops,
         positionErrorMessage: '',
         shopErrorMessage: '',
-        expanded: [true],
+        expandedArray: [true],
     };
 
     beforeEach(() => {

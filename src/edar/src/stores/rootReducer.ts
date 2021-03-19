@@ -1,12 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import shopInformationReducer from './shopInformation';
-import userInformationReducer from './userInformation';
+import { shopInformationReducer } from './shopInformation';
+import { userInformationReducer } from './userInformation';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
     shopInformation: shopInformationReducer,
     userInformation: userInformationReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-
-export default rootReducer;

@@ -44,4 +44,4 @@ export const {
 } = slice.actions;
 
 // reducerをエクスポート
-export default slice.reducer;
+export const userInformationReducer = slice.reducer;

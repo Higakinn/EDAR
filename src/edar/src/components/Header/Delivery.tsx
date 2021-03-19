@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-const Delivery = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
+export const Delivery = (props: { menuLabel: string, menuIcon: React.ElementType<any> }) => {
     const classes = useStyles();
     const { menuLabel, menuIcon } = props;
 
@@ -16,8 +16,6 @@ const Delivery = (props: { menuLabel: string, menuIcon: React.ElementType<any> }
         </>
     );
 }
-
-export default Delivery;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

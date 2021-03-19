@@ -11,10 +11,10 @@ import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { updateRange } from '../../../stores/shopInformation';
 
-const distance = [
+const distanceDict = [
     { code: '1', label: '～300m' },
     { code: '2', label: '～500m' },
     { code: '3', label: '～1000m' },
@@ -22,7 +22,7 @@ const distance = [
     { code: '5', label: '～3000m' },
 ];
 
-export interface NarrowDownDialogRawProps {
+type NarrowDownDialogRawProps = {
     classes: Record<'paper', string>;
     id: string;
     keepMounted: boolean;
@@ -30,7 +30,7 @@ export interface NarrowDownDialogRawProps {
     onCloseDialog: () => void;
 }
 
-function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
+const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
     const { onCloseDialog, isOpeningDialog, ...other } = props;
     const radioGroupRef = useRef<HTMLElement>(null);
     const dispatch = useDispatch();
@@ -44,23 +44,23 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
         }
     }, [isOpeningDialog, range]);
 
-    const openedNarrowDownDialog = () => {
+    function openedNarrowDownDialog() {
         if (radioGroupRef.current != null) {
             radioGroupRef.current.focus();
         }
     };
 
-    const canceledNarrowDownDialog = () => {
+    function canceledNarrowDownDialog() {
         onCloseDialog();
     };
 
-    const decidedNarrowDownSetting = () => {
+    function decidedNarrowDownSetting() {
         onCloseDialog();
-        let label = distance[Number(code) - 1].label;
+        let label = distanceDict[Number(code) - 1].label;
         dispatch(updateRange({ code, label }));
     };
 
-    const doChangeRange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    function doChangeRange(event: React.ChangeEvent<HTMLInputElement>) {
         setCode((event.target as HTMLInputElement).value);
     };
 
@@ -84,7 +84,7 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
                         value={code}
                         onChange={doChangeRange}
                     >
-                        {distance.map((distance) => (
+                        {distanceDict.map((distance) => (
                             <FormControlLabel value={distance.code} key={distance.code} control={<Radio color="primary" />} label={distance.label} />
                         ))}
                     </RadioGroup>
@@ -103,15 +103,15 @@ function NarrowDownDialogRaw(props: NarrowDownDialogRawProps) {
     );
 }
 
-export default function NarrowDown() {
+export const NarrowDown = () => {
     const classes = useStyles();
     const [isOpeningDialog, setIsOpeningDialog] = useState(false);
 
-    const clickNarrowDownButton = () => {
+    function clickNarrowDownButton() {
         setIsOpeningDialog(true);
     };
 
-    const onCloseDialog = () => {
+    function onCloseDialog() {
         setIsOpeningDialog(false);
     };
 

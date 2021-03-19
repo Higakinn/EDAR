@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react';
-import useEffectCustom from '../../../customHooks/useEffectCustom';
+import { useEffectCustom } from '../../../customHooks/useEffectCustom';
 import { Button, InputLabel, Select, FormControl, MenuItem } from '@material-ui/core';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './SearchRestaurant';
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../stores/rootReducer';
 import { createURL, setGenre } from '../../../stores/shopInformation';
 import { fetchPosition, fetchGenreList, fetchShopList } from '../../../stores/shopInformation'
-import NarrowDown from './NarrowDown';
+import { NarrowDown } from './NarrowDown';
 
-export default function SelectGenre() {
+export const SelectGenre = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {
         position,
         genre,
         url,
-        genreList,
+        genres,
         range
     } = useSelector((state: RootState) => state.shopInformation);
 
     // 経度緯度情報を取得
-    const getLocationInfo = (event: React.FormEvent<HTMLFormElement>) => {
+    function getLocationInfo(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         dispatch(fetchPosition());
     };
@@ -43,7 +43,7 @@ export default function SelectGenre() {
     }, [url]);
 
     // ジャンルが変更された際の処理
-    const changedgenre = (event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => {
+    function changedgenre(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) {
         dispatch(setGenre(event.target.value));
     };
 
@@ -74,7 +74,7 @@ export default function SelectGenre() {
                                 onChange={(event: React.ChangeEvent<{ name?: string | undefined, value: any | string }>) => changedgenre(event)}
                                 required
                             >
-                                {genreList.map((output: Genre, index: number) => (
+                                {genres.map((output: Genre, index: number) => (
                                     <MenuItem key={index} value={output.code}> {output.name} </MenuItem>
                                 ))}
                             </Select>
