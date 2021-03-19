@@ -89,7 +89,7 @@ jobs:
           password: ${{ secrets.CR_PAT }}
       - name: Push Docker image to GitHub Container Registry
         run: |
-            IMAGE_TAG=$(echo ${{ github.ref }} | sed -e "s#refs/tags/v##g") 
+            IMAGE_TAG=$(echo ${{ github.ref }} | sed -e "s#refs/heads/release/v##g") 
             docker tag $DOCKER_IMAGE_NAME ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:$IMAGE_TAG
             docker push ghcr.io/${{ github.repository_owner }}/${{env.DOCKER_IMAGE_NAME}}:IMAGE_TAG
       # -----------------------------------　slackへ通知 ----------------------------------------------------------------
@@ -127,8 +127,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Build docker image
-        run: >
-          sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" 
+        run: sed -e "s|__API_USER__|${REACT_APP_RSTRNT_API_USER}|g" 
               -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g" 
               -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g" 
               -e "s|__FIREBASE_API_KEY__|${FIREBASE_STAGING_API_KEY}|g" 
@@ -176,8 +175,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: Build docker image
-        run: >
-          sed -e "s|___API_USER__|${REACT_APP_RSTRNT_API_USER}|g" 
+        run: sed -e "s|___API_USER__|${REACT_APP_RSTRNT_API_USER}|g" 
               -e "s|__API_PASS__|${REACT_APP_RSTRNT_API_PASSWORD}|g"
               -e "s|__RESTRANT_API_URL__|${REACT_APP_RSTRNT_API_URL}|g"
               -e "s|__FIREBASE_API_KEY__|${FIREBASE_API_KEY}|g"
