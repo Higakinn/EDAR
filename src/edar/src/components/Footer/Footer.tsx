@@ -5,13 +5,13 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
-function Copyright() {
+const Copyright = () => {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
                 Your Website
-        </Link>{' '}
+            </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         width: '100%',
         bottom: 0,
         padding: theme.spacing(3, 0),
+        position: 'absolute',
     },
 }));
 
-export default function Footer(props: { title: string, description: string }) {
+export const Footer = (props: { title: string, description: string }) => {
     const classes = useStyles();
     const { description, title } = props;
 

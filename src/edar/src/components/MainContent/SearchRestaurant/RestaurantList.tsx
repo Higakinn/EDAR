@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useEffectCustom } from '../../../customHooks/useEffectCustom';
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card";
@@ -17,59 +18,57 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import type { Shop } from './MainContent';
+import type { Shop } from './SearchRestaurant';
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from '../../../stores/rootReducer';
+import { initExpandedList, updateExpanded, updateSelectedShopIndex } from '../../../stores/shopInformation';
+import { Link } from 'react-router-dom';
 
-type Props = {
-    setExpanded: React.Dispatch<React.SetStateAction<boolean[]>>
-    shops: Shop[]
-    isProcessing: boolean
-    isLoadedLocationInfo: boolean
-    isLoadedShopInfo: boolean
-    errorMessage: string
-    expanded: boolean[]
-}
-
-export default function RestaurantList(props: Props) {
+export const RestaurantList = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {
+        shops,
+        isProcessing,
+        isLoadedLocationInfo,
+        isLoadedShopInfo,
+        positionErrorMessage,
+        shopErrorMessage,
+        expandedArray
+    } = useSelector((state: RootState) => state.shopInformation);
 
     // カードの折りたたみを初期化
-    useEffect(() => {
-        if (props.isLoadedLocationInfo) {
-            let initExpanded: boolean[] = [];
-            props.shops.forEach(() => {
-                initExpanded.push(false);
-            });
-            props.setExpanded(initExpanded);
-        }
+    useEffectCustom(() => {
+        dispatch(initExpandedList());
         // TODO: (警告が出る)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.shops]);
+    }, [shops]);
 
     // 折りたたみボタンを押した際のフラグ変更
-    const handleExpandClick = (index: number) => {
-        let copyExpanded = props.expanded.slice();
-        copyExpanded[index] = !copyExpanded[index];
-        props.setExpanded(copyExpanded);
+    function handleExpandClick(index: number) {
+        dispatch(updateExpanded(index));
     };
 
     return (
         <>
             <Grid container justify="center">
-                {(!props.isProcessing && props.isLoadedLocationInfo && props.isLoadedShopInfo) &&
+                {(!isProcessing && isLoadedLocationInfo && isLoadedShopInfo) &&
                     <h3 className={classes.heading}>検索結果</h3>}
             </Grid>
             <Grid container justify="center">
                 <Grid item xs={12} className={classes.messages}>
-                    {(!props.isProcessing && !props.isLoadedLocationInfo) &&
-                        <p className={classes.sideInfo}> {props.errorMessage}</p>}
-                    {(!props.isProcessing && props.isLoadedLocationInfo && !props.isLoadedShopInfo) &&
-                        <p className={classes.sideInfo}>お店の情報を取得できませんでした。</p>}
-                    {(!props.isProcessing && props.isLoadedLocationInfo && props.isLoadedShopInfo && (props.shops.length === 0)) &&
+                    {(!isProcessing && !isLoadedLocationInfo) &&
+                        <p className={classes.sideInfo}> {positionErrorMessage}</p>}
+                    {(!isProcessing && isLoadedLocationInfo && !isLoadedShopInfo) &&
+                        <p className={classes.sideInfo}>{shopErrorMessage}</p>}
+                    {(!isProcessing && isLoadedLocationInfo && isLoadedShopInfo && (shops.length === 0)) &&
                         <p className={classes.sideInfo}> 近くに該当ジャンルのお店がありませんでした。</p>}
-                    {props.isProcessing &&
+                    {isProcessing &&
                         <CircularProgress className={classes.sideInfo} disableShrink />}
                 </Grid>
-                {props.shops.map((output: Shop, index: number) => {
+            </Grid>
+            <Grid container justify="space-evenly">
+                {shops.map((output: Shop, index: number) => {
                     return (
                         <Grid item key={index}>
                             <Card className={classes.cardRoot}>
@@ -85,7 +84,14 @@ export default function RestaurantList(props: Props) {
                                             <MoreVertIcon />
                                         </IconButton>
                                     }
-                                    title={output.name}
+                                    title={
+                                        <Link
+                                            to={{ pathname: `/detail/${index}` }}
+                                            onClick={() => dispatch(updateSelectedShopIndex(index))}
+                                        >
+                                            {output.name}
+                                        </Link>
+                                    }
                                     subheader={output.budget.average}
                                 />
                                 <CardMedia
@@ -107,16 +113,16 @@ export default function RestaurantList(props: Props) {
                                     </IconButton>
                                     <IconButton
                                         className={clsx(classes.cardExpand, {
-                                            [classes.cardExpandOpen]: props.expanded[index],
+                                            [classes.cardExpandOpen]: expandedArray[index],
                                         })}
                                         onClick={() => handleExpandClick(index)}
-                                        aria-expanded={props.expanded[index]}
+                                        aria-expanded={expandedArray[index]}
                                         aria-label="show more"
                                     >
                                         <ExpandMoreIcon />
                                     </IconButton>
                                 </CardActions>
-                                <Collapse in={props.expanded[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
+                                <Collapse in={expandedArray[index]} timeout="auto" unmountOnExit className={classes.cardCollapse}>
                                     <CardContent>
                                         <Typography paragraph>{output.access}</Typography>
                                         <Typography paragraph>{output.address}</Typography>
