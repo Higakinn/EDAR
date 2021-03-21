@@ -5,6 +5,8 @@ on:
     types: [opened, labeled]
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL_FOR_ISSUE }}
+  SLACK_MESSAGE: 'https://github.com/hgaiji/EDAR/projects/2'
 
 jobs:
   assign_one_project:
@@ -25,3 +27,19 @@ jobs:
       with:
         project: 'https://github.com/hgaiji/EDAR/projects/2'
         column_name: '✅ To Do'
+    # -----------------------------------　slackへ通知 ----------------------------------------------------------------
+    - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
+      if: success()
+      uses: rtCamp/action-slack-notify@v2.0.2
+      env:
+        SLACK_CHANNEL: issue
+        SLACK_TITLE: New Issue Created
+        SLACK_COLOR: good
+    - name: Slack Notification on Failure # テスト失敗時はこちらのステップが実行される
+      uses: rtCamp/action-slack-notify@v2.0.2
+      if: failure()
+      env:
+        SLACK_CHANNEL: issue
+        SLACK_TITLE: New Issue not Created
+        SLACK_COLOR: danger
+
