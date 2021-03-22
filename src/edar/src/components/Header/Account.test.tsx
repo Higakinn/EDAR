@@ -15,77 +15,94 @@ const useSelectorMock = useSelector as jest.Mock;
 const useDispatchMock = useDispatch as jest.Mock;
 
 type State = {
-    user: {
-        email: string | null
-        displayName: string | null
-        photoURL: string | null
-    }
-    isLoggedIn: boolean
-}
+  user: {
+    email: string | null;
+    displayName: string | null;
+    photoURL: string | null;
+  };
+  isLoggedIn: boolean;
+};
 
 describe('Accountコンポーネント>ログインしていない状態', () => {
-    const headerMenus = {
-        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    };
-    const initialState: State = {
-        user: {
-            email: null,
-            displayName: null,
-            photoURL: null,
-        },
-        isLoggedIn: false,
-    };
+  const headerMenus = {
+    reservation: { menuLabel: '飲食店予約', menuIcon: HomeIcon },
+    delivery: { menuLabel: 'デリバリ-', menuIcon: LocalMallIcon },
+    takeOut: { menuLabel: 'テイクアウト', menuIcon: StorefrontIcon },
+    account: { menuLabel: 'アカウント', menuIcon: AccountBoxIcon },
+  };
+  const initialState: State = {
+    user: {
+      email: null,
+      displayName: null,
+      photoURL: null,
+    },
+    isLoggedIn: false,
+  };
 
-    beforeEach(() => {
-        useSelectorMock.mockReturnValue(initialState);
-        useDispatchMock.mockReturnValue(jest.fn());
-    });
+  beforeEach(() => {
+    useSelectorMock.mockReturnValue(initialState);
+    useDispatchMock.mockReturnValue(jest.fn());
+  });
 
-    afterEach(() => {
-        jest.resetAllMocks()
-    });
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
-    test('アカウントボタンの表示', () => {
-        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
-        expect(screen.getByText(headerMenus.account.menuLabel)).toBeInTheDocument();
-    });
+  test('アカウントボタンの表示', () => {
+    render(
+      <Account
+        menuLabel={headerMenus.account.menuLabel}
+        menuIcon={headerMenus.account.menuIcon}
+      />
+    );
+    expect(screen.getByText(headerMenus.account.menuLabel)).toBeInTheDocument();
+  });
 
-    test('アカウントダイアログのキャンセルボタンが表示されているか', () => {
-        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
-        expect(screen.getByText('キャンセル')).toBeInTheDocument();
-    });
+  test('アカウントダイアログのキャンセルボタンが表示されているか', () => {
+    render(
+      <Account
+        menuLabel={headerMenus.account.menuLabel}
+        menuIcon={headerMenus.account.menuIcon}
+      />
+    );
+    expect(screen.getByText('キャンセル')).toBeInTheDocument();
+  });
 });
 
 describe('Accountコンポーネント>ログインしている状態', () => {
-    const headerMenus = {
-        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    };
-    const initialState: State = {
-        user: {
-            email: 'test@test.com',
-            displayName: 'test',
-            photoURL: 'http://test.com',
-        },
-        isLoggedIn: true,
-    };
+  const headerMenus = {
+    reservation: { menuLabel: '飲食店予約', menuIcon: HomeIcon },
+    delivery: { menuLabel: 'デリバリ-', menuIcon: LocalMallIcon },
+    takeOut: { menuLabel: 'テイクアウト', menuIcon: StorefrontIcon },
+    account: { menuLabel: 'アカウント', menuIcon: AccountBoxIcon },
+  };
+  const initialState: State = {
+    user: {
+      email: 'test@test.com',
+      displayName: 'test',
+      photoURL: 'http://test.com',
+    },
+    isLoggedIn: true,
+  };
 
-    beforeEach(() => {
-        useSelectorMock.mockReturnValue(initialState);
-        useDispatchMock.mockReturnValue(jest.fn());
-    });
+  beforeEach(() => {
+    useSelectorMock.mockReturnValue(initialState);
+    useDispatchMock.mockReturnValue(jest.fn());
+  });
 
-    afterEach(() => {
-        jest.resetAllMocks()
-    });
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
 
-    test('ログイン中のメールアドレスが表示されているか', () => {
-        render(<Account menuLabel={headerMenus.account.menuLabel} menuIcon={headerMenus.account.menuIcon} />);
-        expect(screen.getByText(initialState.user.email + 'でログインしています。')).toBeInTheDocument();
-    });
+  test('ログイン中のメールアドレスが表示されているか', () => {
+    render(
+      <Account
+        menuLabel={headerMenus.account.menuLabel}
+        menuIcon={headerMenus.account.menuIcon}
+      />
+    );
+    expect(
+      screen.getByText(initialState.user.email + 'でログインしています。')
+    ).toBeInTheDocument();
+  });
 });
