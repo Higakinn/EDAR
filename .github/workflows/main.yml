@@ -23,7 +23,7 @@ jobs:
       - name: Build docker image
         run: docker build -t $DOCKER_IMAGE_NAME -f ./Dockerfile.deploy .
       - name: Run lint in docker container
-        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts"
+        run: docker run -t $DOCKER_IMAGE_NAME /bin/sh -c "yarn eslint . --ext .tsx --ext .ts && yarn run prettier ./src/ --check"
       # -----------------------------------　slackへ通知 ----------------------------------------------------------------
       - name: Slack Notification on Success # テスト成功時はこちらのステップが実行される
         if: success()
