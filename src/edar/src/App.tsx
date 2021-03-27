@@ -1,14 +1,14 @@
 import { MainContent } from './components/MainContent/SearchRestaurant/SearchRestaurant';
 import React, { useEffect } from 'react';
-import { useDispatch } from "react-redux";
-import { Header } from './components/Header/Header'
-import { EdarSiteTop } from './components/EdarSiteTop'
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { useDispatch } from 'react-redux';
+import { Header } from './components/Header/Header';
+import { EdarSiteTop } from './components/EdarSiteTop';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { RestaurantDetailInformation } from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
-import { Footer } from './components/Footer/Footer'
+import { Footer } from './components/Footer/Footer';
 import { firebaseApp } from './firebase/authentication';
 import { updateUserInformation } from './stores/userInformation';
 
@@ -23,7 +23,7 @@ export const App = () => {
         const { email, displayName, photoURL } = user;
         dispatch(updateUserInformation({ email, displayName, photoURL }));
       }
-    })
+    });
   }, [dispatch]);
 
   return (
@@ -32,25 +32,35 @@ export const App = () => {
         <div className={classes.app}>
           <BrowserRouter>
             <div className={classes.center}>
-              <Header title="EDAR" subtitle="~ Easily decide on a restaurant ~" />
+              <Header
+                title="EDAR"
+                subtitle="~ Easily decide on a restaurant ~"
+              />
             </div>
             <EdarSiteTop />
             <div className={classes.center}>
-              <Route exact path='/' component={MainContent} />
-              <Route exact path='/detail/:index' component={RestaurantDetailInformation} />
+              <Route exact path="/" component={MainContent} />
+              <Route
+                exact
+                path="/detail/:index"
+                component={RestaurantDetailInformation}
+              />
             </div>
-            <Footer title="EDAR" description="~ Easily decide on a restaurant ~" />
+            <Footer
+              title="EDAR"
+              description="~ Easily decide on a restaurant ~"
+            />
           </BrowserRouter>
         </div>
       </ThemeProvider>
     </>
   );
-}
+};
 
 // テーマの設定
 const theme = createMuiTheme({
   palette: {
-    type: "light",
+    type: 'light',
   },
 });
 
@@ -61,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
     minHeight: '100vh',
     position: 'relative',
-    paddingBottom: '124.13px',/*←footerの高さ*/
-    boxSizing: 'border-box',/*←全て含めてmin-height:100vhに*/
+    paddingBottom: '124.13px' /*←footerの高さ*/,
+    boxSizing: 'border-box' /*←全て含めてmin-height:100vhに*/,
   },
   center: {
     width: '960px',
@@ -72,6 +82,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       width: '100%',
       margin: '0 auto',
       textAlign: 'left',
-    }
-  }
+    },
+  },
 }));

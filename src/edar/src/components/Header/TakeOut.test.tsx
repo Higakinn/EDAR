@@ -8,17 +8,21 @@ import { Delivery } from './Delivery';
 
 afterEach(cleanup);
 
-
 describe('TakeOutコンポーネント', () => {
-    const headerMenus = {
-        reservation: { menuLabel: "飲食店予約", menuIcon: HomeIcon },
-        delivery: { menuLabel: "デリバリ-", menuIcon: LocalMallIcon },
-        takeOut: { menuLabel: "テイクアウト", menuIcon: StorefrontIcon },
-        account: { menuLabel: "アカウント", menuIcon: AccountBoxIcon },
-    };
+  const headerMenus = {
+    reservation: { menuLabel: '飲食店予約', menuIcon: HomeIcon },
+    delivery: { menuLabel: 'デリバリ-', menuIcon: LocalMallIcon },
+    takeOut: { menuLabel: 'テイクアウト', menuIcon: StorefrontIcon },
+    account: { menuLabel: 'アカウント', menuIcon: AccountBoxIcon },
+  };
 
-    test('テイクアウトボタンの表示', () => {
-        render(<Delivery menuLabel={headerMenus.takeOut.menuLabel} menuIcon={headerMenus.takeOut.menuIcon} />);
-        expect(screen.getByText(headerMenus.takeOut.menuLabel)).toBeInTheDocument();
-    });
+  test('テイクアウトボタンの表示', () => {
+    render(
+      <Delivery
+        menuLabel={headerMenus.takeOut.menuLabel}
+        menuIcon={headerMenus.takeOut.menuIcon}
+      />
+    );
+    expect(screen.getByText(headerMenus.takeOut.menuLabel)).toBeInTheDocument();
+  });
 });
