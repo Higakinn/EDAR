@@ -3,7 +3,7 @@ import base64 from 'base-64';
 import type {
   Genre,
   Shop,
-} from '../components/MainContent/SearchRestaurant/SearchRestaurant';
+} from '../components/MainContent/SpecifySearchCondition/SearchRestaurant';
 
 export function getGenre(): Promise<Genre[]> {
   let genreUrl = process.env['REACT_APP_RSTRNT_API_URL'] + '/genre_master';
@@ -15,8 +15,8 @@ export function getGenre(): Promise<Genre[]> {
             'Basic ' +
             base64.encode(
               process.env['REACT_APP_RSTRNT_API_USER'] +
-                ':' +
-                process.env['REACT_APP_RSTRNT_API_PASSWORD']
+              ':' +
+              process.env['REACT_APP_RSTRNT_API_PASSWORD']
             ),
           'Content-Type': 'application/json',
         },
@@ -38,8 +38,8 @@ export function getShopList(url: string): Promise<Shop[]> {
             'Basic ' +
             base64.encode(
               process.env['REACT_APP_RSTRNT_API_USER'] +
-                ':' +
-                process.env['REACT_APP_RSTRNT_API_PASSWORD']
+              ':' +
+              process.env['REACT_APP_RSTRNT_API_PASSWORD']
             ),
           'Content-Type': 'application/json',
         },

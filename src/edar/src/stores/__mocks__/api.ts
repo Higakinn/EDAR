@@ -1,7 +1,7 @@
 import type {
   Genre,
   Shop,
-} from '../../components/MainContent/SearchRestaurant/SearchRestaurant';
+} from '../../components/MainContent/SpecifySearchCondition/SearchRestaurant';
 
 export async function getGenre(): Promise<Genre[]> {
   const genres = [

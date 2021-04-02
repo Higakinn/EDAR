@@ -1,5 +1,5 @@
 import React from 'react';
-import { RestaurantList } from './RestaurantList';
+import { RestaurantList } from '../SearchResultList/RestaurantList';
 import { SelectGenre } from './SelectGenre';
 
 export type Shop = {

@@ -1,4 +1,4 @@
-import { MainContent } from './components/MainContent/SearchRestaurant/SearchRestaurant';
+import { MainContent } from './components/MainContent/SpecifySearchCondition/SearchRestaurant';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Header } from './components/Header/Header';

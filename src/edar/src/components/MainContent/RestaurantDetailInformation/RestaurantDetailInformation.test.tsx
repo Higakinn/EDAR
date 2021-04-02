@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { RestaurantDetailInformation } from './RestaurantDetailInformation';
 import { useSelector, useDispatch } from 'react-redux';
 import userEvent from '@testing-library/user-event';
-import type { Shop } from '../SearchRestaurant/SearchRestaurant';
+import type { Shop } from '../SpecifySearchCondition/SearchRestaurant';
 
 afterEach(cleanup);
 
