@@ -11,6 +11,7 @@ import { RestaurantDetailInformation } from './components/MainContent/Restaurant
 import { Footer } from './components/Footer/Footer';
 import { firebaseApp } from './firebase/authentication';
 import { updateUserInformation } from './stores/userInformation';
+import { RestaurantList } from './components/MainContent/SearchResultList/RestaurantList';
 
 export const App = () => {
   const classes = useStyles();
@@ -40,6 +41,7 @@ export const App = () => {
             <EdarSiteTop />
             <div className={classes.center}>
               <Route exact path="/" component={MainContent} />
+              <Route exact path="/range=:range/genre=:genre" component={RestaurantList} />
               <Route
                 exact
                 path="/detail/:index"

@@ -103,7 +103,6 @@ export const MainContent = () => {
   return (
     <>
       <SelectGenre />
-      <RestaurantList />
     </>
   );
 };

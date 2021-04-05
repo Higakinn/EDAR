@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './SearchRestaurant';
 import { useDispatch, useSelector } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import type { RootState } from '../../../stores/rootReducer';
 import { createURL, setGenre } from '../../../stores/shopInformation';
 import {
@@ -21,10 +22,10 @@ import {
 } from '../../../stores/shopInformation';
 import { NarrowDown } from './NarrowDown';
 
-export const SelectGenre = () => {
+export const SelectGenre = withRouter((props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { position, genre, url, genres, range } = useSelector(
+  const { position, genre, url, genres, range, shops } = useSelector(
     (state: RootState) => state.shopInformation
   );
 
@@ -61,6 +62,11 @@ export const SelectGenre = () => {
     // TODO: (警告が出る)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // お店の情報を取得し終えたら画面遷移
+  useEffectCustom(() => {
+    props.history.push(`/range=${range.label}/genre=${genre}`);
+  }, [shops]);
 
   return (
     <>
@@ -130,7 +136,7 @@ export const SelectGenre = () => {
       </form>
     </>
   );
-};
+});
 
 // CSS-in-JS
 const useStyles = makeStyles((theme: Theme) => ({
