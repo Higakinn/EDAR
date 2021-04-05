@@ -7,6 +7,12 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 
+// ブラウザの戻るボタンを押したときはリロードを実施
+window.history.replaceState(null, document.getElementsByTagName('title')[0].innerHTML, null);
+window.addEventListener('popstate', function (e) {
+  window.location.reload();
+});
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
