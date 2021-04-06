@@ -43,8 +43,7 @@ export const App = () => {
               <Route exact path="/" component={MainContent} />
               <Route exact path="/range=:range/genre=:genre" component={RestaurantList} />
               <Route
-                exact
-                path="/detail/:index"
+                path="/:shopId"
                 component={RestaurantDetailInformation}
               />
             </div>

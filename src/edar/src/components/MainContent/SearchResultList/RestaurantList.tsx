@@ -101,7 +101,7 @@ export const RestaurantList = () => {
                   }
                   title={
                     <Link
-                      to={{ pathname: `/detail/${index}` }}
+                      to={{ pathname: `/${shops[index].id}` }}
                       onClick={() => dispatch(updateSelectedShopIndex(index))}
                     >
                       {output.name}
