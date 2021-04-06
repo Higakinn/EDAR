@@ -21,6 +21,7 @@
     "@types/redux-persist": "^4.3.1",
     "axios": "^0.21.1",
     "base-64": "^1.0.0",
+    "connected-react-router": "^6.9.1",
     "firebase": "^8.2.9",
     "prettier": "2.2.1",
     "react": "^17.0.1",
