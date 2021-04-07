@@ -6,7 +6,7 @@ import { EdarSiteTop } from './components/EdarSiteTop';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { RestaurantDetailInformation } from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
 import { Footer } from './components/Footer/Footer';
 import { firebaseApp } from './firebase/authentication';
@@ -31,27 +31,27 @@ export const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <div className={classes.app}>
-          <BrowserRouter>
-            <div className={classes.center}>
-              <Header
-                title="EDAR"
-                subtitle="~ Easily decide on a restaurant ~"
-              />
-            </div>
-            <EdarSiteTop />
-            <div className={classes.center}>
+          <div className={classes.center}>
+            <Header
+              title="EDAR"
+              subtitle="~ Easily decide on a restaurant ~"
+            />
+          </div>
+          <EdarSiteTop />
+          <div className={classes.center}>
+            <Switch>
               <Route exact path="/" component={MainContent} />
               <Route exact path="/range=:range/genre=:genre" component={RestaurantList} />
               <Route
                 path="/:shopId"
                 component={RestaurantDetailInformation}
               />
-            </div>
-            <Footer
-              title="EDAR"
-              description="~ Easily decide on a restaurant ~"
-            />
-          </BrowserRouter>
+            </Switch>
+          </div>
+          <Footer
+            title="EDAR"
+            description="~ Easily decide on a restaurant ~"
+          />
         </div>
       </ThemeProvider>
     </>

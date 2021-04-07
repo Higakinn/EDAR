@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
+import { history } from './stores/rootReducer';
 
 // ブラウザの戻るボタンを押したときはリロードを実施
 window.history.replaceState(null, document.getElementsByTagName('title')[0].innerHTML, null);
@@ -16,9 +18,11 @@ window.addEventListener('popstate', function (e) {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
-        <App />
-      </PersistGate>
+      <ConnectedRouter history={history}>
+        <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </ConnectedRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
