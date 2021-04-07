@@ -1,5 +1,3 @@
-import React from 'react';
-
 export type Shop = {
   access: string;
   address: string;
