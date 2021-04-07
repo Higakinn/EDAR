@@ -17,7 +17,7 @@ const rootPersistConfig = {
 const shopsPersistConfig = {
   key: 'shopInformation',
   storage: storage,
-  whitelist: ['shops'],
+  whitelist: ['shops', 'selectedShopIndex'],
 };
 
 export const rootReducer = combineReducers({
