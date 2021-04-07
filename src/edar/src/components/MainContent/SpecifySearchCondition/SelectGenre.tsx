@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './types';
 import { useDispatch, useSelector } from 'react-redux';
-import { push } from 'connected-react-router';
+import { useHistory } from 'react-router-dom';
 import type { RootState } from '../../../stores/rootReducer';
 import { createURL, setGenre } from '../../../stores/shopInformation';
 import {
@@ -23,6 +23,7 @@ import {
 import { NarrowDown } from './NarrowDown';
 
 export const SelectGenre = () => {
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const { position, genre, url, genres, range, shops } = useSelector(
@@ -65,7 +66,7 @@ export const SelectGenre = () => {
 
   // お店の情報を取得し終えたら画面遷移
   useEffectCustom(() => {
-    dispatch(push(`/range=${range.label}/genre=${genre}`));
+    history.push(`/range=${range.label}/genre=${genre}`);
   }, [shops]);
 
   return (
