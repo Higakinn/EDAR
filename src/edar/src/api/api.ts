@@ -15,8 +15,8 @@ export function getGenre(): Promise<Genre[]> {
             'Basic ' +
             base64.encode(
               process.env['REACT_APP_RSTRNT_API_USER'] +
-              ':' +
-              process.env['REACT_APP_RSTRNT_API_PASSWORD']
+                ':' +
+                process.env['REACT_APP_RSTRNT_API_PASSWORD']
             ),
           'Content-Type': 'application/json',
         },
@@ -38,8 +38,8 @@ export function getShopList(url: string): Promise<Shop[]> {
             'Basic ' +
             base64.encode(
               process.env['REACT_APP_RSTRNT_API_USER'] +
-              ':' +
-              process.env['REACT_APP_RSTRNT_API_PASSWORD']
+                ':' +
+                process.env['REACT_APP_RSTRNT_API_PASSWORD']
             ),
           'Content-Type': 'application/json',
         },

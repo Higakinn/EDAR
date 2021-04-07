@@ -11,7 +11,7 @@ export const history = History.createBrowserHistory();
 const rootPersistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['shopInformation', 'userInformation']
+  blacklist: ['shopInformation', 'userInformation'],
 };
 
 const shopsPersistConfig = {

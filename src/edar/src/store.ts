@@ -7,7 +7,7 @@ import { history } from './stores/rootReducer';
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: [thunk, routerMiddleware(history)]
+  middleware: [thunk, routerMiddleware(history)],
 });
 
 export const persistor = persistStore(store);

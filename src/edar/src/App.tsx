@@ -32,20 +32,18 @@ export const App = () => {
       <ThemeProvider theme={theme}>
         <div className={classes.app}>
           <div className={classes.center}>
-            <Header
-              title="EDAR"
-              subtitle="~ Easily decide on a restaurant ~"
-            />
+            <Header title="EDAR" subtitle="~ Easily decide on a restaurant ~" />
           </div>
           <EdarSiteTop />
           <div className={classes.center}>
             <Switch>
               <Route exact path="/" component={SelectGenre} />
-              <Route exact path="/range=:range/genre=:genre" component={RestaurantList} />
               <Route
-                path="/:shopId"
-                component={RestaurantDetailInformation}
+                exact
+                path="/range=:range/genre=:genre"
+                component={RestaurantList}
               />
+              <Route path="/:shopId" component={RestaurantDetailInformation} />
             </Switch>
           </div>
           <Footer
