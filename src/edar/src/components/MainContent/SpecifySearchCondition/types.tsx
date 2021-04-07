@@ -1,6 +1,4 @@
 import React from 'react';
-import { RestaurantList } from '../SearchResultList/RestaurantList';
-import { SelectGenre } from './SelectGenre';
 
 export type Shop = {
   access: string;
@@ -97,12 +95,4 @@ export type Shop = {
 export type Genre = {
   code: string;
   name: string;
-};
-
-export const MainContent = () => {
-  return (
-    <>
-      <SelectGenre />
-    </>
-  );
 };

@@ -1,4 +1,4 @@
-import { MainContent } from './components/MainContent/SpecifySearchCondition/SearchRestaurant';
+import { SelectGenre } from './components/MainContent/SpecifySearchCondition/SelectGenre';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Header } from './components/Header/Header';
@@ -40,7 +40,7 @@ export const App = () => {
           <EdarSiteTop />
           <div className={classes.center}>
             <Switch>
-              <Route exact path="/" component={MainContent} />
+              <Route exact path="/" component={SelectGenre} />
               <Route exact path="/range=:range/genre=:genre" component={RestaurantList} />
               <Route
                 path="/:shopId"

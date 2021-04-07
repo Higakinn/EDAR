@@ -10,7 +10,7 @@ import {
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
-import type { Genre } from './SearchRestaurant';
+import type { Genre } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { push } from 'connected-react-router';
 import type { RootState } from '../../../stores/rootReducer';

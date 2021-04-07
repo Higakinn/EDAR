@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../stores/rootReducer';
-import type { Shop } from '../SpecifySearchCondition/SearchRestaurant';
+import type { Shop } from '../SpecifySearchCondition/types';
 
 type TabPanelProps = {
   children?: React.ReactNode;
