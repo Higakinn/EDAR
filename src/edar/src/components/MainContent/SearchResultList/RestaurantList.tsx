@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import type { Shop } from './SearchRestaurant';
+import type { Shop } from '../SpecifySearchCondition/types';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../stores/rootReducer';
 import {
@@ -101,7 +101,7 @@ export const RestaurantList = () => {
                   }
                   title={
                     <Link
-                      to={{ pathname: `/detail/${index}` }}
+                      to={{ pathname: `/${shops[index].id}` }}
                       onClick={() => dispatch(updateSelectedShopIndex(index))}
                     >
                       {output.name}

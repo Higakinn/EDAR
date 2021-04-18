@@ -1,4 +1,4 @@
-import { MainContent } from './components/MainContent/SearchRestaurant/SearchRestaurant';
+import { SelectGenre } from './components/MainContent/SpecifySearchCondition/SelectGenre';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Header } from './components/Header/Header';
@@ -6,11 +6,12 @@ import { EdarSiteTop } from './components/EdarSiteTop';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { RestaurantDetailInformation } from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
 import { Footer } from './components/Footer/Footer';
 import { firebaseApp } from './firebase/authentication';
 import { updateUserInformation } from './stores/userInformation';
+import { RestaurantList } from './components/MainContent/SearchResultList/RestaurantList';
 
 export const App = () => {
   const classes = useStyles();
@@ -30,27 +31,25 @@ export const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <div className={classes.app}>
-          <BrowserRouter>
-            <div className={classes.center}>
-              <Header
-                title="EDAR"
-                subtitle="~ Easily decide on a restaurant ~"
-              />
-            </div>
-            <EdarSiteTop />
-            <div className={classes.center}>
-              <Route exact path="/" component={MainContent} />
+          <div className={classes.center}>
+            <Header title="EDAR" subtitle="~ Easily decide on a restaurant ~" />
+          </div>
+          <EdarSiteTop />
+          <div className={classes.center}>
+            <Switch>
+              <Route exact path="/" component={SelectGenre} />
               <Route
                 exact
-                path="/detail/:index"
-                component={RestaurantDetailInformation}
+                path="/range=:range/genre=:genre"
+                component={RestaurantList}
               />
-            </div>
-            <Footer
-              title="EDAR"
-              description="~ Easily decide on a restaurant ~"
-            />
-          </BrowserRouter>
+              <Route path="/:shopId" component={RestaurantDetailInformation} />
+            </Switch>
+          </div>
+          <Footer
+            title="EDAR"
+            description="~ Easily decide on a restaurant ~"
+          />
         </div>
       </ThemeProvider>
     </>

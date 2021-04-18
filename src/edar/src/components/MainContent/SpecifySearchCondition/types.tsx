@@ -1,7 +1,3 @@
-import React from 'react';
-import { RestaurantList } from './RestaurantList';
-import { SelectGenre } from './SelectGenre';
-
 export type Shop = {
   access: string;
   address: string;
@@ -97,13 +93,4 @@ export type Shop = {
 export type Genre = {
   code: string;
   name: string;
-};
-
-export const MainContent = () => {
-  return (
-    <>
-      <SelectGenre />
-      <RestaurantList />
-    </>
-  );
 };

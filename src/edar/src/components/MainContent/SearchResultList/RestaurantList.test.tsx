@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import { RestaurantList } from './RestaurantList';
-import type { Shop } from './SearchRestaurant';
+import type { Shop } from '../SpecifySearchCondition/types';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
