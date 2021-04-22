@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import { SelectGenre } from './SelectGenre';
 import { useSelector, useDispatch } from 'react-redux';
-import type { Genre } from './types';
+import type { Genre } from '../../../reducks/shop/types';
 import userEvent from '@testing-library/user-event';
 
 afterEach(cleanup);

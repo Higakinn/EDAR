@@ -94,3 +94,40 @@ export type Genre = {
   code: string;
   name: string;
 };
+
+export type InitialState = {
+  position: {
+    latitude: number;
+    longitude: number;
+  };
+  isLoadedLocationInfo: boolean;
+  isLoadedShopInfo: boolean;
+  isProcessing: boolean;
+  shops: Shop[];
+  url: string;
+  positionErrorMessage: string;
+  shopErrorMessage: string;
+  genre: string;
+  genres: Genre[];
+  expandedArray: boolean[];
+  range: {
+    code: string;
+    label: string;
+  };
+  selectedShopIndex: number;
+};
+
+export type TabPanelProps = {
+  children?: React.ReactNode;
+  dir?: string;
+  index: number;
+  selectedIndex: number;
+};
+
+export type NarrowDownDialogRawProps = {
+  classes: Record<'paper', string>;
+  id: string;
+  keepMounted: boolean;
+  isOpeningDialog: boolean;
+  onCloseDialog: () => void;
+};

@@ -18,7 +18,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import type { Shop } from '../SpecifySearchCondition/types';
+import type { Shop } from '../../../reducks/shop/types';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../reducks/rootReducer';
 import {

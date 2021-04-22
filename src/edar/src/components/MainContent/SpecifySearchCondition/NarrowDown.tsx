@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../reducks/rootReducer';
 import { updateRange } from '../../../reducks/shop/reducers';
+import type { NarrowDownDialogRawProps } from '../../../reducks/shop/types';
 
 const distanceDict = [
   { code: '1', label: '～300m' },
@@ -21,14 +22,6 @@ const distanceDict = [
   { code: '4', label: '～2000m' },
   { code: '5', label: '～3000m' },
 ];
-
-type NarrowDownDialogRawProps = {
-  classes: Record<'paper', string>;
-  id: string;
-  keepMounted: boolean;
-  isOpeningDialog: boolean;
-  onCloseDialog: () => void;
-};
 
 const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
   const { onCloseDialog, isOpeningDialog, ...other } = props;

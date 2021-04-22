@@ -1,15 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { InitialState } from './types';
 
-type State = {
-  isLoggedIn: boolean;
-  user: {
-    email: string | null;
-    displayName: string | null;
-    photoURL: string | null;
-  };
-};
-
-const initialState: State = {
+const initialState: InitialState = {
   isLoggedIn: false,
   user: {
     email: null,
@@ -23,7 +15,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     updateUserInformation: (
-      state: State,
+      state: InitialState,
       action: PayloadAction<{
         email: string | null;
         displayName: string | null;
@@ -33,7 +25,7 @@ const slice = createSlice({
       state.user = action.payload;
       state.isLoggedIn = true;
     },
-    clearUserInformation: (state: State) => {
+    clearUserInformation: (state: InitialState) => {
       state.user = { email: null, displayName: null, photoURL: null };
       state.isLoggedIn = false;
     },

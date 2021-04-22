@@ -7,14 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../../reducks/rootReducer';
-import type { Shop } from '../SpecifySearchCondition/types';
-
-type TabPanelProps = {
-  children?: React.ReactNode;
-  dir?: string;
-  index: number;
-  selectedIndex: number;
-};
+import type { Shop, TabPanelProps } from '../../../reducks/shop/types';
 
 function createIdLabel(index: number) {
   return {
