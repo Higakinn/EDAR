@@ -16,6 +16,7 @@ import {
   clearUserInformation,
 } from '../../reducks/user/reducers';
 import type { RootState } from '../../reducks/rootReducer';
+import { getUser, getIsLoggedIn } from '../../reducks/user/selectors';
 
 type LoginDialogRawProps = {
   classes: Record<'paper', string>;
@@ -28,9 +29,9 @@ type LoginDialogRawProps = {
 const LoginDialogRaw = (props: LoginDialogRawProps) => {
   const { closeAccountDialog, isOpeningDialog, ...other } = props;
   const dispatch = useDispatch();
-  const { user, isLoggedIn } = useSelector(
-    (state: RootState) => state.userInformation
-  );
+  const selector = useSelector((state: RootState) => state);
+  const user = getUser(selector);
+  const isLoggedIn = getIsLoggedIn(selector);
 
   // ログイン処理をして、ユーザー情報をreduxにて管理
   async function setLoggedInUserWithGoogle() {
@@ -97,9 +98,9 @@ export const Account = (props: {
   const classes = useStyles();
   const { menuLabel, menuIcon } = props;
   const [isOpeningDialog, setIsOpeningDialog] = useState(false);
-  const { user, isLoggedIn } = useSelector(
-    (state: RootState) => state.userInformation
-  );
+  const selector = useSelector((state: RootState) => state);
+  const user = getUser(selector);
+  const isLoggedIn = getIsLoggedIn(selector);
 
   function openAccountDialog() {
     setIsOpeningDialog(true);

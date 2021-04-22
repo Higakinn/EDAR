@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../../reducks/rootReducer';
 import { updateRange } from '../../../reducks/shop/reducers';
 import type { NarrowDownDialogRawProps } from '../../../reducks/shop/types';
+import { getRange } from '../../../reducks/shop/selectors';
 
 const distanceDict = [
   { code: '1', label: '～300m' },
@@ -27,7 +28,8 @@ const NarrowDownDialogRaw = (props: NarrowDownDialogRawProps) => {
   const { onCloseDialog, isOpeningDialog, ...other } = props;
   const radioGroupRef = useRef<HTMLElement>(null);
   const dispatch = useDispatch();
-  const { range } = useSelector((state: RootState) => state.shopInformation);
+  const selector = useSelector((state: RootState) => state);
+  const range = getRange(selector);
   const [code, setCode] = useState(range.code);
 
   // キャンセルを押した際に前回値を再設定
