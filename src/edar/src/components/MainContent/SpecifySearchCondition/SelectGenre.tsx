@@ -19,7 +19,7 @@ import {
   fetchPosition,
   fetchGenreList,
   fetchShopList,
-} from '../../../reducks/shop/reducers';
+} from '../../../reducks/shop/operations';
 import { NarrowDown } from './NarrowDown';
 
 export const SelectGenre = () => {
