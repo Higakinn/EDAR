@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ConnectedRouter } from 'connected-react-router';
-import { history } from './stores/rootReducer';
+import { history } from './reducks/rootReducer';
 
 // ブラウザの戻るボタンを押したときはリロードを実施
 window.history.replaceState(

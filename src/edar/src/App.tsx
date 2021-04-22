@@ -10,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import { RestaurantDetailInformation } from './components/MainContent/RestaurantDetailInformation/RestaurantDetailInformation';
 import { Footer } from './components/Footer/Footer';
 import { firebaseApp } from './firebase/authentication';
-import { updateUserInformation } from './stores/userInformation';
+import { updateUserInformation } from './reducks/user/reducers';
 import { RestaurantList } from './components/MainContent/SearchResultList/RestaurantList';
 
 export const App = () => {

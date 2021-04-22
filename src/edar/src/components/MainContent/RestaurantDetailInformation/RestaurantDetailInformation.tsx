@@ -6,7 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { useSelector } from 'react-redux';
-import type { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../reducks/rootReducer';
 import type { Shop } from '../SpecifySearchCondition/types';
 
 type TabPanelProps = {

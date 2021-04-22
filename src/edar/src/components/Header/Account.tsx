@@ -14,8 +14,8 @@ import { loginWithGoogle, logout } from '../../firebase/authentication';
 import {
   updateUserInformation,
   clearUserInformation,
-} from '../../stores/userInformation';
-import type { RootState } from '../../stores/rootReducer';
+} from '../../reducks/user/reducers';
+import type { RootState } from '../../reducks/rootReducer';
 
 type LoginDialogRawProps = {
   classes: Record<'paper', string>;

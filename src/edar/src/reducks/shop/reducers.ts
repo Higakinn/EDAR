@@ -2,8 +2,8 @@ import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
 import type {
   Shop,
   Genre,
-} from '../components/MainContent/SpecifySearchCondition/types';
-import { getGenre, getPosition, getShopList } from '../api/api';
+} from '../../components/MainContent/SpecifySearchCondition/types';
+import { getGenre, getPosition, getShopList } from '../../api/api';
 
 type State = {
   position: {

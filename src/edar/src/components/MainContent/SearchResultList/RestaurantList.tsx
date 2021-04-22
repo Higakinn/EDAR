@@ -20,12 +20,12 @@ import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import type { Shop } from '../SpecifySearchCondition/types';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../reducks/rootReducer';
 import {
   initExpandedList,
   updateExpanded,
   updateSelectedShopIndex,
-} from '../../../stores/shopInformation';
+} from '../../../reducks/shop/reducers';
 import { Link } from 'react-router-dom';
 
 export const RestaurantList = () => {

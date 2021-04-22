@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { shopInformationReducer } from './shopInformation';
-import { userInformationReducer } from './userInformation';
+import { shopInformationReducer } from './shop/reducers';
+import { userInformationReducer } from './user/reducers';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { connectRouter } from 'connected-react-router';

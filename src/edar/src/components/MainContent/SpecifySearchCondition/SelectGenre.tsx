@@ -13,13 +13,13 @@ import SearchIcon from '@material-ui/icons/Search';
 import type { Genre } from './types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import type { RootState } from '../../../stores/rootReducer';
-import { createURL, setGenre } from '../../../stores/shopInformation';
+import type { RootState } from '../../../reducks/rootReducer';
+import { createURL, setGenre } from '../../../reducks/shop/reducers';
 import {
   fetchPosition,
   fetchGenreList,
   fetchShopList,
-} from '../../../stores/shopInformation';
+} from '../../../reducks/shop/reducers';
 import { NarrowDown } from './NarrowDown';
 
 export const SelectGenre = () => {
