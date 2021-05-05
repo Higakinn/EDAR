@@ -77,7 +77,7 @@ describe('SelectGenreコンポーネント', () => {
     userEvent.click(screen.getByTestId('seachButton'));
   });
 
-  test.skip('ジャンル取得APIから情報を取得できているかは目視にて確認', () => { });
+  test.skip('ジャンル取得APIから情報を取得できているかは目視にて確認', () => {});
 
-  test.skip('現在地、ジャンルよりURLを作成し、お店の情報を取得できているかを目視で確認', () => { });
+  test.skip('現在地、ジャンルよりURLを作成し、お店の情報を取得できているかを目視で確認', () => {});
 });
