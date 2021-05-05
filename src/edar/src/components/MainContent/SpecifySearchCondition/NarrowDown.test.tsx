@@ -35,20 +35,20 @@ describe('NarrowDownコンポーネント', () => {
     jest.resetAllMocks();
   });
 
-  test('絞り込みボタンが表示されているか', () => {
+  test.skip('絞り込みボタンが表示されているか', () => {
     render(<NarrowDown />);
     expect(screen.getByTestId('narrowDown')).toBeInTheDocument();
   });
 
-  test('絞り込みボタンが押されて、距離オプションが表示されるか', () => {
+  test.skip('絞り込みボタンが押されて、距離オプションが表示されるか', () => {
     render(<NarrowDown />);
     userEvent.click(screen.getByTestId('narrowDown'));
     expect(screen.getByText('距離')).toBeInTheDocument();
   });
 
-  test.skip('距離のデフォルト値は「～1000m」であることを目視で確認', () => {});
+  test.skip('距離のデフォルト値は「～1000m」であることを目視で確認', () => { });
 
-  test.skip('絞り込みダイアログを表示して、距離を選択して「設定する」を押すとそれに応じてお店表示されるのを目視で確認', () => {});
+  test.skip('絞り込みダイアログを表示して、距離を選択して「設定する」を押すとそれに応じてお店表示されるのを目視で確認', () => { });
 
-  test.skip('絞り込みオプションのダイアログ表示して、デフォルト値以外を選んで「キャンセル」を押すと、前回値を設定することを目視で確認', () => {});
+  test.skip('絞り込みオプションのダイアログ表示して、デフォルト値以外を選んで「キャンセル」を押すと、前回値を設定することを目視で確認', () => { });
 });
