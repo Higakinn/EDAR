@@ -18,28 +18,36 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import clsx from 'clsx';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import type { Shop } from '../SpecifySearchCondition/types';
+import type { Shop } from '../../../reducks/shop/types';
 import { useDispatch, useSelector } from 'react-redux';
-import type { RootState } from '../../../stores/rootReducer';
+import type { RootState } from '../../../reducks/rootReducer';
 import {
   initExpandedList,
   updateExpanded,
   updateSelectedShopIndex,
-} from '../../../stores/shopInformation';
+} from '../../../reducks/shop/reducers';
 import { Link } from 'react-router-dom';
+import {
+  getShops,
+  getIsProcessing,
+  getIsLoadedLocationInfo,
+  getIsLoadedShopInfo,
+  getShopErrorMessage,
+  getPositionErrorMessage,
+  getExpandedArray,
+} from '../../../reducks/shop/selectors';
 
 export const RestaurantList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const {
-    shops,
-    isProcessing,
-    isLoadedLocationInfo,
-    isLoadedShopInfo,
-    positionErrorMessage,
-    shopErrorMessage,
-    expandedArray,
-  } = useSelector((state: RootState) => state.shopInformation);
+  const selector = useSelector((state: RootState) => state);
+  const shops = getShops(selector);
+  const isProcessing = getIsProcessing(selector);
+  const isLoadedLocationInfo = getIsLoadedLocationInfo(selector);
+  const isLoadedShopInfo = getIsLoadedShopInfo(selector);
+  const positionErrorMessage = getPositionErrorMessage(selector);
+  const shopErrorMessage = getShopErrorMessage(selector);
+  const expandedArray = getExpandedArray(selector);
 
   // カードの折りたたみを初期化
   useEffectCustom(() => {

@@ -10,25 +10,37 @@ import {
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import SearchIcon from '@material-ui/icons/Search';
-import type { Genre } from './types';
+import type { Genre } from '../../../reducks/shop/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import type { RootState } from '../../../stores/rootReducer';
-import { createURL, setGenre } from '../../../stores/shopInformation';
+import type { RootState } from '../../../reducks/rootReducer';
+import { createURL, setGenre } from '../../../reducks/shop/reducers';
 import {
   fetchPosition,
   fetchGenreList,
   fetchShopList,
-} from '../../../stores/shopInformation';
+} from '../../../reducks/shop/operations';
 import { NarrowDown } from './NarrowDown';
+import {
+  getPosition,
+  getGenre,
+  getUrl,
+  getGenres,
+  getRange,
+  getShops,
+} from '../../../reducks/shop/selectors';
 
 export const SelectGenre = () => {
   const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { position, genre, url, genres, range, shops } = useSelector(
-    (state: RootState) => state.shopInformation
-  );
+  const selector = useSelector((state: RootState) => state);
+  const position = getPosition(selector);
+  const genre = getGenre(selector);
+  const url = getUrl(selector);
+  const genres = getGenres(selector);
+  const range = getRange(selector);
+  const shops = getShops(selector);
 
   // 経度緯度情報を取得
   function getLocationInfo(event: React.FormEvent<HTMLFormElement>) {
